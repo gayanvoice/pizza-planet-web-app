@@ -47,8 +47,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
 {
-    microsoftOptions.ClientId = "19bea5b8-2883-4e56-939c-8a26b583f963";
-    microsoftOptions.ClientSecret = "S9j8Q~kE3Or3MjpyhTrZPA~3m3WfVKIT5Zf1.dcy";
+    microsoftOptions.ClientId = "8e775854-9173-4696-b285-32dd81b8025d";
+    microsoftOptions.ClientSecret = "hdg8Q~Rn3cBWuPZNgxdUYbAr6IYl_NMdRNvz6c5x";
 });
 var app = builder.Build();
 
