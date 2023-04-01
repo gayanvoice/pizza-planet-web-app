@@ -48,8 +48,8 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthentication()
     .AddMicrosoftAccount(microsoftOptions =>
     {
-        microsoftOptions.ClientId = "8e775854-9173-4696-b285-32dd81b8025d";
-        microsoftOptions.ClientSecret = "hdg8Q~Rn3cBWuPZNgxdUYbAr6IYl_NMdRNvz6c5x";
+        microsoftOptions.ClientId = "b294b012-5e4d-4a5f-a968-e567d3914df1";
+        microsoftOptions.ClientSecret = "kgd8Q~rKIVbgNnuvp1zvos~mt77hHBYTQGZmMazs";
     })
     .AddGoogle(googleOptions =>
     {
