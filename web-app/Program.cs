@@ -45,7 +45,11 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
-
+builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
+{
+    microsoftOptions.ClientId = "19bea5b8-2883-4e56-939c-8a26b583f963";
+    microsoftOptions.ClientSecret = "S9j8Q~kE3Or3MjpyhTrZPA~3m3WfVKIT5Zf1.dcy";
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

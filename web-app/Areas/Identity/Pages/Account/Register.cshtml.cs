@@ -98,7 +98,7 @@ namespace web_app.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
-
+        // U3nUwGXhBUbLHr-12345
 
         public async Task OnGetAsync(string returnUrl = null)
         {
