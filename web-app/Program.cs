@@ -45,11 +45,17 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
-builder.Services.AddAuthentication().AddMicrosoftAccount(microsoftOptions =>
-{
-    microsoftOptions.ClientId = "8e775854-9173-4696-b285-32dd81b8025d";
-    microsoftOptions.ClientSecret = "hdg8Q~Rn3cBWuPZNgxdUYbAr6IYl_NMdRNvz6c5x";
-});
+builder.Services.AddAuthentication()
+    .AddMicrosoftAccount(microsoftOptions =>
+    {
+        microsoftOptions.ClientId = "8e775854-9173-4696-b285-32dd81b8025d";
+        microsoftOptions.ClientSecret = "hdg8Q~Rn3cBWuPZNgxdUYbAr6IYl_NMdRNvz6c5x";
+    })
+    .AddGoogle(googleOptions =>
+    {
+        googleOptions.ClientId = "249360452107-h3bccgtqhie4mj3642gsd70sbkv7buug.apps.googleusercontent.com";
+        googleOptions.ClientSecret = "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";
+    });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
