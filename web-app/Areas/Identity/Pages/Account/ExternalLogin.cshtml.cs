@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using web_app.Context;
+using web_app.Models.Repository;
 
 namespace web_app.Areas.Identity.Pages.Account
 {
@@ -179,7 +181,16 @@ namespace web_app.Areas.Identity.Pages.Account
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
+                            using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                            {
+                                AspNetUser aspNetUser = rsMssqlContext.AspNetUsers.Where(x => x.Id == userId).FirstOrDefault();
+                                aspNetUser.EmailConfirmed = true;
+                                rsMssqlContext.AspNetUsers.Attach(aspNetUser);
+                                rsMssqlContext.Entry(aspNetUser).Property(x => x.EmailConfirmed).IsModified = true;
+                                rsMssqlContext.SaveChanges();
+                            }
+                            await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
+                            return LocalRedirect(returnUrl);
                         }
 
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
