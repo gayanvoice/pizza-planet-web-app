@@ -14,7 +14,7 @@
         }
         else if (Model.ProviderDisplayName == "Google")
         {
-            <img class="mb-4" src="https://en.wikipedia.org/wiki/Google_logo#/media/File:Google_%22G%22_Logo.svg" alt="" width="72" height="57">
+            <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1024px-Google_%22G%22_Logo.svg.png" alt="" width="72" height="57">
         }
         else
         {
@@ -28,7 +28,7 @@
         <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="email" disabled />
+                <input asp-for="Input.Email" class="form-control" autocomplete="email" />
                 <label asp-for="Input.Email" class="form-label"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
