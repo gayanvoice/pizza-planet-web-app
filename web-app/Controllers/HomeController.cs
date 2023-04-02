@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using web_app.Context;
 using web_app.Models;
-using Microsoft.AspNetCore.Identity;
-using web_app.Models.Repository.View;
-using static web_app.Models.Repository.View.Common;
+using web_app.Models.View;
 
 namespace web_app.Controllers
 {
@@ -21,7 +19,7 @@ namespace web_app.Controllers
             _userManager = userManager;
         }
 
-        public async Task<Home.Index> IndexAsync()
+        public async Task<IActionResult> IndexAsync()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user is not null)
@@ -30,12 +28,12 @@ namespace web_app.Controllers
                     Home.Index index = new Home.Index();
                     index.CheckoutEnumerable = rsMssqlContext.AppCheckouts.Where(s => s.AspNetUsersId == user.Id).ToList();
                     index.AspNetUser = Home.Index.FromUser(user);
-                    return index;
+                    return View(index);
                 }
             }
             else
             {
-                return new Home.Index();
+                return View(new Home.Index());
             }
         }
 

@@ -1,4 +1,4 @@
-﻿namespace web_app.Models.Repository.View;
+﻿namespace web_app.Models.View;
 
 public partial class Common
 {

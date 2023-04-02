@@ -1,8 +1,11 @@
-﻿@{
+﻿@model web_app.Models.View.Home.Index
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome @Model.AspNetUser.NormalizedUserName</h1>
+    <p>User ID is @Model.AspNetUser.Id</p>
+    <p>Your associated email is @Model.AspNetUser.Email</p>
+    <a href="/Identity/Account/Logout">Logout</a>
 </div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using web_app.Models.Repository;
 
-namespace web_app.Models.Repository.View;
+namespace web_app.Models.View;
 
 public partial class Home
 {
@@ -19,8 +20,8 @@ public partial class Home
             aspNetUser.NormalizedEmail = User.NormalizedEmail;
             aspNetUser.EmailConfirmed = User.EmailConfirmed;
             aspNetUser.PasswordHash = User.PasswordHash;
-            aspNetUser.SecurityStamp = User.PasswordHash;
-            aspNetUser.ConcurrencyStamp = User.PasswordHash;
+            aspNetUser.SecurityStamp = User.SecurityStamp;
+            aspNetUser.ConcurrencyStamp = User.ConcurrencyStamp;
             aspNetUser.PhoneNumber = User.PasswordHash;
             aspNetUser.PhoneNumberConfirmed = User.PhoneNumberConfirmed;
             aspNetUser.TwoFactorEnabled = User.TwoFactorEnabled;
