@@ -1,0 +1,33 @@
+﻿@page
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "Register";
+}
+@section CSS {
+    <link href="https://getbootstrap.com/docs/5.3/examples/sign-in/sign-in.css" rel="stylesheet">
+}
+<main class="form-signin w-100 m-auto text-center">
+    @{
+        <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">Associate @Model.ProviderDisplayName account</h1>
+        <div class="pt-3 pb-3">
+            You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
+            Please click the Continue button to finish logging in.
+        </div>
+        <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="email" disabled />
+                <label asp-for="Input.Email" class="form-label"></label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div>
+                <button type="submit" class="w-100 btn btn-lg btn-primary">Continue</button>
+            </div>
+        </form>
+    }
+    <p class="mt-5 mb-3 text-body-secondary">Pizza Planet © 2023</p>
+</main>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
