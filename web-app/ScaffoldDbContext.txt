@@ -1,0 +1,1 @@
+Scaffold-DbContext "Server=tcp:rs-mssql.database.windows.net,1433;Initial Catalog=rs-mssql;Persist Security Info=False;User ID=rsuser;Password=rspassword1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models

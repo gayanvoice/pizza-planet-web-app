@@ -18,6 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using web_app.Context;
+using web_app.Models.Repository;
+using static web_app.Models.Repository.View.Common;
 
 namespace web_app.Areas.Identity.Pages.Account
 {
@@ -123,20 +126,18 @@ namespace web_app.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
-
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                        {
+                            AspNetUser aspNetUser = rsMssqlContext.AspNetUsers.Where(x => x.Id == userId).FirstOrDefault();
+                            aspNetUser.EmailConfirmed = true;
+                            rsMssqlContext.AspNetUsers.Attach(aspNetUser);
+                            rsMssqlContext.Entry(aspNetUser).Property(x => x.EmailConfirmed).IsModified = true;
+                            rsMssqlContext.SaveChanges();
+                        }
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
                     }
                     else
                     {

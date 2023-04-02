@@ -1,7 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using web_app.Context;
 using web_app.Models;
+using Microsoft.AspNetCore.Identity;
+using web_app.Models.Repository.View;
+using static web_app.Models.Repository.View.Common;
 
 namespace web_app.Controllers
 {
@@ -9,18 +14,32 @@ namespace web_app.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly UserManager<IdentityUser> _userManager;
+        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<Home.Index> IndexAsync()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using(RsMssqlContext rsMssqlContext = new RsMssqlContext()){
+                    Home.Index index = new Home.Index();
+                    index.CheckoutEnumerable = rsMssqlContext.AppCheckouts.Where(s => s.AspNetUsersId == user.Id).ToList();
+                    index.AspNetUser = Home.Index.FromUser(user);
+                    return index;
+                }
+            }
+            else
+            {
+                return new Home.Index();
+            }
         }
 
-        public IActionResult Privacy()
+        public IActionResult Profile()
         {
             return View();
         }
