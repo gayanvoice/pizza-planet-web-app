@@ -17,8 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using web_app.Context;
-using web_app.Models.Repository;
 
 namespace web_app.Areas.Identity.Pages.Account
 {
@@ -167,20 +165,21 @@ namespace web_app.Areas.Identity.Pages.Account
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
                         var userId = await _userManager.GetUserIdAsync(user);
+                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                        var callbackUrl = Url.Page(
+                            "/Account/ConfirmEmail",
+                            pageHandler: null,
+                            values: new { area = "Identity", userId = userId, code = code },
+                            protocol: Request.Scheme);
+
+                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                         // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
-                            {
-                                AspNetUser aspNetUser = rsMssqlContext.AspNetUsers.Where(x => x.Id == userId).FirstOrDefault();
-                                aspNetUser.EmailConfirmed = true;
-                                rsMssqlContext.AspNetUsers.Attach(aspNetUser);
-                                rsMssqlContext.Entry(aspNetUser).Property(x => x.EmailConfirmed).IsModified = true;
-                                rsMssqlContext.SaveChanges();
-                            }
-                            await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
-                            return LocalRedirect(returnUrl);
+                            return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
                         }
 
                         await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);

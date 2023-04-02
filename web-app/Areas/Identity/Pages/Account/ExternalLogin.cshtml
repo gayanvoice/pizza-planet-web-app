@@ -8,7 +8,18 @@
 }
 <main class="form-signin w-100 m-auto text-center">
     @{
-        <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        if (Model.ProviderDisplayName == "Microsoft")
+        {
+            <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Microsoft_icon.svg" alt="" width="72" height="57">
+        }
+        else if (Model.ProviderDisplayName == "Google")
+        {
+            <img class="mb-4" src="https://en.wikipedia.org/wiki/Google_logo#/media/File:Google_%22G%22_Logo.svg" alt="" width="72" height="57">
+        }
+        else
+        {
+            <img class="mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        }
         <h1 class="h3 mb-3 fw-normal">Associate @Model.ProviderDisplayName account</h1>
         <div class="pt-3 pb-3">
             You've successfully authenticated with <strong>@Model.ProviderDisplayName</strong>.
