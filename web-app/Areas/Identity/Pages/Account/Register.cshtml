@@ -132,7 +132,7 @@
         <div class="mt-3">
             <span><a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Sign in</a></span>
         </div>
-        <div class="mt-3 mb-3 h5 fw-normal">OR</div>
+        <div class="mt-3 mb-3 h5 fw-normal">or</div>
         if ((Model.ExternalLogins?.Count ?? 0) > 0)
         {
             <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal m-auto">
@@ -163,7 +163,8 @@
             </form>
         }
     }
-    <p class="mt-5 mb-3 text-body-secondary">Pizza Planet © 2023</p>
+    <a href="https://github.com/gayanvoice/web-app" class="mt-5 text-body-secondary">gayanvoice/web-app @@ GitHub</a>
+    <p class="mb-3 text-body-secondary">Pizza Planet © 2023</p>
 </main>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
