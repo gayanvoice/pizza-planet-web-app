@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using web_app.Context;
 using web_app.Models;
+using web_app.Models.Repository;
 using web_app.Models.View;
 
 namespace web_app.Controllers
@@ -27,7 +28,7 @@ namespace web_app.Controllers
                 using(RsMssqlContext rsMssqlContext = new RsMssqlContext()){
                     Home.Index index = new Home.Index();
                     index.CheckoutEnumerable = rsMssqlContext.AppCheckouts.Where(s => s.AspNetUsersId == user.Id).ToList();
-                    index.AspNetUser = Home.Index.FromUser(user);
+                    index.AspNetUser = Home.FromUser(user);
                     return View(index);
                 }
             }
@@ -37,9 +38,24 @@ namespace web_app.Controllers
             }
         }
 
-        public IActionResult Profile()
+        public async Task<IActionResult> Account()
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AspNetUserLogin? aspNetUserLogin = rsMssqlContext.AspNetUserLogins.Where(s => s.UserId == user.Id).FirstOrDefault();
+                    Home.Account account = new Home.Account();
+                    account.AspNetUserLogin = aspNetUserLogin;
+                    account.AspNetUser = Home.FromUser(user);
+                    return View(account);
+                }
+            }
+            else
+            {
+                return View(new Home.Account());
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

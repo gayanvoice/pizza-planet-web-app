@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace web_app.Models.Repository;
 
-public partial class Home
+public partial class AppAlergy
 {
     public int AllergyId { get; set; }
 

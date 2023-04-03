@@ -1,0 +1,215 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model web_app.Models.View.Home.Account
+@{
+    ViewData["Title"] = "Profile";
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
+    {
+        <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
+        <main class="container">
+            @if (Model.AspNetUserLogin is not null)
+            {
+                if(Model.AspNetUserLogin.LoginProvider is not null)
+                {
+                    if(Model.AspNetUserLogin.LoginProvider.Equals("Microsoft")){
+                        <div class="d-flex align-items-center p-3 my-3 text-black rounded shadow-sm">
+                            <img class="me-3" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Microsoft_icon.svg" alt="" height="38">
+                            <div class="lh-1">
+                                <h1 class="h6 mb-0 text-black lh-1">Google</h1>
+                                @if(Model.AspNetUser.Email is not null)
+                                {
+                                     <small>@Model.AspNetUser.Email</small>
+                                }
+                               
+                            </div>
+                        </div>
+                    }
+                    else if (Model.AspNetUserLogin.LoginProvider.Equals("Google"))
+                    {
+                        <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+                            <img class="me-3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1024px-Google_%22G%22_Logo.svg.png" alt="" height="38">
+                            <div class="lh-1">
+                                <h1 class="h6 mb-0 lh-1">Google</h1>
+                                @if (Model.AspNetUser.Email is not null)
+                                {
+                                    <small>@Model.AspNetUser.Email</small>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+                            <img class="me-3" src="https://cdn-icons-png.flaticon.com/512/893/893257.png" alt="" height="38">
+                            <div class="lh-1">
+                                <h1 class="h6 mb-0 lh-1">Unrecognized Provider</h1>
+                                @if (Model.AspNetUser.Email is not null)
+                                {
+                                    <small>@Model.AspNetUser.Email</small>
+                                }
+                            </div>
+                        </div>
+                    }
+
+                }
+            }
+            else
+            {
+                <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+                    <img class="me-3" src="https://cdn-icons-png.flaticon.com/512/893/893257.png" alt="" height="38">
+                    <div class="lh-1">
+                        <h1 class="h6 mb-0 lh-1">Custom Email</h1>
+                        @if (Model.AspNetUser.Email is not null)
+                        {
+                            <small>@Model.AspNetUser.Email</small>
+                        }
+                    </div>
+                </div>
+            }
+           
+
+            <div class="my-3 p-3 rounded shadow-sm">
+                <h6 class="border-bottom pb-2 mb-0">Data</h6>
+                @if (Model.AspNetUser.Id is not null) {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Id</strong>
+                        </div>
+                            <span class="d-block">@Model.AspNetUser.Id</span>
+                    </div>
+                </div>
+                }
+                @if (Model.AspNetUser.UserName is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">UserName</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.UserName</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.AspNetUser.NormalizedUserName is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Normalized UserName</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.NormalizedUserName</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.AspNetUser.Email is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Email</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.Email</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.AspNetUser.NormalizedEmail is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Normalized Email</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.NormalizedEmail</span>
+                        </div>
+                    </div>
+                }
+                <div class="d-flex text-body-secondary pt-3">
+                    <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Email Confirmed</strong>
+                        </div>
+                        <span class="d-block">@Model.AspNetUser.EmailConfirmed</span>
+                    </div>
+                </div>
+                @if (Model.AspNetUser.PasswordHash is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Password Hash</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.PasswordHash</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.AspNetUser.SecurityStamp is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Security Stamp</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.SecurityStamp</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.AspNetUser.ConcurrencyStamp is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Concurrency Stamp</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.ConcurrencyStamp</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.AspNetUser.PhoneNumber is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Phone Number</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.PhoneNumber</span>
+                        </div>
+                    </div>
+                }
+                @if (Model.AspNetUser.PhoneNumber is not null)
+                {
+                    <div class="d-flex text-body-secondary pt-3">
+                        <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
+                        <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Phone Number Confirmed</strong>
+                            </div>
+                            <span class="d-block">@Model.AspNetUser.PhoneNumberConfirmed</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </main>
+        <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            User is already signed in. But no User ID. Contact Admin.
+        </div>
+    }
+}

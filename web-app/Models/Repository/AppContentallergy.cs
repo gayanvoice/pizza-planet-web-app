@@ -13,7 +13,7 @@ public partial class AppContentallergy
 
     public int ContentIdId { get; set; }
 
-    public virtual Home AllergyId { get; set; } = null!;
+    public virtual AppAlergy AllergyId { get; set; } = null!;
 
     public virtual AppContent ContentId { get; set; } = null!;
 }

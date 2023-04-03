@@ -14,7 +14,7 @@ public partial class RsMssqlContext : DbContext
     {
     }
 
-    public virtual DbSet<Home> AppAllergies { get; set; }
+    public virtual DbSet<AppAlergy> AppAllergies { get; set; }
 
     public virtual DbSet<AppBasket> AppBaskets { get; set; }
 
@@ -73,7 +73,7 @@ public partial class RsMssqlContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Home>(entity =>
+        modelBuilder.Entity<AppAlergy>(entity =>
         {
             entity.HasKey(e => e.AllergyId).HasName("PK__app_alle__A49EBE42DA86C170");
 
