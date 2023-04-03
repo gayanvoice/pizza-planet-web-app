@@ -4,21 +4,4 @@
     ViewData["Title"] = "Log out";
 }
 
-<header>
-    <h1>@ViewData["Title"]</h1>
-    @{
-        if (User.Identity?.IsAuthenticated ?? false)
-        {
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-            </form>
-        }
-        else
-        {
-            <p>You have successfully logged out of the application.</p>
-        }
-    }
-
-</header>
-<a href="https://github.com/gayanvoice/web-app" class="mt-5 text-body-secondary">gayanvoice/web-app @@ GitHub</a>
-<p class="mb-3 text-body-secondary">Pizza Planet © 2023</p>
+<p class="mb-3 text-body-secondary">Log out</p>
