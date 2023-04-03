@@ -5,22 +5,19 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+        @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
+        {
+            <div class="container">
+                <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
+                    <p class="col-md-4 mb-0 text-muted">Pizza Planet © 2023, University of Derby</p>
+                    <a href="https://github.com/gayanvoice/pizza-planet-web-app" 
+                    class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">gayanvoice/pizza-planet-web-app</a>
+
+                    <ul class="nav col-md-4 justify-content-end">
+                        <li class="nav-item"><a asp-controller="Home" asp-action="Account" class="nav-link px-2 text-muted">User ID @Model.AspNetUser.Id</a></li>
+                    </ul>
+                </footer>
+            </div>
+        }
 }
 </ul>

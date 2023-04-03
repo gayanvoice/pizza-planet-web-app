@@ -6,21 +6,85 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@section CSS {
+    <style>
+        .bi {
+            vertical-align: -.125em;
+            fill: white;
+        }
+    </style>
 
+}
+@section SVG {
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="arrow-right-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+        </symbol>
+    </svg>
+}
 
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
     {
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
-        <div class="text-center">
-            <h1 class="display-4">Welcome @Model.AspNetUser.NormalizedUserName</h1>
-            <p>User ID is @Model.AspNetUser.Id</p>
-            <p>Your associated email is @Model.AspNetUser.Email</p>
-            <a href="/Identity/Account/Logout">Logout</a>
+        <div class="container">
+            <div class="text-center p-5 bg-body-tertiary border border-dashed rounded-3">
+                <h1 class="text-body-emphasis mb-5">Welcome @Model.AspNetUser.Email</h1>
+                <div class="d-inline-flex gap-2 mb-3">
+                    <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
+                        Checkout <svg class="bi ms-2" width="24" height="24"><use xlink:href="#arrow-right-short"></use></svg>
+                    </button>
+                </div>
+            </div>
         </div>
-        <a href="https://github.com/gayanvoice/web-app" class="mt-5 text-body-secondary">gayanvoice/web-app @@ GitHub</a>
-        <p class="mb-3 text-body-secondary">Pizza Planet © 2023</p>
+        <div class="container">
+            <div class="h4 m-3">History</div>
+            @if (Model.CheckoutEnumerable is not null && Model.CheckoutEnumerable.Count() == 0)
+            {
+                <div class="bd-example m-3">
+                    <p class="lead">
+                        You have no any previous checkouts.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">List group item heading</h6>
+                                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                            </div>
+                            <small class="opacity-50 text-nowrap">now</small>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">Another title here</h6>
+                                <p class="mb-0 opacity-75">Some placeholder content in a paragraph that goes a little longer so it wraps to a new line.</p>
+                            </div>
+                            <small class="opacity-50 text-nowrap">3d</small>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                        <div class="d-flex gap-2 w-100 justify-content-between">
+                            <div>
+                                <h6 class="mb-0">Third heading</h6>
+                                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
+                            </div>
+                            <small class="opacity-50 text-nowrap">1w</small>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+        <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />
     }
     else
     {
