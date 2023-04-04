@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using web_app.Context;
 using web_app.Models.Repository;
-using static web_app.Models.View.Common;
 
 namespace web_app.Areas.Identity.Pages.Account
 {

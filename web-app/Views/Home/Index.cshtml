@@ -1,8 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Globalization;
+@using web_app.Helper;
+@using web_app.Models.Procedure;
+@using web_app.Models.Repository;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-@model web_app.Models.View.Home.Index
+@model web_app.Models.View.HomeViewModel.IndexViewModel
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -40,7 +45,8 @@
         </div>
         <div class="container">
             <div class="h4 m-3">History</div>
-            @if (Model.CheckoutEnumerable is not null && Model.CheckoutEnumerable.Count() == 0)
+            @if (Model.CheckoutProcedureModelV2Enumerable is not null &&
+            Model.CheckoutProcedureModelV2Enumerable.Count() == 0)
             {
                 <div class="bd-example m-3">
                     <p class="lead">
@@ -50,38 +56,57 @@
             }
             else
             {
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <div>
-                                <h6 class="mb-0">List group item heading</h6>
-                                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-                            </div>
-                            <small class="opacity-50 text-nowrap">now</small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <div>
-                                <h6 class="mb-0">Another title here</h6>
-                                <p class="mb-0 opacity-75">Some placeholder content in a paragraph that goes a little longer so it wraps to a new line.</p>
-                            </div>
-                            <small class="opacity-50 text-nowrap">3d</small>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <div>
-                                <h6 class="mb-0">Third heading</h6>
-                                <p class="mb-0 opacity-75">Some placeholder content in a paragraph.</p>
-                            </div>
-                            <small class="opacity-50 text-nowrap">1w</small>
-                        </div>
-                    </a>
-                </div>
+                if (Model.CheckoutProcedureModelV2Enumerable is not null)
+                {
+                    <div class="list-group">
+                        @foreach (CheckoutProcedureModel.V2? v2 in Model.CheckoutProcedureModelV2Enumerable)
+                    {
+                            if (v2 is not null)
+                            {
+                                <a asp-controller="Home" asp-action="Checkout" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                    @if (v2.Status is not null)
+                                    {
+                                        if (v2.Status.Equals("ORDER"))
+                                        {
+                                            <span class="rounded-circle flex-shrink-0">ORDER</span>
+                                        }
+                                        else if (v2.Status.Equals("PROCESS"))
+                                        {
+                                            <span class="rounded-circle flex-shrink-0">PROCESS</span>
+                                        }
+                                        else if (v2.Status.Equals("PACK"))
+                                        {
+                                            <span class="rounded-circle flex-shrink-0">PACK</span>
+                                        }
+                                        else if (v2.Status.Equals("DELIVERY"))
+                                        {
+                                            <span class="rounded-circle flex-shrink-0">DELIVERY</span>
+                                        }
+                                        else if (v2.Status.Equals("COMPLETE"))
+                                        {
+                                            <span class="rounded-circle flex-shrink-0">COMPLETE</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="rounded-circle flex-shrink-0">ERROR: @v2.Status</span>
+                                        }
+                                    }
+                                    <div class="d-flex gap-2 w-100 justify-content-between">
+                                        <div>
+                                            <h6 class="mb-0">@v2.Item - @v2.Sum.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h6>
+                                        </div>
+                                        <small class="opacity-50 text-nowrap">@Time.ToRelativeDate(v2.ModifyTime)</small>
+                                    </div>
+                                </a>
+                            }
+                            
+                    }
+                    </div>
+                }
+                
+              
+                 
+               
             }
         </div>
         <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />

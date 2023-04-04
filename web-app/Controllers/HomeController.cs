@@ -1,9 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Data.Common;
 using System.Diagnostics;
+using System.Drawing;
 using web_app.Context;
+using web_app.Helper;
 using web_app.Models;
+using web_app.Models.Procedure;
 using web_app.Models.Repository;
 using web_app.Models.View;
 
@@ -26,15 +33,30 @@ namespace web_app.Controllers
             if (user is not null)
             {
                 using(RsMssqlContext rsMssqlContext = new RsMssqlContext()){
-                    Home.Index index = new Home.Index();
-                    index.CheckoutEnumerable = rsMssqlContext.AppCheckouts.Where(s => s.AspNetUsersId == user.Id).ToList();
-                    index.AspNetUser = Home.FromUser(user);
-                    return View(index);
+                    HomeViewModel.IndexViewModel indexViewModel = new HomeViewModel.IndexViewModel();
+                    using (var command = rsMssqlContext.Database.GetDbConnection().CreateCommand())
+                    {
+                        command.CommandText = "web_app_orders_v2";
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add(new SqlParameter("@AspNetUsersId", user.Id));
+                        rsMssqlContext.Database.OpenConnection();
+                        DbDataReader dbDataReader = command.ExecuteReader();
+                        var dataTable = new DataTable();
+                        dataTable.Load(dbDataReader);
+                        List<CheckoutProcedureModel.V2?> v2List = new List<CheckoutProcedureModel.V2?>();
+                        foreach (DataRow dataRow in dataTable.Rows)
+                        {
+                            v2List.Add(CheckoutProcedureModel.V2.FromDataTable(dataRow));
+                        }
+                        indexViewModel.CheckoutProcedureModelV2Enumerable = v2List;
+                    }
+                    indexViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                    return View(indexViewModel);
                 }
             }
             else
             {
-                return View(new Home.Index());
+                return View(new HomeViewModel.IndexViewModel());
             }
         }
 
@@ -46,15 +68,15 @@ namespace web_app.Controllers
                 using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                 {
                     AspNetUserLogin? aspNetUserLogin = rsMssqlContext.AspNetUserLogins.Where(s => s.UserId == user.Id).FirstOrDefault();
-                    Home.Account account = new Home.Account();
+                    HomeViewModel.AccountViewModel account = new HomeViewModel.AccountViewModel();
                     account.AspNetUserLogin = aspNetUserLogin;
-                    account.AspNetUser = Home.FromUser(user);
+                    account.AspNetUser = AspNetUser.FromIdentityUser(user);
                     return View(account);
                 }
             }
             else
             {
-                return View(new Home.Account());
+                return View(new HomeViewModel.AccountViewModel());
             }
         }
 
