@@ -1,0 +1,108 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Globalization;
+@using web_app.Helper;
+@using web_app.Models.Procedure;
+@using web_app.Models.Repository;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model web_app.Models.View.HomeViewModel.CheckoutViewModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+@section CSS {
+    <style>
+        .bi {
+            vertical-align: -.125em;
+            fill: white;
+        }
+    </style>
+
+}
+@section SVG {
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="arrow-right-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+        </symbol>
+    </svg>
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
+    {
+        <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
+        <div class="container">
+            @if (Model.CheckoutBasketProcedureModelV1Enumerable is not null &&
+           Model.CheckoutBasketProcedureModelV1Enumerable.Count() == 0)
+            {
+                <div class="bd-example m-3">
+                    <p class="lead">
+                        You have no any items in your checkout.
+                    </p>
+                </div>
+            }
+            else
+            {
+                if (Model.CheckoutBasketProcedureModelV1Enumerable is not null)
+                {
+                    <div class="col-md-12 order-md-2 my-5">
+                        <h4 class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="text-primary">Your cart</span>
+                            <span class="badge bg-primary rounded-pill">@Model.CheckoutBasketProcedureModelV1Enumerable.Count()</span>
+                        </h4>
+                        <ul class="list-group mb-3">
+                            @foreach (CheckoutBasketProcedureModel.V1? v1 in Model.CheckoutBasketProcedureModelV1Enumerable)
+                            {
+                                if (v1 is not null)
+                                {
+                                    double total = v1.Quantity * v1.Price;
+                                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                        <div>
+                                            <h6 class="my-0">@v1.Quantity x @v1.Name</h6>
+                                            <small class="text-muted">@v1.Size @v1.Type</small>
+                                        </div>
+                                        <div>
+                                            <div class="text-muted">@v1.Quantity x @v1.Price.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</div>
+                                            <div class="text-muted">@total.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</div>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                            <li class="list-group-item text-center">
+                                <form class="p-2">
+                                    <div class="col-lg-6 col-xxl-4 my-2 mx-auto">
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-primary" type="button">Add Item</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <h4>Total</h4>
+                                <h4>@Model.Total.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h4>
+                            </li>
+                        </ul>
+                       
+
+                        <form class="card p-2">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-secondary">Collection</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                }
+            }
+        </div>
+        <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            User is already signed in. But no User ID. Contact Admin.
+        </div>
+    }
+}

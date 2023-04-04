@@ -7,12 +7,14 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using web_app.Context;
 using web_app.Helper;
 using web_app.Models;
 using web_app.Models.Procedure;
 using web_app.Models.Repository;
 using web_app.Models.View;
+using static web_app.Models.View.HomeViewModel;
 
 namespace web_app.Controllers
 {
@@ -32,27 +34,15 @@ namespace web_app.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user is not null)
             {
-                using(RsMssqlContext rsMssqlContext = new RsMssqlContext()){
-                    HomeViewModel.IndexViewModel indexViewModel = new HomeViewModel.IndexViewModel();
-                    using (var command = rsMssqlContext.Database.GetDbConnection().CreateCommand())
-                    {
-                        command.CommandText = "web_app_orders_v2";
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.Add(new SqlParameter("@AspNetUsersId", user.Id));
-                        rsMssqlContext.Database.OpenConnection();
-                        DbDataReader dbDataReader = command.ExecuteReader();
-                        var dataTable = new DataTable();
-                        dataTable.Load(dbDataReader);
-                        List<CheckoutProcedureModel.V2?> v2List = new List<CheckoutProcedureModel.V2?>();
-                        foreach (DataRow dataRow in dataTable.Rows)
-                        {
-                            v2List.Add(CheckoutProcedureModel.V2.FromDataTable(dataRow));
-                        }
-                        indexViewModel.CheckoutProcedureModelV2Enumerable = v2List;
-                    }
-                    indexViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
-                    return View(indexViewModel);
+                IndexViewModel indexViewModel = new IndexViewModel();
+                List<CheckoutProcedureModel.V2?> v2List = new List<CheckoutProcedureModel.V2?>();
+                foreach (DataRow dataRow in SqlProcedureHelper.GetDataTable("web_app_orders_v2", new SqlParameter("@AspNetUsersId", user.Id)).Rows)
+                {
+                    v2List.Add(CheckoutProcedureModel.V2.FromDataTable(dataRow));
                 }
+                indexViewModel.CheckoutProcedureModelV2Enumerable = v2List;
+                indexViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                return View(indexViewModel);
             }
             else
             {
@@ -68,7 +58,7 @@ namespace web_app.Controllers
                 using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                 {
                     AspNetUserLogin? aspNetUserLogin = rsMssqlContext.AspNetUserLogins.Where(s => s.UserId == user.Id).FirstOrDefault();
-                    HomeViewModel.AccountViewModel account = new HomeViewModel.AccountViewModel();
+                    AccountViewModel account = new AccountViewModel();
                     account.AspNetUserLogin = aspNetUserLogin;
                     account.AspNetUser = AspNetUser.FromIdentityUser(user);
                     return View(account);
@@ -77,6 +67,47 @@ namespace web_app.Controllers
             else
             {
                 return View(new HomeViewModel.AccountViewModel());
+            }
+        }
+        public async Task<IActionResult> Checkout(int CheckoutId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                        .Where(c => c.CheckoutId == CheckoutId && c.AspNetUsersId == user.Id).FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        CheckoutViewModel checkoutViewModel = new CheckoutViewModel();
+                        List<CheckoutBasketProcedureModel.V1?> v1List = new List<CheckoutBasketProcedureModel.V1?>();
+                        foreach (DataRow dataRow in SqlProcedureHelper
+                            .GetDataTable("web_app_order_basket_v1", new SqlParameter("@CheckoutId", appCheckout.CheckoutId)).Rows)
+                        {
+                            v1List.Add(CheckoutBasketProcedureModel.V1.FromDataTable(dataRow));
+                        }
+                        checkoutViewModel.CheckoutBasketProcedureModelV1Enumerable = v1List;
+                        checkoutViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                        v1List.ForEach((v1) =>
+                        {
+                            if (v1 is not null)
+                            {
+                                checkoutViewModel.Total = checkoutViewModel.Total + (v1.Quantity * v1.Price);
+                            }
+                            
+                        });
+                        return View(checkoutViewModel);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
             }
         }
 
