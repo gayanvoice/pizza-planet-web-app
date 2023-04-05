@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using web_app.Models.Procedure;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model web_app.Models.View.HomeViewModel.ProductViewModel
+@{
+    ViewData["Title"] = "Type";
+}
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
+    {
+        <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
+        <div class="container">
+            <main>
+                <div class="container px-4 py-5" id="custom-cards">
+                    <h2 class="pb-2 border-bottom">Products</h2>
+
+                    <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
+                        @if (Model.ProductProcedureModelV3Enumerable is not null)
+                        {
+                            var list = Model.ProductProcedureModelV3Enumerable
+                            .GroupBy(i => new { i.ProductId, i.Name, i.Description, i.Size, i.Kcal, i.Price, i.Type, i.ProductImageUrl });
+                            foreach (var item in list)
+                            {
+                                var groupKey = item.Key;
+                                <a asp-controller="Home" asp-action="AddToBasket" asp-route-ProductId="@groupKey.ProductId" class="col text-decoration-none">
+                                    <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
+                                         style="background-image: url('@groupKey.ProductImageUrl'); background-size: cover">
+                                        @if (Model.CheckoutBasketProcedureModelV2Enumerable is not null)
+                                        {
+                                            @foreach (CheckoutBasketProcedureModel.V2? v2 in Model.CheckoutBasketProcedureModelV2Enumerable
+                                           .Where(c => c.ProductId == groupKey.ProductId).ToList())
+                                            {
+                                                if (v2 is not null)
+                                                {
+                                                    <span type="button"
+                                                          class="position-absolute top-0 end-0 p-3 m-3 border border-white bg-light h1 text-light bg-opacity-10 rounded-pill">@v2.Quantity</span>
+                                                }
+                                            }
+                                        }
+                                      
+                                        <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+                                            <h4 class="mt-5 mb-4 display-6 lh-1 fw-bold text-light">@groupKey.Name</h4>
+                                            @foreach (var groupedItem in item)
+                                            {
+                                                if (groupedItem is not null)
+                                                {
+                                                    <div class="text-light"><span>@groupedItem.ContentName</span> <span class="">@groupedItem.RecipeQuantity @groupedItem.RecipeMeasurement</span></div>
+                                                }
+                                            }
+                                            <div class="mt-4">
+                                                <ul class="d-flex list-unstyled mt-auto">
+                                                    <li class="ms-1">
+                                                        @if (Model.ProductContentProcedureModelV1Enumerable is not null)
+                                                        {
+                                                            @foreach (ProductContentProcedureModel.V1? v1 in Model.ProductContentProcedureModelV1Enumerable
+                                                           .Where(p => p.ProductId == groupKey.ProductId).ToList())
+                                                            {
+                                                                if (v1 is not null && v1.GuideName is not "")
+                                                                {
+                                                                    <img src="@v1.GuideImageUrl" alt="@v1.GuideName" width="32" height="32"
+                                                                         class="rounded-circle border border-white bg-light">
+                                                                }
+                                                            }
+                                                        }
+                                                    </li>
+                                                    <li class="ms-1">
+                                                        @if (Model.ProductAllergyProcedureModelV2Enumerable is not null)
+                                                        {
+                                                            @foreach (ProductAllergyProcedureModel.V2? v2 in Model.ProductAllergyProcedureModelV2Enumerable
+                                                           .Where(p => p.ProductId == groupKey.ProductId).ToList())
+                                                            {
+                                                                if (v2 is not null && v2.AllergyName is not "")
+                                                                {
+                                                                    <img src="@v2.AllergyImageUrl" alt="@v2.AllergyName" width="32" height="32"
+                                                                         class="rounded-circle border border-white bg-light">
+                                                                }
+                                                            }
+                                                        }
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        }
+
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+            </main>
+        </div>
+        <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            User is already signed in. But no User ID. Contact Admin.
+        </div>
+    }
+}

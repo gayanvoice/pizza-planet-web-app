@@ -10,7 +10,7 @@ namespace web_app.Helper
 {
     public static class SqlProcedureHelper
     {
-        public static DataTable GetDataTable(string commandText, SqlParameter sqlParameter)
+        public static DataTable GetDataTable(string commandText, SqlParameter? sqlParameter)
         {
             using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
             {
@@ -18,7 +18,10 @@ namespace web_app.Helper
                 {
                     command.CommandText = commandText;
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.Add(sqlParameter);
+                    if (sqlParameter is not null)
+                    {
+                        command.Parameters.Add(sqlParameter);
+                    }
                     rsMssqlContext.Database.OpenConnection();
                     DbDataReader dbDataReader = command.ExecuteReader();
                     var dataTable = new DataTable();

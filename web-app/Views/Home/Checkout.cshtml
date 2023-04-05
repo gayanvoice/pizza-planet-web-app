@@ -42,22 +42,33 @@
                         You have no any items in your checkout.
                     </p>
                 </div>
+                <li class="list-group-item text-center">
+                    <form class="p-2">
+                        <div class="col-lg-6 col-xxl-4 my-2 mx-auto">
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Home" asp-action="Product" class="btn btn-primary" type="button">Add Item</a>
+                            </div>
+                        </div>
+                    </form>
+                </li>
             }
             else
             {
                 if (Model.CheckoutBasketProcedureModelV1Enumerable is not null)
                 {
+                    double totalCost = 0.0;
+                    double totalUnits = Model.CheckoutBasketProcedureModelV1Enumerable.Sum(b => b.Quantity);
                     <div class="col-md-12 order-md-2 my-5">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-primary">Your cart</span>
-                            <span class="badge bg-primary rounded-pill">@Model.CheckoutBasketProcedureModelV1Enumerable.Count()</span>
+                            <span class="badge bg-primary rounded-pill">@totalUnits</span>
                         </h4>
                         <ul class="list-group mb-3">
                             @foreach (CheckoutBasketProcedureModel.V1? v1 in Model.CheckoutBasketProcedureModelV1Enumerable)
                             {
                                 if (v1 is not null)
                                 {
-                                    double total = v1.Quantity * v1.Price;
+                                    double itemCost = v1.Quantity * v1.Price;
                                     <li class="list-group-item d-flex justify-content-between lh-condensed">
                                         <div>
                                             <h6 class="my-0">@v1.Quantity x @v1.Name</h6>
@@ -65,23 +76,25 @@
                                         </div>
                                         <div>
                                             <div class="text-muted">@v1.Quantity x @v1.Price.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</div>
-                                            <div class="text-muted">@total.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</div>
+                                            <div class="text-muted">@itemCost.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</div>
                                         </div>
                                     </li>
+                                    totalCost = totalCost + itemCost;
+                                    totalUnits = totalUnits + v1.Quantity;
                                 }
                             }
                             <li class="list-group-item text-center">
-                                <form class="p-2">
+                                <div class="p-2">
                                     <div class="col-lg-6 col-xxl-4 my-2 mx-auto">
                                         <div class="d-grid gap-2">
-                                            <button class="btn btn-primary" type="button">Add Item</button>
+                                            <a asp-controller="Home" asp-action="Product" class="btn btn-primary" type="button">Add Item</a>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
                                 <h4>Total</h4>
-                                <h4>@Model.Total.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h4>
+                                <h4>@totalCost.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h4>
                             </li>
                         </ul>
                        

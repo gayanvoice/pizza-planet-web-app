@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
@@ -36,7 +37,7 @@ namespace web_app.Controllers
             {
                 IndexViewModel indexViewModel = new IndexViewModel();
                 List<CheckoutProcedureModel.V2?> v2List = new List<CheckoutProcedureModel.V2?>();
-                foreach (DataRow dataRow in SqlProcedureHelper.GetDataTable("web_app_orders_v2", new SqlParameter("@AspNetUsersId", user.Id)).Rows)
+                foreach (DataRow dataRow in SqlProcedureHelper.GetDataTable("web_app_checkout_v2", new SqlParameter("@AspNetUsersId", user.Id)).Rows)
                 {
                     v2List.Add(CheckoutProcedureModel.V2.FromDataTable(dataRow));
                 }
@@ -46,7 +47,7 @@ namespace web_app.Controllers
             }
             else
             {
-                return View(new HomeViewModel.IndexViewModel());
+                return View(new IndexViewModel());
             }
         }
 
@@ -57,7 +58,8 @@ namespace web_app.Controllers
             {
                 using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                 {
-                    AspNetUserLogin? aspNetUserLogin = rsMssqlContext.AspNetUserLogins.Where(s => s.UserId == user.Id).FirstOrDefault();
+                    AspNetUserLogin? aspNetUserLogin = rsMssqlContext.AspNetUserLogins
+                        .Where(s => s.UserId == user.Id).FirstOrDefault();
                     AccountViewModel account = new AccountViewModel();
                     account.AspNetUserLogin = aspNetUserLogin;
                     account.AspNetUser = AspNetUser.FromIdentityUser(user);
@@ -66,42 +68,52 @@ namespace web_app.Controllers
             }
             else
             {
-                return View(new HomeViewModel.AccountViewModel());
+                return View(new AccountViewModel());
             }
         }
-        public async Task<IActionResult> Checkout(int CheckoutId)
+        public async Task<IActionResult> Checkout(string CheckoutId)
         {
             var user = await _userManager.GetUserAsync(User);
             if (user is not null)
             {
                 using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                 {
-                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
-                        .Where(c => c.CheckoutId == CheckoutId && c.AspNetUsersId == user.Id).FirstOrDefault();
-                    if (appCheckout is not null)
+                    if (CheckoutId is null)
                     {
-                        CheckoutViewModel checkoutViewModel = new CheckoutViewModel();
-                        List<CheckoutBasketProcedureModel.V1?> v1List = new List<CheckoutBasketProcedureModel.V1?>();
-                        foreach (DataRow dataRow in SqlProcedureHelper
-                            .GetDataTable("web_app_order_basket_v1", new SqlParameter("@CheckoutId", appCheckout.CheckoutId)).Rows)
+                        AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                            .Where(c => (c.AspNetUsersId == user.Id) && (c.Status == "ORDER")).FirstOrDefault();
+                        if (appCheckout is null)
                         {
-                            v1List.Add(CheckoutBasketProcedureModel.V1.FromDataTable(dataRow));
+                            AppCheckout newAppCheckout = new AppCheckout();
+                            newAppCheckout.CreateTime = DateTime.Now;
+                            newAppCheckout.ModifyTime = DateTime.Now;
+                            newAppCheckout.Status = "ORDER";
+                            newAppCheckout.AspNetUsersId = user.Id;
+                            rsMssqlContext.AppCheckouts.Add(newAppCheckout);
+                            rsMssqlContext.SaveChanges();
+                            return RedirectToAction("Checkout");
                         }
-                        checkoutViewModel.CheckoutBasketProcedureModelV1Enumerable = v1List;
-                        checkoutViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
-                        v1List.ForEach((v1) =>
+                        else
                         {
-                            if (v1 is not null)
-                            {
-                                checkoutViewModel.Total = checkoutViewModel.Total + (v1.Quantity * v1.Price);
-                            }
-                            
-                        });
-                        return View(checkoutViewModel);
+                            return RedirectToAction("Checkout", new { CheckoutId = appCheckout.CheckoutId });
+                        }
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                            .Where(c => c.CheckoutId == int.Parse(CheckoutId) && c.AspNetUsersId == user.Id).FirstOrDefault();
+                        if (appCheckout is not null)
+                        {
+                           
+                            CheckoutViewModel checkoutViewModel = new CheckoutViewModel();
+                            checkoutViewModel.CheckoutBasketProcedureModelV1Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV1(appCheckout.CheckoutId);
+                            checkoutViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                            return View(checkoutViewModel);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                 }
             }
@@ -110,7 +122,37 @@ namespace web_app.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        public async Task<IActionResult> Product()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                           .Where(c => c.Status == "ORDER" && c.AspNetUsersId == user.Id).FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        AspNetUserLogin? aspNetUserLogin = rsMssqlContext.AspNetUserLogins.Where(s => s.UserId == user.Id).FirstOrDefault();
+                        ProductViewModel productViewModel = new ProductViewModel();
+                        productViewModel.ProductProcedureModelV3Enumerable = HomeHelper.GetProductProcedureModelV3();
+                        productViewModel.ProductAllergyProcedureModelV2Enumerable = HomeHelper.GetProductAllergyProcedureModelV2();
+                        productViewModel.ProductContentProcedureModelV1Enumerable = HomeHelper.GetProductContentProcedureModelV1();
+                        productViewModel.CheckoutBasketProcedureModelV2Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV2(appCheckout.CheckoutId);
+                        productViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                        return View(productViewModel);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Checkout", "Home");
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

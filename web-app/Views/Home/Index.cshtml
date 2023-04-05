@@ -37,9 +37,9 @@
             <div class="text-center p-5 bg-body-tertiary border border-dashed rounded-3">
                 <h1 class="text-body-emphasis mb-5">Welcome @Model.AspNetUser.Email</h1>
                 <div class="d-inline-flex gap-2 mb-3">
-                    <button class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
+                    <a asp-controller="Home" asp-action="Checkout" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
                         Checkout <svg class="bi ms-2" width="24" height="24"><use xlink:href="#arrow-right-short"></use></svg>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -94,7 +94,15 @@
                                     }
                                     <div class="d-flex gap-2 w-100 justify-content-between">
                                         <div>
-                                            <h6 class="mb-0">@v2.Item - @v2.Sum.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h6>
+                                            @if (v2.Sum == 0.0)
+                                            {
+                                                <h6 class="mb-0">No items</h6>
+                                            }
+                                            else
+                                            {
+                                                <h6 class="mb-0">@v2.Item - @v2.Sum.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h6>
+                                            }
+
                                         </div>
                                         <small class="opacity-50 text-nowrap">@Time.ToRelativeDate(v2.ModifyTime)</small>
                                     </div>

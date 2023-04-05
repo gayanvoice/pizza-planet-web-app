@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System.Data;
-using System.Globalization;
-using web_app.Models.Repository;
+﻿using System.Data;
 
 namespace web_app.Models.Procedure;
 
 public partial class CheckoutProcedureModel
 {
+    [Obsolete]
     public V1? CheckoutProcedureModelV1 { get; set; }
     public V2? CheckoutProcedureModelV2 { get; set; }
     public partial class V1
@@ -51,12 +49,12 @@ public partial class CheckoutProcedureModel
             string? ModifyTime = dataRow["ModifyTime"].ToString();
             string? Sum = dataRow["Sum"].ToString();
 
-            if (CheckoutId is not null) v2.CheckoutId = int.Parse(CheckoutId); else v2.CheckoutId = 0;
+            if (CheckoutId is not "") v2.CheckoutId = int.Parse(CheckoutId); else v2.CheckoutId = 0;
             v2.AspNetUsersId = dataRow["AspNetUsersId"].ToString();
             v2.Status = dataRow["Status"].ToString();
-            if (ModifyTime is not null) v2.ModifyTime = DateTimeOffset.Parse(ModifyTime); else v2.ModifyTime = DateTimeOffset.UtcNow;
+            if (ModifyTime is not "") v2.ModifyTime = DateTimeOffset.Parse(ModifyTime); else v2.ModifyTime = DateTimeOffset.UtcNow;
             v2.Item = dataRow["Item"].ToString();
-            if (Sum is not null) v2.Sum = double.Parse(Sum.ToString()); else v2.Sum = 0.0;
+            if (Sum is not "") v2.Sum = double.Parse(Sum.ToString()); else v2.Sum = 0.0;
             return v2;
         }
     }
