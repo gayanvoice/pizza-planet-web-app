@@ -153,6 +153,51 @@ namespace web_app.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        public async Task<IActionResult> AddToBasket(int ProductId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                           .Where(c => c.Status == "ORDER" && c.AspNetUsersId == user.Id).FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        AppBasket? exisitingAppBasket = rsMssqlContext.AppBaskets
+                            .Where(b => b.CheckoutIdId == appCheckout.CheckoutId && b.ProductIdId == ProductId).FirstOrDefault();
+                        if (exisitingAppBasket is not null)
+                        {
+                            exisitingAppBasket.Quantity = exisitingAppBasket.Quantity + 1;
+                            rsMssqlContext.AppBaskets.Update(exisitingAppBasket);
+                            rsMssqlContext.SaveChanges();
+                        }
+                        else
+                        {
+                            AppBasket appBasket = new AppBasket();
+                            appBasket.Quantity = 1;
+                            appBasket.CreateTime = DateTimeOffset.Now;
+                            appBasket.ModifyTime = DateTimeOffset.Now;
+                            appBasket.Status = "ENABLE";
+                            appBasket.CheckoutIdId = appCheckout.CheckoutId;
+                            appBasket.ProductIdId = ProductId;
+                            rsMssqlContext.AppBaskets.Add(appBasket);
+                            rsMssqlContext.SaveChanges();
+                        }
+                        return RedirectToAction("Product", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Checkout", "Home");
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

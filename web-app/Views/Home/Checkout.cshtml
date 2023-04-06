@@ -75,8 +75,8 @@
                                             <small class="text-muted">@v1.Size @v1.Type</small>
                                         </div>
                                         <div>
-                                            <div class="text-muted">@v1.Quantity x @v1.Price.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</div>
-                                            <div class="text-muted">@itemCost.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</div>
+                                            <div class="text-muted">@v1.Quantity x @v1.Price.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</div>
+                                            <div class="text-muted">@itemCost.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</div>
                                         </div>
                                     </li>
                                     totalCost = totalCost + itemCost;
@@ -94,7 +94,7 @@
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
                                 <h4>Total</h4>
-                                <h4>@totalCost.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h4>
+                                <h4>@totalCost.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</h4>
                             </li>
                         </ul>
                        

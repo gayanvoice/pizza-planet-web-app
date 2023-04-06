@@ -25,9 +25,7 @@
                             foreach (var item in list)
                             {
                                 var groupKey = item.Key;
-                                <a data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-product-name="@groupKey.Name"
-                                data-bs-product-price="@groupKey.Price.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))"
-                                class="col text-decoration-none open-AddBookDialog">
+                                <a asp-controller="Home" asp-action="AddToBasket" asp-route-ProductId="@groupKey.ProductId" class="col text-decoration-none">
                                     <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg"
                                          style="background-image: url('@groupKey.ProductImageUrl'); background-size: cover">
                                         @if (Model.CheckoutBasketProcedureModelV2Enumerable is not null)
@@ -44,7 +42,8 @@
                                         }
                                       
                                         <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-                                            <h4 class="mt-5 mb-4 display-6 lh-1 fw-bold text-light">@groupKey.Name</h4>
+                                            <div class="mt-5 display-2 lh-1 text-light">@groupKey.Price.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</div>
+                                            <h4 class="mb-4 display-6 lh-1 fw-bold text-light">@groupKey.Name</h4>
                                             @foreach (var groupedItem in item)
                                             {
                                                 if (groupedItem is not null)
@@ -106,46 +105,4 @@
             User is already signed in. But no User ID. Contact Admin.
         </div>
     }
-}
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Product">
-                    <input type="text" id="ProductId" name="FirstName" hidden />
-                    <div class="mb-3 text-center">
-                        <span class="modal-product-price display-6" id="exampleModalLabel">Price</span>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <a input type="submit" class="btn btn-primary">Add</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section JS{
-    <script>
-        const exampleModal = document.getElementById('exampleModal')
-        if (exampleModal) {
-            exampleModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget
-                const productTitle = button.getAttribute('data-bs-product-name')
-                const productPrice = button.getAttribute('data-bs-product-price')
-
-                const modalTitle = exampleModal.querySelector('.modal-title')
-                const modalProductPrice = exampleModal.querySelector('.modal-product-price')
-
-                modalTitle.textContent = `Would you like to add ${productTitle}?`
-                modalProductPrice.textContent = productPrice
-            })
-        }
-    </script>
-   
 }
