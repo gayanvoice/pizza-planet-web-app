@@ -71,6 +71,43 @@ namespace web_app.Controllers
                 return View(new AccountViewModel());
             }
         }
+        public async Task<IActionResult> Invoice(string CheckoutId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    if (CheckoutId is null)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                            .Where(c => c.CheckoutId == int.Parse(CheckoutId) && c.AspNetUsersId == user.Id).FirstOrDefault();
+                        if (appCheckout is not null)
+                        {
+
+                            InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
+                            invoiceViewModel.CheckoutBasketProcedureModelV1Enumerable = HomeHelper
+                                .GetCheckoutBasketProcedureModelV1(appCheckout.CheckoutId);
+                            invoiceViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                            invoiceViewModel.AppCheckout = appCheckout;
+                            return View(invoiceViewModel);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
         public async Task<IActionResult> Checkout(string CheckoutId)
         {
             var user = await _userManager.GetUserAsync(User);
