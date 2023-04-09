@@ -2,19 +2,13 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
 using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
 using web_app.Context;
 using web_app.Helper;
 using web_app.Models;
 using web_app.Models.Procedure;
 using web_app.Models.Repository;
-using web_app.Models.View;
 using static web_app.Models.View.HomeViewModel;
 
 namespace web_app.Controllers
@@ -63,6 +57,7 @@ namespace web_app.Controllers
                     AccountViewModel account = new AccountViewModel();
                     account.AspNetUserLogin = aspNetUserLogin;
                     account.AspNetUser = AspNetUser.FromIdentityUser(user);
+                    account.AddressEnumerable = rsMssqlContext.AppAddresses.Where(s => s.AspNetUsersId == user.Id).ToList();
                     return View(account);
                 }
             }
@@ -234,7 +229,27 @@ namespace web_app.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
+        public async Task<IActionResult> Address()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                //using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                //{
+                //    IEnumerable<AppAddress?>? appAddressEnumerable = rsMssqlContext.AppAddresses.Where(s => s.AspNetUsersId == user.Id).ToList();
+                //    AccountViewModel account = new AccountViewModel();
+                //    account.AspNetUserLogin = aspNetUserLogin;
+                //    account.AspNetUser = AspNetUser.FromIdentityUser(user);
+                //    account.AddressEnumerable = rsMssqlContext.AppAddresses.Where(s => s.AspNetUsersId == user.Id).ToList();
+                //    return View(account);
+                //}
+                return View();
+            }
+            else
+            {
+                return View(new AccountViewModel());
+            }
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

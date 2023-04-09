@@ -16,6 +16,7 @@ public partial class HomeViewModel
     {
         public AspNetUser? AspNetUser { get; set; }
         public AspNetUserLogin? AspNetUserLogin { get; set; }
+        public IEnumerable<AppAddress?>? AddressEnumerable { get; set; }
     }
     public partial class CheckoutViewModel
     {

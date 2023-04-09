@@ -14,6 +14,7 @@ public partial class RsMssqlContext : DbContext
     {
     }
 
+    public virtual DbSet<AppAddress> AppAddresses { get; set; }
     public virtual DbSet<AppAlergy> AppAllergies { get; set; }
 
     public virtual DbSet<AppBasket> AppBaskets { get; set; }
@@ -73,6 +74,22 @@ public partial class RsMssqlContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AppAddress>(entity =>
+        {
+            entity.HasKey(e => e.AddressId).HasName("PK__app_addr__091C2AFB72F9216C");
+
+            entity.ToTable("app_address");
+
+            entity.Property(e => e.AspNetUsersId).HasMaxLength(450);
+            entity.Property(e => e.HouseNumber).HasMaxLength(450);
+            entity.Property(e => e.Street).HasMaxLength(450);
+            entity.Property(e => e.PostCode).HasMaxLength(20);
+            entity.Property(e => e.Country).HasMaxLength(40);
+            entity.Property(e => e.Region).HasMaxLength(40);
+            entity.Property(e => e.Longitude).HasMaxLength(20);
+            entity.Property(e => e.Latitude).HasMaxLength(20);
+        });
+
         modelBuilder.Entity<AppAlergy>(entity =>
         {
             entity.HasKey(e => e.AllergyId).HasName("PK__app_alle__A49EBE42DA86C170");

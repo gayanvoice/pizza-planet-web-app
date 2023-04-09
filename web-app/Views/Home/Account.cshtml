@@ -5,6 +5,9 @@
 @{
     ViewData["Title"] = "Profile";
 }
+@section CSS{
+    <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
+}
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
@@ -75,13 +78,13 @@
             <div class="px-3 rounded shadow-sm">
                 @if (Model.AspNetUser.Id is not null) {
                     <div class="d-flex text-body-secondary pt-3">
-                    <div class="pb-3 mb-0 small lh-sm w-100">
-                        <div class="d-flex justify-content-between">
-                            <strong class="text-gray-dark">Id</strong>
+                        <div class="pb-3 mb-0 small lh-sm w-100">
+                            <div class="d-flex justify-content-between">
+                                <strong class="text-gray-dark">Id</strong>
+                            </div>
+                                <span class="d-block">@Model.AspNetUser.Id</span>
                         </div>
-                            <span class="d-block">@Model.AspNetUser.Id</span>
                     </div>
-                </div>
                 }
                 @if (Model.AspNetUser.UserName is not null)
                 {
@@ -191,6 +194,29 @@
                     </div>
                 }
             </div>
+
+            <div class="mt-3 px-3 rounded shadow-sm">
+                <div class="d-flex text-body-secondary pt-3">
+                    <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Addresses</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex text-body-secondary pt-3">
+                    <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="d-flex justify-content-between">
+                            <strong class="text-gray-dark">Open Maps</strong>
+                        </div>
+                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-post-code="DE1 3LD" data-bs-latitude="52.926413" data-bs-longitude="-1.486821"
+                           class="col text-decoration-none open-AddBookDialog">52.926413/-1.486821</a>
+                    
+                      
+                    </div>
+                </div>
+            </div>
+
+
         </main>
         <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />
     }
@@ -200,4 +226,54 @@
             User is already signed in. But no User ID. Contact Admin.
         </div>
     }
+}
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="osm-map"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section JS{
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script>
+        const element = document.getElementById('osm-map');
+        element.style = 'height:600px';
+        const map = L.map(element);
+        const exampleModal = document.getElementById('exampleModal')
+        if (exampleModal) {
+            exampleModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget
+
+                const postCode = button.getAttribute('data-bs-post-code')
+                const latitude = button.getAttribute('data-bs-latitude')
+                const longitude = button.getAttribute('data-bs-longitude')
+
+                const modalTitle = exampleModal.querySelector('.modal-title')
+
+                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+                var target = L.latLng(latitude, longitude);
+
+                map.setView(target, 18);
+                setInterval(function () {
+                    map.invalidateSize();
+                }, 100);
+
+                L.marker(target).addTo(map);
+
+                modalTitle.textContent = postCode.concat(' ', latitude, ' ', longitude)
+            })
+        }
+    </script>
 }
