@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using web_app.Models.Repository;
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @model web_app.Models.View.HomeViewModel.AccountViewModel
@@ -199,7 +200,7 @@
                 <div class="d-flex text-body-secondary pt-3">
                     <div class="pb-3 mb-0 small lh-sm w-100">
                         <div class="d-flex justify-content-between">
-                            <strong class="text-gray-dark">Addresses</strong>
+                            <strong class="text-gray-dark">Addresses <a asp-controller="Home" asp-action="Address">Add Address</a></strong>
                         </div>
                     </div>
                 </div>
@@ -208,8 +209,23 @@
                         <div class="d-flex justify-content-between">
                             <strong class="text-gray-dark">Open Maps</strong>
                         </div>
-                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-post-code="DE1 3LD" data-bs-latitude="52.926413" data-bs-longitude="-1.486821"
-                           class="col text-decoration-none open-AddBookDialog">52.926413/-1.486821</a>
+                        @if(Model.AddressEnumerable is not null){
+                            foreach(AppAddress? appAddress in Model.AddressEnumerable)
+                            {
+                                if (appAddress is not null)
+                                {
+                                    <div>
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                       data-bs-post-code="@appAddress.PostCode"
+                                       data-bs-latitude="@appAddress.Latitude"
+                                       data-bs-longitude="@appAddress.Longitude"
+                                       class="col text-decoration-none open-AddBookDialog">@appAddress.Latitude/@appAddress.Longitude</a>
+                                       </div>
+                                }
+                            }
+                               
+                        }
+                       
                     
                       
                     </div>

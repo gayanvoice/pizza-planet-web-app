@@ -35,7 +35,7 @@ public partial class HomeViewModel
             public string? PostCode { get; set; }
             public string? Country { get; set; }
             public string? Region { get; set; }
-            public string? Logitude { get; set; }
+            public string? Longitude { get; set; }
             public string? Latitude { get; set; }
             public DateTimeOffset? CreateTime { get; set; }
             public DateTimeOffset? ModifyTime { get; set; }
@@ -59,7 +59,7 @@ public partial class HomeViewModel
                 formViewModel.PostCode = postcodeApiModel.result.postcode;
                 formViewModel.Country = postcodeApiModel.result.country;
                 formViewModel.Region = postcodeApiModel.result.region;
-                formViewModel.Logitude = postcodeApiModel.result.longitude.ToString();
+                formViewModel.Longitude = postcodeApiModel.result.longitude.ToString();
                 formViewModel.Latitude = postcodeApiModel.result.latitude.ToString();
             }
             return formViewModel;
@@ -78,7 +78,7 @@ public partial class HomeViewModel
             formViewModel.PostCode = appAddress.PostCode;
             formViewModel.Country = appAddress.Country;
             formViewModel.Region = appAddress.Region;
-            formViewModel.Logitude = appAddress.Longitude;
+            formViewModel.Longitude = appAddress.Longitude;
             formViewModel.Latitude = appAddress.Latitude;
             formViewModel.CreateTime = appAddress.CreateTime;
             formViewModel.ModifyTime = appAddress.ModifyTime;

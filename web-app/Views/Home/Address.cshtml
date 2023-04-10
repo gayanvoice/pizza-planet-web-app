@@ -33,42 +33,81 @@
 
                     <div class="col-md-7 col-lg-8 order-md-last">
                         <h4 class="mb-3">Billing address</h4>
+                       @* <form id="account" method="post" asp-controller="Home" asp-action="Address">
+                            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                            <div class="form-floating mb-3">
+                                <input asp-for="Form.HouseNumber" class="form-control" autocomplete="House Number" aria-required="true" placeholder="name@example.com" />
+                                <label asp-for="Form.HouseNumber" class="form-label">Email</label>
+                                <span asp-validation-for="Form.HouseNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                                <label asp-for="Input.Password" class="form-label">Password</label>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="checkbox mb-3">
+                                <label asp-for="Input.RememberMe" class="form-label">
+                                    <input class="form-check-input" asp-for="Input.RememberMe" />
+                                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                </label>
+                            </div>
+ 
+                        </form>*@
                         <form class="needs-validation" novalidate="" asp-controller="Home" asp-action="Address" method="post">
                             <div class="row g-3">
                                 <div class="col-12">
-                                    <label for="houseNumber" class="form-label">House Number <span class="text-body-secondary">(Optional)</span></label>
+                                    <label asp-for="Form.HouseNumber" class="form-label">House Number <span class="text-body-secondary">(Optional)</span></label>
                                     <div class="input-group has-validation">
                                         <span class="input-group-text">#</span>
-                                        <input type="text" class="form-control" id="houseNumber" placeholder="House Number" required="">
+                                        <input asp-for="Form.HouseNumber" class="form-control" autocomplete="House Number" aria-required="true" />
                                     </div>
+                                    <span asp-validation-for="Form.HouseNumber" class="form-label"></span>
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="street" class="form-label">Street <span class="text-body-secondary">(Optional)</span></label>
-                                    <input type="text" class="form-control" id="street" placeholder="Street">
+                                    <label asp-for="Form.Street" class="form-label"></label>
+                                    <div class="input-group has-validation">
+                                        <input asp-for="Form.Street" class="form-control" autocomplete="Street" aria-required="true" />
+                                    </div>
+                                    <span asp-validation-for="Form.Street" class="form-label"></span>
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="postcode" class="form-label">Postcode</label>
-                                    <input type="text" class="form-control" id="postcode" placeholder="Postcode" value="@Model.Form.PostCode" readonly>
+                                    <label asp-for="Form.PostCode" class="form-label"></label>
+                                    <div class="input-group has-validation">
+                                        <input asp-for="Form.PostCode" class="form-control" autocomplete="Post Code" aria-required="true" readonly />
+                                    </div>
+                                    <span asp-validation-for="Form.PostCode" class="form-label"></span>
                                 </div>
 
                                
                                 <div class="col-6">
-                                    <label for="region" class="form-label">Region</label>
-                                    <input type="text" class="form-control" id="region" placeholder="Region" value="@Model.Form.Region" readonly>
+                                    <label asp-for="Form.Region" class="form-label"></label>
+                                    <div class="input-group has-validation">
+                                        <input asp-for="Form.Region" class="form-control" autocomplete="Region" aria-required="true" readonly />
+                                    </div>
+                                    <span asp-validation-for="Form.Region" class="form-label"></span>
                                 </div>
                                 <div class="col-6">
-                                    <label for="country" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="country" placeholder="Country" value="@Model.Form.Country" readonly>
+                                    <label asp-for="Form.Country" class="form-label"></label>
+                                    <div class="input-group has-validation">
+                                        <input asp-for="Form.Country" class="form-control" autocomplete="Country" aria-required="true" readonly />
+                                    </div>
+                                    <span asp-validation-for="Form.Country" class="form-label"></span>
                                 </div>
                                 <div class="col-6">
-                                    <label for="latitude" class="form-label">Latitude</label>
-                                    <input type="text" class="form-control" id="latitude" placeholder="Latitude" value="@Model.Form.Latitude" readonly>
+                                    <label asp-for="Form.Latitude" class="form-label"></label>
+                                    <div class="input-group has-validation">
+                                        <input asp-for="Form.Latitude" class="form-control" autocomplete="Latitude" aria-required="true" readonly />
+                                    </div>
+                                    <span asp-validation-for="Form.Latitude" class="form-label"></span>
                                 </div>
                                 <div class="col-6">
-                                    <label for="longitude" class="form-label">Longitude</label>
-                                    <input type="text" class="form-control" id="longitude" placeholder="Longitude" value="@Model.Form.Logitude" readonly>
+                                    <label asp-for="Form.Longitude" class="form-label"></label>
+                                    <div class="input-group has-validation">
+                                        <input asp-for="Form.Longitude" class="form-control" autocomplete="Logitude" aria-required="true" readonly />
+                                    </div>
+                                    <span asp-validation-for="Form.Longitude" class="form-label"></span>
                                 </div>
                             </div>
 
@@ -96,7 +135,7 @@
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-        var target = L.latLng(@Model.Form.Latitude, @Model.Form.Logitude);
+        var target = L.latLng(@Model.Form.Latitude, @Model.Form.Longitude);
 
         map.setView(target, 18);
         setInterval(function () {

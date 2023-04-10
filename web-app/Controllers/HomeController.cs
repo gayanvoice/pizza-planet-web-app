@@ -60,7 +60,7 @@ namespace web_app.Controllers
                     AccountViewModel account = new AccountViewModel();
                     account.AspNetUserLogin = aspNetUserLogin;
                     account.AspNetUser = AspNetUser.FromIdentityUser(user);
-                    account.AddressEnumerable = rsMssqlContext.AppAddresses.Where(s => s.AspNetUsersId == user.Id).ToList();
+                    account.AddressEnumerable = rsMssqlContext.AppAddresses.Where(s => s.AspNetUsersId != null && s.AspNetUsersId == user.Id).ToList();
                     return View(account);
                 }
             }
@@ -274,9 +274,31 @@ namespace web_app.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Address(AddressViewModel.FormViewModel formViewModel)
+        public async Task<IActionResult> Address(AddressViewModel addressViewModel)
         {
-            return RedirectToAction("Account", "Home", new { PostCode = formViewModel.PostCode });
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AspNetUser aspNetUser = AspNetUser.FromIdentityUser(user);
+                    AppAddress appAddress = new AppAddress();
+                    appAddress.AspNetUsersId = aspNetUser.Id;
+                    appAddress.HouseNumber = addressViewModel.Form.HouseNumber;
+                    appAddress.Street = addressViewModel.Form.Street;
+                    appAddress.PostCode = addressViewModel.Form.PostCode;
+                    appAddress.Country = addressViewModel.Form.Country;
+                    appAddress.Region = addressViewModel.Form.Region;
+                    appAddress.Longitude = addressViewModel.Form.Longitude;
+                    appAddress.Latitude = addressViewModel.Form.Latitude;
+                    appAddress.ModifyTime = DateTimeOffset.Now;
+                    appAddress.CreateTime = DateTimeOffset.Now;
+                    rsMssqlContext.AppAddresses.Add(appAddress);
+                    rsMssqlContext.SaveChanges();
+                }
+            }
+            return RedirectToAction("Account", "Home");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
