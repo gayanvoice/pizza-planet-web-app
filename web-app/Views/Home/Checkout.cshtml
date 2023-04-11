@@ -12,10 +12,16 @@
     ViewData["Title"] = "Checkout";
 }
 @section CSS {
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
     <style>
         .bi {
             vertical-align: -.125em;
             fill: white;
+        }
+
+        .map {
+            width: 100%;
+            height: 400px;
         }
     </style>
 
@@ -101,9 +107,7 @@
 
                         <form class="card p-2">
                             <div class="input-group">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-secondary">Collection</button>
-                                </div>
+                                <div id="map" class="map"></div>
                             </div>
                         </form>
                     </div>
@@ -118,4 +122,75 @@
             User is already signed in. But no User ID. Contact Admin.
         </div>
     }
+}
+@section JS {
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <script>
+        var layers = [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            new ol.layer.Tile({
+                extent: [-13884991, 2870341, -7455066, 6338219],
+                source: new ol.source.TileWMS({
+                    url: 'https://ahocevar.com/geoserver/wms',
+                    params: { 'LAYERS': 'topp:states', 'TILED': true },
+                    serverType: 'geoserver',
+                    // Countries have transparency, so do not fade tiles:
+                    transition: 0
+                })
+            })
+        ];
+        var map = new ol.Map({
+            layers: layers,
+            target: 'map',
+            view: new ol.View({
+                center: [0, 0],
+                zoom: 2
+            })
+        });
+
+        const coordinates = [
+            [-1.486821, 52.926413],
+            [-1.495123, 52.925369],
+        ];
+
+        fetch(
+            'https://router.project-osrm.org/route/v1/driving/' +
+            coordinates.join(';') +
+            '?overview=full&geometries=polyline6'
+        ).then(function (response) {
+            response.json().then(function (result) {
+                const polyline = result.routes[0].geometry;
+
+                const route = new Polyline({
+                    factor: 1e6,
+                }).readGeometry(polyline, {
+                    dataProjection: 'EPSG:4326',
+                    featureProjection: map.getView().getProjection(),
+                });
+                const routeFeature = new Feature({
+                    type: 'route',
+                    geometry: route,
+                });
+
+                const vectorLayer = new VectorLayer({
+                    source: new VectorSource({
+                        features: [routeFeature],
+                    }),
+                    style: new Style({
+                        stroke: new Stroke({
+                            width: 4,
+                            color: 'red',
+                        }),
+                    }),
+                });
+
+                map.addLayer(vectorLayer);
+                map.getView().fit(routeFeature.getGeometry());
+            });
+        });
+    </script>
+
 }
