@@ -203,13 +203,16 @@
                     {
                         if (appAddress is not null)
                         {
-                            <div data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   data-bs-post-code="@appAddress.PostCode"
-                                   data-bs-latitude="@appAddress.Latitude"
-                                   data-bs-longitude="@appAddress.Longitude"
-                                 class="d-flex text-body-secondary pt-3 open-AddBookDialog" style="cursor: pointer;">
-                                <svg class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 32x32" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#007bff"></rect><text x="50%" y="50%" fill="#007bff" dy=".3em">32x32</text></svg>
-                                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                            <div 
+                                 class="d-flex text-body-secondary pt-3">
+                                <img data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-address-id="@appAddress.AddressId" data-bs-post-code="@appAddress.PostCode"
+                                     src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                                     style="cursor: pointer;" />
+                                <div class="pb-3 mb-0 small lh-sm border-bottom w-100 open-AddBookDialog"
+                                     data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                     data-bs-post-code="@appAddress.PostCode"
+                                     data-bs-latitude="@appAddress.Latitude"
+                                     data-bs-longitude="@appAddress.Longitude" style="cursor: pointer;">
                                     <div class="d-flex justify-content-between">
                                         <strong class="text-gray-dark">@appAddress.PostCode</strong>
                                         <span>@appAddress.Latitude ° N, @appAddress.Longitude ° W</span>
@@ -239,6 +242,25 @@
 }
 
 
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-controller="Home" asp-action="DeleteAddress" method="get">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="deleteModalLabel">Title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="h6">Are you sure want to delete this postcode from account?</div>
+                <input type="text" class="form-control" name="Id" hidden>
+            </div>
+            <div class="modal-footer">
+                    <button class="btn btn-danger" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" type="submit">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
@@ -283,6 +305,23 @@
                 L.marker(target).addTo(map);
 
                 modalTitle.textContent = postCode.concat(' ', latitude, ' ', longitude)
+            })
+        }
+    </script>
+    <script>
+        const deleteModal = document.getElementById('deleteModal')
+        if (deleteModal) {
+            deleteModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget
+
+                const addressId = button.getAttribute('data-bs-address-id')
+                const postCode = button.getAttribute('data-bs-post-code')
+
+                const modalTitle = deleteModal.querySelector('.modal-title')
+                const modalBodyInput = deleteModal.querySelector('.modal-body input')
+
+                modalTitle.textContent = 'Delete '.concat(postCode)
+                modalBodyInput.value = addressId
             })
         }
     </script>

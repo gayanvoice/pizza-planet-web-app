@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Diagnostics;
 using System.Net;
@@ -295,6 +296,23 @@ namespace web_app.Controllers
                     appAddress.ModifyTime = DateTimeOffset.Now;
                     appAddress.CreateTime = DateTimeOffset.Now;
                     rsMssqlContext.AppAddresses.Add(appAddress);
+                    rsMssqlContext.SaveChanges();
+                }
+            }
+            return RedirectToAction("Account", "Home");
+        }
+        [HttpGet]
+        public async Task<IActionResult> DeleteAddress(int id)
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AspNetUser aspNetUser = AspNetUser.FromIdentityUser(user);
+                    AppAddress appAddress = rsMssqlContext.AppAddresses.Where(a => a.AddressId == id).First();
+                    rsMssqlContext.AppAddresses.Remove(appAddress);
                     rsMssqlContext.SaveChanges();
                 }
             }
