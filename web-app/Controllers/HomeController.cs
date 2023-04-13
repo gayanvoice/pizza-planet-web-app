@@ -142,7 +142,7 @@ namespace web_app.Controllers
                         {
                            
                             CheckoutViewModel checkoutViewModel = new CheckoutViewModel();
-                            checkoutViewModel.CheckoutBasketProcedureModelV1Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV1(appCheckout.CheckoutId);
+                            checkoutViewModel.CheckoutBasketProcedureModelV2Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV2(appCheckout.CheckoutId);
                             checkoutViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
                             return View(checkoutViewModel);
                         }
@@ -322,6 +322,79 @@ namespace web_app.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public async Task<IActionResult> AddToCheckout(int ProductId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                           .Where(c => c.Status == "ORDER" && c.AspNetUsersId == user.Id).FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        AppBasket? exisitingAppBasket = rsMssqlContext.AppBaskets
+                            .Where(b => b.CheckoutIdId == appCheckout.CheckoutId && b.ProductIdId == ProductId).FirstOrDefault();
+                        if (exisitingAppBasket is not null)
+                        {
+                            exisitingAppBasket.Quantity = exisitingAppBasket.Quantity + 1;
+                            rsMssqlContext.AppBaskets.Update(exisitingAppBasket);
+                            rsMssqlContext.SaveChanges();
+                        }
+                        return RedirectToAction("Checkout", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Checkout", "Home");
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
+        public async Task<IActionResult> RemoveFromCheckout(int ProductId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                           .Where(c => c.Status == "ORDER" && c.AspNetUsersId == user.Id).FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        AppBasket? exisitingAppBasket = rsMssqlContext.AppBaskets
+                            .Where(b => b.CheckoutIdId == appCheckout.CheckoutId && b.ProductIdId == ProductId).FirstOrDefault();
+                        if (exisitingAppBasket is not null)
+                        {
+                            if (exisitingAppBasket.Quantity > 1)
+                            {
+                                exisitingAppBasket.Quantity = exisitingAppBasket.Quantity - 1;
+                                rsMssqlContext.AppBaskets.Update(exisitingAppBasket);
+                                rsMssqlContext.SaveChanges();
+                            }
+                            else
+                            {
+                                rsMssqlContext.AppBaskets.Remove(exisitingAppBasket);
+                                rsMssqlContext.SaveChanges();
+                            }
+                          
+                        }
+                        return RedirectToAction("Checkout", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Checkout", "Home");
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }

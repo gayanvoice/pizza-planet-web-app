@@ -40,8 +40,8 @@
     {
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
         <div class="container">
-            @if (Model.CheckoutBasketProcedureModelV1Enumerable is not null &&
-           Model.CheckoutBasketProcedureModelV1Enumerable.Count() == 0)
+            @if (Model.CheckoutBasketProcedureModelV2Enumerable is not null &&
+           Model.CheckoutBasketProcedureModelV2Enumerable.Count() == 0)
             {
                 <div class="bd-example m-3">
                     <p class="lead">
@@ -60,33 +60,35 @@
             }
             else
             {
-                if (Model.CheckoutBasketProcedureModelV1Enumerable is not null)
+                if (Model.CheckoutBasketProcedureModelV2Enumerable is not null)
                 {
                     double totalCost = 0.0;
-                    double totalUnits = Model.CheckoutBasketProcedureModelV1Enumerable.Sum(b => b.Quantity);
+                    double totalUnits = Model.CheckoutBasketProcedureModelV2Enumerable.Sum(b => b.Quantity);
                     <div class="col-md-12 order-md-2 my-5">
                         <h4 class="d-flex justify-content-between align-items-center mb-3">
                             <span class="text-primary">Your cart</span>
                             <span class="badge bg-primary rounded-pill">@totalUnits</span>
                         </h4>
                         <ul class="list-group mb-3">
-                            @foreach (CheckoutBasketProcedureModel.V1? v1 in Model.CheckoutBasketProcedureModelV1Enumerable)
+                            @foreach (CheckoutBasketProcedureModel.V2? v2 in Model.CheckoutBasketProcedureModelV2Enumerable)
                             {
-                                if (v1 is not null)
+                                if (v2 is not null)
                                 {
-                                    double itemCost = v1.Quantity * v1.Price;
-                                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                    double itemCost = v2.Quantity * v2.Price;
+                                    <li data-bs-toggle="modal" data-bs-target="#basketModal" data-bs-checkout-id="@v2.CheckoutId"
+                                        data-bs-product-id="@v2.ProductId" data-bs-product-name="@v2.Name"
+                                        class="list-group-item d-flex justify-content-between lh-condensed" style="cursor: pointer;">
                                         <div>
-                                            <h6 class="my-0">@v1.Quantity x @v1.Name</h6>
-                                            <small class="text-muted">@v1.Size @v1.Type</small>
+                                            <h6 class="my-0">@v2.Quantity x @v2.Name</h6>
+                                            <small class="text-muted">@v2.Size @v2.Type</small>
                                         </div>
                                         <div>
-                                            <div class="text-muted">@v1.Quantity x @v1.Price.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</div>
+                                            <div class="text-muted">@v2.Quantity x @v2.Price.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</div>
                                             <div class="text-muted">@itemCost.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</div>
                                         </div>
                                     </li>
                                     totalCost = totalCost + itemCost;
-                                    totalUnits = totalUnits + v1.Quantity;
+                                    totalUnits = totalUnits + v2.Quantity;
                                 }
                             }
                             <li class="list-group-item text-center">
@@ -103,14 +105,6 @@
                                 <h4>@totalCost.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))</h4>
                             </li>
                         </ul>
-                       
-
-                        <form class="card p-2">
-                            <div class="input-group">
-                                <iframe src="https://pizza-planet-map-app.azurewebsites.net/Map/-1.486821/52.926413" height="200" width="300" title="Iframe Example"></iframe>
-                                @*<div id="map" class="map"></div>*@
-                            </div>
-                        </form>
                     </div>
                 }
             }
@@ -124,74 +118,47 @@
         </div>
     }
 }
-@section JS {
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+<div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-controller="Home" asp-action="DeleteAddress" method="get">
+                <div class="modal-header">
+                    <div class="modal-title display-6" id="deleteModalLabel">Title</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex gap-2 justify-content-center">
+                        <a href="#" class="btn rounded-circle p-3 lh-1 modal-link-minus">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2569/2569198.png" class="bi" width="128" height="128" />
+                        </a>
+                        <a href="#" class="btn rounded-circle p-3 lh-1 modal-link-plus">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png" class="bi" width="128" height="128" />
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section JS{
     <script>
-        var layers = [
-            new ol.layer.Tile({
-                source: new ol.source.OSM()
-            }),
-            new ol.layer.Tile({
-                extent: [-13884991, 2870341, -7455066, 6338219],
-                source: new ol.source.TileWMS({
-                    url: 'https://ahocevar.com/geoserver/wms',
-                    params: { 'LAYERS': 'topp:states', 'TILED': true },
-                    serverType: 'geoserver',
-                    // Countries have transparency, so do not fade tiles:
-                    transition: 0
-                })
+        const basketModal = document.getElementById('basketModal')
+        if (basketModal) {
+            basketModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget
+
+                const checkoutId = button.getAttribute('data-bs-checkout-id')
+                const productId = button.getAttribute('data-bs-product-id')
+                const productName = button.getAttribute('data-bs-product-name')
+
+                const modalTitle = basketModal.querySelector('.modal-title')
+                const modalLinkMinus = basketModal.querySelector('.modal-link-minus')
+                const modalLinkPlus = basketModal.querySelector('.modal-link-plus')
+
+                modalLinkMinus.setAttribute('href', '/Home/RemoveFromCheckout'.concat('?ProductId=', productId))
+                modalLinkPlus.setAttribute('href', '/Home/AddToCheckout'.concat('?ProductId=', productId))
+                modalTitle.textContent = 'Edit '.concat(productName)
             })
-        ];
-        var map = new ol.Map({
-            layers: layers,
-            target: 'map',
-            view: new ol.View({
-                center: [0, 0],
-                zoom: 2
-            })
-        });
-
-        const coordinates = [
-            [-1.486821, 52.926413],
-            [-1.495123, 52.925369],
-        ];
-
-        fetch(
-            'https://router.project-osrm.org/route/v1/driving/' +
-            coordinates.join(';') +
-            '?overview=full&geometries=polyline6'
-        ).then(function (response) {
-            response.json().then(function (result) {
-                const polyline = result.routes[0].geometry;
-
-                const route = new Polyline({
-                    factor: 1e6,
-                }).readGeometry(polyline, {
-                    dataProjection: 'EPSG:4326',
-                    featureProjection: map.getView().getProjection(),
-                });
-                const routeFeature = new Feature({
-                    type: 'route',
-                    geometry: route,
-                });
-
-                const vectorLayer = new VectorLayer({
-                    source: new VectorSource({
-                        features: [routeFeature],
-                    }),
-                    style: new Style({
-                        stroke: new Stroke({
-                            width: 4,
-                            color: 'red',
-                        }),
-                    }),
-                });
-
-                map.addLayer(vectorLayer);
-                map.getView().fit(routeFeature.getGeometry());
-            });
-        });
+        }
     </script>
-
 }
