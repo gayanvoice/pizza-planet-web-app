@@ -122,6 +122,7 @@ namespace web_app.Controllers
                         newAppCheckout.CreateTime = DateTime.Now;
                         newAppCheckout.ModifyTime = DateTime.Now;
                         newAppCheckout.Status = "ORDER";
+                        newAppCheckout.DeliveryMethod = "DELIVERY";
                         newAppCheckout.AspNetUsersId = user.Id;
                         rsMssqlContext.AppCheckouts.Add(newAppCheckout);
                         rsMssqlContext.SaveChanges();
@@ -300,6 +301,47 @@ namespace web_app.Controllers
                 }
             }
             return RedirectToAction("Account", "Home");
+        }
+        public async Task<IActionResult> Order()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    OrderViewModel orderViewModel = new OrderViewModel();
+                    orderViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                    orderViewModel.AppCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                    return View(orderViewModel);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        public async Task<IActionResult> OrderMethod(string deliveryType)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        appCheckout.DeliveryMethod = deliveryType;
+                        rsMssqlContext.AppCheckouts.Update(appCheckout);
+                        rsMssqlContext.SaveChanges();
+                        return RedirectToAction("Order", "Home");
+                    }
+                    return RedirectToAction("Checkout", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         public async Task<IActionResult> Delivery()
         {

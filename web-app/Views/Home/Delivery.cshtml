@@ -21,73 +21,6 @@
                         <div class="card">
                             <div class="card-body p-4">
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card p-3 mb-3">
-                                            <div class="row">
-                                                <div class="col-lg-4 h5 mb-3">
-                                                    Select delivery method
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <div class="card">
-                                                        <div class="card-body p-4">
-                                                            <div class="row">
-                                                                <div class="col-lg-12 text-center">
-                                                                    <a asp-controller="Home" asp-action="AddAddressToCheckout" asp-route-DeliveryType="Pickup"
-                                                                       class="btn rounded-circle lh-1 modal-link-plus">
-                                                                        <img src="https://cdn-icons-png.flaticon.com/512/1888/1888960.png" class="bi" width="128" height="128" />
-                                                                    </a>
-                                                                    <div class="h5">
-                                                                        Dine
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="card">
-                                                        <div class="card-body p-4">
-                                                            <div class="row">
-                                                                <div class="col-lg-12 text-center">
-                                                                    <a asp-controller="Home" asp-action="AddAddressToCheckout" asp-route-DeliveryType="Pickup"
-                                                                       class="btn rounded-circle lh-1 modal-link-plus">
-                                                                        <img src="https://cdn-icons-png.flaticon.com/512/869/869432.png" class="bi" width="128" height="128" />
-                                                                    </a>
-                                                                    <div class="h5">
-                                                                        Pick
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="card">
-                                                        <div class="card-body p-4">
-                                                            <div class="row">
-                                                                <div class="col-lg-12 text-center">
-                                                                    <a asp-controller="Home" asp-action="AddAddressToCheckout" asp-route-DeliveryType="Pickup"
-                                                                       class="btn rounded-circle lh-1 modal-link-plus">
-                                                                        <img src="https://cdn-icons-png.flaticon.com/512/3063/3063822.png" class="bi" width="128" height="128" />
-                                                                    </a>
-                                                                    <div class="h5">
-                                                                        Delivery
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-                                <div class="row">
 
                                     <div class="col-lg-12">
                                         @if (Model.AppAddressIEnumerable is not null &&
@@ -144,7 +77,7 @@
                                                                     <div class="d-flex flex-row align-items-center">
                                                                         <div>
                                                                             <a asp-controller="Home" asp-action="AddAddressToCheckout" asp-route-AddressId="@appAddress.AddressId"
-                                                                               class="btn rounded-circle lh-1 modal-link-plus">
+                                                                               class="rounded-circle lh-1 modal-link-plus">
                                                                                 <img src="https://cdn-icons-png.flaticon.com/512/4315/4315609.png" class="bi" width="32" height="32" />
                                                                             </a>
 

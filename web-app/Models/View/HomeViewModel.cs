@@ -111,4 +111,9 @@ public partial class HomeViewModel
         public AppCheckout? AppCheckout { get; set; }
         public IEnumerable<AppAddress?>? AppAddressIEnumerable { get; set; }
     }
+    public partial class OrderViewModel
+    {
+        public AspNetUser? AspNetUser { get; set; }
+        public AppCheckout? AppCheckout { get; set; }
+    }
 }
