@@ -57,5 +57,15 @@ namespace web_app.Helper
             }
             return list;
         }
+        public static List<CheckoutBasketProcedureModel.V3?>? GetCheckoutBasketProcedureModelV3(int checkoutId)
+        {
+            List<CheckoutBasketProcedureModel.V3?>? list = new List<CheckoutBasketProcedureModel.V3?>();
+            foreach (DataRow dataRow in SqlProcedureHelper
+                .GetDataTable("web_app_checkout_basket_v3", new SqlParameter("@CheckoutId", checkoutId)).Rows)
+            {
+                list.Add(CheckoutBasketProcedureModel.V3.FromDataTable(dataRow));
+            }
+            return list;
+        }
     }
 }

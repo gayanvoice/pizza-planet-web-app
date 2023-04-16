@@ -107,49 +107,32 @@ namespace web_app.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-        public async Task<IActionResult> Checkout(string CheckoutId)
+        public async Task<IActionResult> Checkout()
         {
             var user = await _userManager.GetUserAsync(User);
             if (user is not null)
             {
                 using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                 {
-                    if (CheckoutId is null)
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                           .Where(c => (c.AspNetUsersId == user.Id) && (c.Status == "ORDER")).FirstOrDefault();
+                    if (appCheckout is null)
                     {
-                        AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
-                            .Where(c => (c.AspNetUsersId == user.Id) && (c.Status == "ORDER")).FirstOrDefault();
-                        if (appCheckout is null)
-                        {
-                            AppCheckout newAppCheckout = new AppCheckout();
-                            newAppCheckout.CreateTime = DateTime.Now;
-                            newAppCheckout.ModifyTime = DateTime.Now;
-                            newAppCheckout.Status = "ORDER";
-                            newAppCheckout.AspNetUsersId = user.Id;
-                            rsMssqlContext.AppCheckouts.Add(newAppCheckout);
-                            rsMssqlContext.SaveChanges();
-                            return RedirectToAction("Checkout");
-                        }
-                        else
-                        {
-                            return RedirectToAction("Checkout", new { CheckoutId = appCheckout.CheckoutId });
-                        }
+                        AppCheckout newAppCheckout = new AppCheckout();
+                        newAppCheckout.CreateTime = DateTime.Now;
+                        newAppCheckout.ModifyTime = DateTime.Now;
+                        newAppCheckout.Status = "ORDER";
+                        newAppCheckout.AspNetUsersId = user.Id;
+                        rsMssqlContext.AppCheckouts.Add(newAppCheckout);
+                        rsMssqlContext.SaveChanges();
+                        return RedirectToAction("Checkout");
                     }
                     else
                     {
-                        AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
-                            .Where(c => c.CheckoutId == int.Parse(CheckoutId) && c.AspNetUsersId == user.Id).FirstOrDefault();
-                        if (appCheckout is not null)
-                        {
-                           
-                            CheckoutViewModel checkoutViewModel = new CheckoutViewModel();
-                            checkoutViewModel.CheckoutBasketProcedureModelV2Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV2(appCheckout.CheckoutId);
-                            checkoutViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
-                            return View(checkoutViewModel);
-                        }
-                        else
-                        {
-                            return RedirectToAction("Index", "Home");
-                        }
+                        CheckoutViewModel checkoutViewModel = new CheckoutViewModel();
+                        checkoutViewModel.CheckoutBasketProcedureModelV3Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV3(appCheckout.CheckoutId);
+                        checkoutViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                        return View(checkoutViewModel);
                     }
                 }
             }
@@ -317,6 +300,24 @@ namespace web_app.Controllers
                 }
             }
             return RedirectToAction("Account", "Home");
+        }
+        public async Task<IActionResult> Delivery()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    DeliveryViewModel deliveryViewModel = new DeliveryViewModel();
+                    deliveryViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                    deliveryViewModel.AppAddressIEnumerable = rsMssqlContext.AppAddresses.Where(a => a.AspNetUsersId == user.Id).ToList();
+                    return View(deliveryViewModel);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

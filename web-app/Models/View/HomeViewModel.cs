@@ -88,7 +88,7 @@ public partial class HomeViewModel
     public partial class CheckoutViewModel
     {
         public AspNetUser? AspNetUser { get; set; }
-        public IEnumerable<CheckoutBasketProcedureModel.V2?>? CheckoutBasketProcedureModelV2Enumerable { get; set; }
+        public IEnumerable<CheckoutBasketProcedureModel.V3?>? CheckoutBasketProcedureModelV3Enumerable { get; set; }
     }
     public partial class InvoiceViewModel
     {
@@ -103,5 +103,12 @@ public partial class HomeViewModel
         public IEnumerable<ProductAllergyProcedureModel.V2?>? ProductAllergyProcedureModelV2Enumerable { get; set; }
         public IEnumerable<ProductContentProcedureModel.V1?>? ProductContentProcedureModelV1Enumerable { get; set; }
         public IEnumerable<CheckoutBasketProcedureModel.V2?>? CheckoutBasketProcedureModelV2Enumerable { get; set; }
+    }
+
+    public partial class DeliveryViewModel
+    {
+        public AspNetUser? AspNetUser { get; set; }
+        public AppCheckout? AppCheckout { get; set; }
+        public IEnumerable<AppAddress?>? AppAddressIEnumerable { get; set; }
     }
 }

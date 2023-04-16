@@ -13,6 +13,11 @@
                          height="64" /></a>
                 <div class="d-flex">
                     <a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
+               asp-controller="Home" asp-action="Checkout">
+                        Checkout
+                    </a>
+                    <span class="m-3"></span>
+                    <a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
                     asp-controller="Home" asp-action="Account">
                         @Model.AspNetUser.Email
                     </a>
@@ -21,7 +26,7 @@
                     asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
                        Sign Out
                     </a>
-                  
+                    <span class="m-3"></span>
                 </div>
             </div>
         </nav>

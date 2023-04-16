@@ -70,4 +70,40 @@ public partial class CheckoutBasketProcedureModel
             return v2;
         }
     }
+    public partial class V3
+    {
+        public int CheckoutId { get; set; }
+        public string? Name { get; set; }
+        public int Quantity { get; set; }
+        public int ProductId { get; set; }
+        public double Price { get; set; }
+        public int Kcal { get; set; }
+        public string? Size { get; set; }
+        public string? Type { get; set; }
+        public string? ImageUrl { get; set; }
+        public DateTimeOffset ModifyTime { get; set; }
+        public static V3 FromDataTable(DataRow dataRow)
+        {
+            V3 v3 = new V3();
+            string? CheckoutId = dataRow["CheckoutId_id"].ToString();
+            string? Quantity = dataRow["Quantity"].ToString();
+            string? ProductId = dataRow["ProductId"].ToString();
+            string? Price = dataRow["Price"].ToString();
+            string? Kcal = dataRow["Kcal"].ToString();
+            string? ImageUrl = dataRow["ImageUrl"].ToString();
+            string? ModifyTime = dataRow["ModifyTime"].ToString();
+
+            if (CheckoutId is not null) v3.CheckoutId = int.Parse(CheckoutId); else v3.CheckoutId = 0;
+            v3.Name = dataRow["Name"].ToString();
+            if (Quantity is not null) v3.Quantity = int.Parse(Quantity); else v3.Quantity = 0;
+            if (ProductId is not null) v3.ProductId = int.Parse(ProductId); else v3.ProductId = 0;
+            if (Price is not null) v3.Price = double.Parse(Price); else v3.Price = 0.0;
+            if (Kcal is not null) v3.Kcal = int.Parse(Kcal); else v3.Kcal = 0;
+            v3.Size = dataRow["Size"].ToString();
+            v3.Type = dataRow["Type"].ToString();
+            v3.ImageUrl = dataRow["ImageUrl"].ToString();
+            if (ModifyTime is not null) v3.ModifyTime = DateTimeOffset.Parse(ModifyTime); else v3.ModifyTime = DateTimeOffset.UtcNow;
+            return v3;
+        }
+    }
 }
