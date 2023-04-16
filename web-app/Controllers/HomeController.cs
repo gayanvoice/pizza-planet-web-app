@@ -343,6 +343,29 @@ namespace web_app.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+        public async Task<IActionResult> DeliveryAddress(int addressId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        appCheckout.AddressId = addressId;
+                        rsMssqlContext.AppCheckouts.Update(appCheckout);
+                        rsMssqlContext.SaveChanges();
+                        return RedirectToAction("Delivery", "Home");
+                    }
+                    return RedirectToAction("Checkout", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
         public async Task<IActionResult> Delivery()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -352,6 +375,7 @@ namespace web_app.Controllers
                 {
                     DeliveryViewModel deliveryViewModel = new DeliveryViewModel();
                     deliveryViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                    deliveryViewModel.AppCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
                     deliveryViewModel.AppAddressIEnumerable = rsMssqlContext.AppAddresses.Where(a => a.AspNetUsersId == user.Id).ToList();
                     return View(deliveryViewModel);
                 }

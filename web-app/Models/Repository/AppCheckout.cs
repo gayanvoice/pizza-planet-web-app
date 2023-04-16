@@ -17,6 +17,7 @@ public partial class AppCheckout
     public string? AspNetUsersId { get; set; }
 
     public int? AuthUserId { get; set; }
+    public int? AddressId { get; set; }
 
     public virtual ICollection<AppBasket> AppBaskets { get; } = new List<AppBasket>();
 
