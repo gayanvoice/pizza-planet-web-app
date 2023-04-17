@@ -96,6 +96,12 @@ public partial class HomeViewModel
         public AppCheckout? AppCheckout { get; set; }
         public IEnumerable<CheckoutBasketProcedureModel.V1?>? CheckoutBasketProcedureModelV1Enumerable { get; set; }
     }
+    public partial class ProcessViewModel
+    {
+        public AspNetUser? AspNetUser { get; set; }
+        public AppCheckout? AppCheckout { get; set; }
+        public IEnumerable<CheckoutBasketProcedureModel.V4?>? CheckoutBasketProcedureModelV4Enumerable { get; set; }
+    }
     public partial class ProductViewModel
     {
         public AspNetUser? AspNetUser { get; set; }
@@ -115,5 +121,18 @@ public partial class HomeViewModel
     {
         public AspNetUser? AspNetUser { get; set; }
         public AppCheckout? AppCheckout { get; set; }
+    }
+
+    public partial class PaymentViewModel
+    {
+        public AspNetUser? AspNetUser { get; set; }
+        public AppCheckout? AppCheckout { get; set; }
+        public FormViewModel? Form { get; set; }
+
+        public class FormViewModel
+        {
+            public string? PaymentMethod { get; set; }
+            public string? Comment { get; set; }
+        }
     }
 }

@@ -7,7 +7,7 @@ public partial class AppPayment
 {
     public int PaymentId { get; set; }
 
-    public string Type { get; set; } = null!;
+    public string? Type { get; set; } = null!;
 
     public string? Comment { get; set; }
 

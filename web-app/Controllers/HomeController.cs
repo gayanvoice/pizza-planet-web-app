@@ -107,6 +107,42 @@ namespace web_app.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        public async Task<IActionResult> Process(string CheckoutId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    if (CheckoutId is null)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        AppCheckout? appCheckout = rsMssqlContext.AppCheckouts
+                            .Where(c => c.CheckoutId == int.Parse(CheckoutId) && c.AspNetUsersId == user.Id).FirstOrDefault();
+                        if (appCheckout is not null)
+                        {
+
+                            ProcessViewModel processViewModel = new ProcessViewModel();
+                            processViewModel.CheckoutBasketProcedureModelV4Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV4(appCheckout.CheckoutId);
+                            processViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                            processViewModel.AppCheckout = appCheckout;
+                            return View(processViewModel);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+        }
         public async Task<IActionResult> Checkout()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -198,7 +234,7 @@ namespace web_app.Controllers
                             appBasket.Quantity = 1;
                             appBasket.CreateTime = DateTimeOffset.Now;
                             appBasket.ModifyTime = DateTimeOffset.Now;
-                            appBasket.Status = "ENABLE";
+                            appBasket.Status = "PROCESS";
                             appBasket.CheckoutIdId = appCheckout.CheckoutId;
                             appBasket.ProductIdId = ProductId;
                             rsMssqlContext.AppBaskets.Add(appBasket);
@@ -384,6 +420,62 @@ namespace web_app.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
+        }
+        public async Task<IActionResult> Payment()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    PaymentViewModel paymentViewModel = new PaymentViewModel();
+                    paymentViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                    paymentViewModel.AppCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                    return View(paymentViewModel);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Error", "Home");
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> ProcessPayment(PaymentViewModel paymentViewModel)
+        {
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user is not null)
+            {
+                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                {
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        IEnumerable<CheckoutBasketProcedureModel.V2?>? v2 = HomeHelper.GetCheckoutBasketProcedureModelV2(appCheckout.CheckoutId);
+                        if (v2 is not null)
+                        {
+                            AspNetUser aspNetUser = AspNetUser.FromIdentityUser(user);
+                            AppPayment appPayment = new AppPayment();
+                            appPayment.CheckoutIdId = appCheckout.CheckoutId;
+                            appPayment.Type = paymentViewModel.Form.PaymentMethod;
+                            appPayment.Comment = paymentViewModel.Form.Comment;
+                            appPayment.TotalAmount = v2.Sum(v2 => v2.Quantity * v2.Price);
+                            appPayment.RemainingAmount = v2.Sum(v2 => v2.Quantity * v2.Price);
+                            appPayment.ModifyTime = DateTimeOffset.Now;
+                            appPayment.CreateTime = DateTimeOffset.Now;
+                            appPayment.Status = "ENABLE";
+                            rsMssqlContext.AppPayments.Add(appPayment);
+                            appCheckout.Status = "PROCESS";
+                            rsMssqlContext.AppCheckouts.Update(appCheckout);
+                            rsMssqlContext.SaveChanges();
+                            return RedirectToAction("Invoice", "Home", new { CheckoutId = appCheckout.CheckoutId });
+                        }
+                        
+                    }
+                    
+                }
+            }
+            return RedirectToAction("Account", "Home");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

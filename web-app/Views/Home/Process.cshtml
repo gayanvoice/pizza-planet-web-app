@@ -1,0 +1,119 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Globalization;
+@using web_app.Helper;
+@using web_app.Models.Procedure;
+@using web_app.Models.Repository;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@model web_app.Models.View.HomeViewModel.ProcessViewModel
+
+@{
+    if (Model is not null && Model.AppCheckout is not null)
+    {
+        ViewData["Title"] = "Process - " + Model.AppCheckout.CheckoutId;
+    }
+    else
+    {
+        ViewData["Title"] = "Process - #Error: CheckoutId is NULL";
+    }
+}
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
+    {
+        <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
+        @if (Model.AppCheckout is not null)
+        {
+            <main class="container">
+                <div class="d-flex align-items-center p-3 my-3 rounded border">
+                    <div class="lh-1">
+                        <h1 class="h6 mb-0 lh-1">Checkout ID <span class="text-muted">@Model.AppCheckout.CheckoutId</span></h1>
+                        <small>Last updated @Time.ToRelativeDate(Model.AppCheckout.ModifyTime)</small>
+                    </div>
+                </div>
+                @if (Model.CheckoutBasketProcedureModelV4Enumerable is not null)
+                {
+                    var totalProgress = 0;
+                    var totalItems = Model.CheckoutBasketProcedureModelV4Enumerable.Count();
+                  
+                    <div class="my-3 p-3 bg-body rounded border">
+                        <h6 class="border-bottom pb-2 mb-0">Items</h6>
+                        @foreach (CheckoutBasketProcedureModel.V4? v4 in Model.CheckoutBasketProcedureModelV4Enumerable)
+                        {
+                            if (v4 is not null)
+                            {
+                                var itemProgress = 100;
+                                if (Model.AppCheckout.Status.Equals("COMPLETE"))
+                                {
+                                    itemProgress = 100;
+                                }
+                                else
+                                {
+                                    if (v4.Status is not null)
+                                    {
+                                        if (v4.Status.Equals("PROCESS"))
+                                        {
+                                            itemProgress = 25;
+                                        }
+                                        else if (v4.Status.Equals("MAKE"))
+                                        {
+                                            itemProgress = 50;
+                                        }
+                                        else if (v4.Status.Equals("PACK"))
+                                        {
+                                            itemProgress = 75;
+                                        }
+                                        else if (v4.Status.Equals("OK"))
+                                        {
+                                            itemProgress = 100;
+                                        }
+                                        else
+                                        {
+                                            itemProgress = 0;
+                                        }
+                                    }
+                                }
+                                totalProgress = totalProgress + itemProgress;
+
+                                totalItems = totalItems * v4.Quantity;
+                                <div class="d-flex text-muted pt-3">
+                                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                        <div class="d-flex justify-content-between">
+                                            <strong class="text-gray-dark">@v4.Quantity X @v4.Name</strong>
+                                            <div class="progress" role="progressbar" aria-label="Basic example" style="width: 200px">
+                                                <div class="progress-bar" style="width: @itemProgress%">@itemProgress %</div>
+                                            </div>
+                                        </div>
+                                        <span class="d-block">@v4.Status</span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @{
+                            totalProgress = totalProgress / totalItems;
+                         }
+                    </div>
+                    <div class="p-3 my-3 rounded border">
+                        <div class="lh-1">
+                            <h1 class="h6 mb-0 lh-1 mb-3">Checkout Status <span class="text-muted">@Model.AppCheckout.Status</span></h1>
+                            <div class="progress" role="progressbar" aria-label="Basic example">
+                                <div class="progress-bar" style="width: @totalProgress%">@totalProgress%</div>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </main>
+        }
+        <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />
+    }
+    else
+    {
+        <div class="alert alert-danger" role="alert">
+            User is already signed in. But no User ID. Contact Admin.
+        </div>
+    }
+}

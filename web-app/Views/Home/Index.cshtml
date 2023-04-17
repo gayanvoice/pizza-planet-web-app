@@ -62,51 +62,78 @@
                         @foreach (CheckoutProcedureModel.V2? v2 in Model.CheckoutProcedureModelV2Enumerable)
                     {
                             if (v2 is not null)
-                            {
-                                <a asp-controller="Home" asp-action="Invoice" asp-route-CheckoutId="@v2.CheckoutId" 
-                                class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                                    @if (v2.Status is not null)
+                            { @if (v2.Status is not null)
                                     {
-                                        if (v2.Status.Equals("ORDER"))
+                                        if (v2.Status.Equals("PROCESS"))
                                         {
-                                            <span class="rounded-circle flex-shrink-0">ORDER</span>
-                                        }
-                                        else if (v2.Status.Equals("PROCESS"))
-                                        {
+                                        <a asp-controller="Home" asp-action="Process" asp-route-CheckoutId="@v2.CheckoutId"
+                                           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                                             <span class="rounded-circle flex-shrink-0">PROCESS</span>
-                                        }
-                                        else if (v2.Status.Equals("PACK"))
-                                        {
-                                            <span class="rounded-circle flex-shrink-0">PACK</span>
+                                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                                <div>
+                                                    @if (v2.Sum == 0.0)
+                                                    {
+                                                        <h6 class="mb-0">No items</h6>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h6 class="mb-0">@v2.Item - @v2.Sum.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h6>
+                                                    }
+
+                                                </div>
+                                                <small class="opacity-50 text-nowrap">@Time.ToRelativeDate(v2.ModifyTime)</small>
+                                            </div>
+                                        </a>
                                         }
                                         else if (v2.Status.Equals("DELIVERY"))
                                         {
+                                        <a asp-controller="Home" asp-action="Process" asp-route-CheckoutId="@v2.CheckoutId"
+                                           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                                             <span class="rounded-circle flex-shrink-0">DELIVERY</span>
+                                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                                <div>
+                                                    @if (v2.Sum == 0.0)
+                                                    {
+                                                        <h6 class="mb-0">No items</h6>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h6 class="mb-0">@v2.Item - @v2.Sum.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h6>
+                                                    }
+
+                                                </div>
+                                                <small class="opacity-50 text-nowrap">@Time.ToRelativeDate(v2.ModifyTime)</small>
+                                            </div>
+                                        </a>
                                         }
                                         else if (v2.Status.Equals("COMPLETE"))
                                         {
+                                        <a asp-controller="Home" asp-action="Invoice" asp-route-CheckoutId="@v2.CheckoutId"
+                                           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                                             <span class="rounded-circle flex-shrink-0">COMPLETE</span>
+                                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                                <div>
+                                                    @if (v2.Sum == 0.0)
+                                                    {
+                                                        <h6 class="mb-0">No items</h6>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h6 class="mb-0">@v2.Item - @v2.Sum.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h6>
+                                                    }
+
+                                                </div>
+                                                <small class="opacity-50 text-nowrap">@Time.ToRelativeDate(v2.ModifyTime)</small>
+                                            </div>
+                                        </a>
                                         }
                                         else
                                         {
-                                            <span class="rounded-circle flex-shrink-0">ERROR: @v2.Status</span>
+                                            
                                         }
                                     }
-                                    <div class="d-flex gap-2 w-100 justify-content-between">
-                                        <div>
-                                            @if (v2.Sum == 0.0)
-                                            {
-                                                <h6 class="mb-0">No items</h6>
-                                            }
-                                            else
-                                            {
-                                                <h6 class="mb-0">@v2.Item - @v2.Sum.ToString("C3", CultureInfo.CreateSpecificCulture("en-GB"))</h6>
-                                            }
 
-                                        </div>
-                                        <small class="opacity-50 text-nowrap">@Time.ToRelativeDate(v2.ModifyTime)</small>
-                                    </div>
-                                </a>
+                               
                             }
                             
                     }
