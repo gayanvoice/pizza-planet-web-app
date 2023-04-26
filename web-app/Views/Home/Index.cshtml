@@ -33,7 +33,7 @@
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
     {
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
-        <div class="container">
+        <div class="container my-5">
             <div class="text-center p-5 bg-body-tertiary border border-dashed rounded-3">
                 <h1 class="text-body-emphasis mb-5">Welcome @Model.AspNetUser.Email</h1>
                 <div class="d-inline-flex gap-2 mb-3">

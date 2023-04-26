@@ -12,11 +12,65 @@
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
     {
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
+        <section class="h-100 h-custom border-bottom" style="background-color: #eee;">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body p-4">
+
+                                <div class="row">
+
+                                    <div class="col-lg-12">
+                                        @if (Model.CheckoutBasketProcedureModelV2Enumerable is not null &&
+                                       Model.CheckoutBasketProcedureModelV2Enumerable.Count() == 0)
+                                        {
+                                            <div class="card">
+                                                <div class="card-body p-4">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="h5">
+                                                                You have no any items in your checkout.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            if (Model.CheckoutBasketProcedureModelV2Enumerable is not null)
+                                            {
+                                                double totalCost = 0.0;
+                                                double totalUnits = Model.CheckoutBasketProcedureModelV2Enumerable.Sum(b => b.Quantity);
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <a asp-controller="Home" asp-action="Checkout" class="display-6 mb-0 text-decoration-none text-black">Checkout</a>
+                                                    </div>
+                                                    <div>
+                                                        <p class="mb-0 display-6">
+                                                            @totalUnits
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <div class="container">
             <main>
-                <div class="container px-4 py-5" id="custom-cards">
-                    <h2 class="pb-2 border-bottom">Products</h2>
-
+                <div class="container px-1 py-5" id="custom-cards">
+                    <div class="row row-cols-1 row-cols-lg-2 align-items-stretch">
+                        <div>
+                            <h2 class="display-6">Products</h2>
+                        </div>
+                    </div>
                     <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
                         @if (Model.ProductProcedureModelV3Enumerable is not null)
                         {

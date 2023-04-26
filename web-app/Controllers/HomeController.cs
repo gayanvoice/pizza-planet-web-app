@@ -346,10 +346,27 @@ namespace web_app.Controllers
             {
                 using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                 {
-                    OrderViewModel orderViewModel = new OrderViewModel();
-                    orderViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
-                    orderViewModel.AppCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
-                    return View(orderViewModel);
+                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        List<CheckoutBasketProcedureModel.V3?>? checkoutBasketProcedureModelV3Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV3(appCheckout.CheckoutId);
+                        if (checkoutBasketProcedureModelV3Enumerable is not null)
+                        {
+                            if (checkoutBasketProcedureModelV3Enumerable.Count > 0)
+                            {
+                                OrderViewModel orderViewModel = new OrderViewModel();
+                                orderViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                                orderViewModel.AppCheckout = appCheckout;
+                                return View(orderViewModel);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Checkout", "Home", new { Message = "No items in checkout"});
+                            }
+                        }
+                       
+                    }
+                    return RedirectToAction(nameof(Checkout));
                 }
             }
             else
