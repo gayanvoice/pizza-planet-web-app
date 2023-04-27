@@ -14,6 +14,18 @@
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
     {
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
+        @if (!string.IsNullOrEmpty(Context.Request.Query["Message"]))
+        {
+            <section class="h-100 h-custom" style="background-color: #eee;">
+                <div class="container pt-5 h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col">
+                            <div class="alert alert-danger">@Context.Request.Query["Message"]</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
         @if (Model.AppCheckout is not null)
         {
             <section class="h-100 h-custom" style="background-color: #eee;">
@@ -106,11 +118,6 @@
                                                 </div>
                                             </div>
                                         }
-                                        <div class="col-lg-6">
-                                            <div class="h5 text-xl-end">
-                                                <a asp-controller="Home" asp-action="Receipt" class="text-body">Receipt</a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

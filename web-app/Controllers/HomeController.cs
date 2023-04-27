@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -88,13 +89,24 @@ namespace web_app.Controllers
                             .Where(c => c.CheckoutId == int.Parse(CheckoutId) && c.AspNetUsersId == user.Id).FirstOrDefault();
                         if (appCheckout is not null)
                         {
-
-                            InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
-                            invoiceViewModel.CheckoutBasketProcedureModelV1Enumerable = HomeHelper
-                                .GetCheckoutBasketProcedureModelV1(appCheckout.CheckoutId);
-                            invoiceViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
-                            invoiceViewModel.AppCheckout = appCheckout;
-                            return View(invoiceViewModel);
+                            if (appCheckout.DeliveryMethod  is not null && appCheckout.DeliveryMethod.Equals("DELIVERY"))
+                            {
+                                InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
+                                invoiceViewModel.CheckoutBasketProcedureModelV1Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV1(appCheckout.CheckoutId);
+                                invoiceViewModel.AppAddress = rsMssqlContext.AppAddresses.Where(a => a.AddressId == appCheckout.AddressId).FirstOrDefault();
+                                invoiceViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                                invoiceViewModel.AppCheckout = appCheckout;
+                                return View(invoiceViewModel);
+                            }
+                            else
+                            {
+                                InvoiceViewModel invoiceViewModel = new InvoiceViewModel();
+                                invoiceViewModel.CheckoutBasketProcedureModelV1Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV1(appCheckout.CheckoutId);
+                                invoiceViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                                invoiceViewModel.AppCheckout = appCheckout;
+                                return View(invoiceViewModel);
+                            }
+                            
                         }
                         else
                         {
@@ -446,11 +458,40 @@ namespace web_app.Controllers
             {
                 using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                 {
-                    PaymentViewModel paymentViewModel = new PaymentViewModel();
-                    paymentViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
-                    paymentViewModel.AppCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
-                    return View(paymentViewModel);
+                    AppCheckout? appCheckout =  rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                    if (appCheckout is not null)
+                    {
+                        if (appCheckout.DeliveryMethod is not null)
+                        {
+                            if (appCheckout.DeliveryMethod.Equals("DELIVERY"))
+                            {
+                                if (appCheckout.AddressId is not null)
+                                {
+                                    PaymentViewModel paymentViewModel = new PaymentViewModel();
+                                    paymentViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                                    paymentViewModel.AppCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                                    return View(paymentViewModel);
+                                }
+                                else
+                                {
+                                    return RedirectToAction("Delivery", "Home", new { Message = "Address is not set" });
+                                }
+                            }
+                            else
+                            {
+                                PaymentViewModel paymentViewModel = new PaymentViewModel();
+                                paymentViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                                paymentViewModel.AppCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                                return View(paymentViewModel);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToAction("Checkout", "Home", new { Message = "No checkout for current user" });
+                    }
                 }
+                return RedirectToAction("Checkout", "Home", new { Message = "No checkout for current user" });
             }
             else
             {
@@ -464,33 +505,40 @@ namespace web_app.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (user is not null)
             {
-                using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
+                if (paymentViewModel.Form.PaymentMethod is null)
                 {
-                    AppCheckout? appCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
-                    if (appCheckout is not null)
+                    return RedirectToAction("Payment", "Home", new { Message = "Select any payment method" });
+                }
+                else
+                {
+                    using (RsMssqlContext rsMssqlContext = new RsMssqlContext())
                     {
-                        IEnumerable<CheckoutBasketProcedureModel.V2?>? v2 = HomeHelper.GetCheckoutBasketProcedureModelV2(appCheckout.CheckoutId);
-                        if (v2 is not null)
+                        AppCheckout? appCheckout = rsMssqlContext.AppCheckouts.Where(c => c.AspNetUsersId == user.Id && c.Status == "ORDER").FirstOrDefault();
+                        if (appCheckout is not null)
                         {
-                            AspNetUser aspNetUser = AspNetUser.FromIdentityUser(user);
-                            AppPayment appPayment = new AppPayment();
-                            appPayment.CheckoutIdId = appCheckout.CheckoutId;
-                            appPayment.Type = paymentViewModel.Form.PaymentMethod;
-                            appPayment.Comment = paymentViewModel.Form.Comment;
-                            appPayment.TotalAmount = v2.Sum(v2 => v2.Quantity * v2.Price);
-                            appPayment.RemainingAmount = v2.Sum(v2 => v2.Quantity * v2.Price);
-                            appPayment.ModifyTime = DateTimeOffset.Now;
-                            appPayment.CreateTime = DateTimeOffset.Now;
-                            appPayment.Status = "ENABLE";
-                            rsMssqlContext.AppPayments.Add(appPayment);
-                            appCheckout.Status = "PROCESS";
-                            rsMssqlContext.AppCheckouts.Update(appCheckout);
-                            rsMssqlContext.SaveChanges();
-                            return RedirectToAction("Invoice", "Home", new { CheckoutId = appCheckout.CheckoutId });
+                            IEnumerable<CheckoutBasketProcedureModel.V2?>? v2 = HomeHelper.GetCheckoutBasketProcedureModelV2(appCheckout.CheckoutId);
+                            if (v2 is not null)
+                            {
+                                AspNetUser aspNetUser = AspNetUser.FromIdentityUser(user);
+                                AppPayment appPayment = new AppPayment();
+                                appPayment.CheckoutIdId = appCheckout.CheckoutId;
+                                appPayment.Type = paymentViewModel.Form.PaymentMethod;
+                                appPayment.Comment = paymentViewModel.Form.Comment;
+                                appPayment.TotalAmount = v2.Sum(v2 => v2.Quantity * v2.Price);
+                                appPayment.RemainingAmount = v2.Sum(v2 => v2.Quantity * v2.Price);
+                                appPayment.ModifyTime = DateTimeOffset.Now;
+                                appPayment.CreateTime = DateTimeOffset.Now;
+                                appPayment.Status = "ENABLE";
+                                rsMssqlContext.AppPayments.Add(appPayment);
+                                appCheckout.Status = "PROCESS";
+                                rsMssqlContext.AppCheckouts.Update(appCheckout);
+                                rsMssqlContext.SaveChanges();
+                                return RedirectToAction("Invoice", "Home", new { CheckoutId = appCheckout.CheckoutId });
+                            }
+
                         }
-                        
+
                     }
-                    
                 }
             }
             return RedirectToAction("Account", "Home");

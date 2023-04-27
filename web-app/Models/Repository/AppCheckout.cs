@@ -12,6 +12,7 @@ public partial class AppCheckout
     public DateTimeOffset ModifyTime { get; set; }
 
     public string Status { get; set; } = null!;
+    public string? Comments { get; set; }
     public string? DeliveryMethod { get; set; }
 
     public string? AspNetUsersId { get; set; }
