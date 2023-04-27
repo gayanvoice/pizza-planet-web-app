@@ -26,7 +26,7 @@ public partial class RsMssqlContext : DbContext
     public virtual DbSet<AppContent> AppContents { get; set; }
 
     public virtual DbSet<AppContentallergy> AppContentallergies { get; set; }
-
+    public virtual DbSet<AppDelivery> AppDeliverys { get; set; }
     public virtual DbSet<AppGuide> AppGuides { get; set; }
 
     public virtual DbSet<AppPayment> AppPayments { get; set; }
@@ -184,7 +184,21 @@ public partial class RsMssqlContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("app_allergycontent_ContentId_id_17804b61_fk_app_content_ContentId");
         });
+        modelBuilder.Entity<AppDelivery>(entity =>
+        {
+            entity.HasKey(e => e.DeliveryId).HasName("PK__app_deli__626D8FCE507791E3");
 
+            entity.ToTable("app_delivery");
+
+            entity.HasIndex(e => e.DeliveryId);
+            entity.HasIndex(e => e.AuthUserId);
+            entity.Property(e => e.CheckoutId);
+            entity.Property(e => e.Status);
+            entity.Property(e => e.Latitude).HasMaxLength(10);
+            entity.Property(e => e.Longitude).HasMaxLength(10);
+            entity.Property(e => e.CreateTime);
+            entity.Property(e => e.ModifyTime);
+        });
         modelBuilder.Entity<AppGuide>(entity =>
         {
             entity.HasKey(e => e.GuideId).HasName("PK__app_guid__E77EE05EDE1410C6");

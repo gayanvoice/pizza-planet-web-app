@@ -101,6 +101,8 @@ public partial class HomeViewModel
     {
         public AspNetUser? AspNetUser { get; set; }
         public AppCheckout? AppCheckout { get; set; }
+        public AppDelivery? AppDelivery { get; set; }
+        public AppAddress? AppAddress { get; set; }
         public IEnumerable<CheckoutBasketProcedureModel.V4?>? CheckoutBasketProcedureModelV4Enumerable { get; set; }
     }
     public partial class ProductViewModel

@@ -137,12 +137,25 @@ namespace web_app.Controllers
                             .Where(c => c.CheckoutId == int.Parse(CheckoutId) && c.AspNetUsersId == user.Id).FirstOrDefault();
                         if (appCheckout is not null)
                         {
-
-                            ProcessViewModel processViewModel = new ProcessViewModel();
-                            processViewModel.CheckoutBasketProcedureModelV4Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV4(appCheckout.CheckoutId);
-                            processViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
-                            processViewModel.AppCheckout = appCheckout;
-                            return View(processViewModel);
+                            if (appCheckout.DeliveryMethod is not null &&
+                                appCheckout.DeliveryMethod.Equals("DELIVERY"))
+                            {
+                                ProcessViewModel processViewModel = new ProcessViewModel();
+                                processViewModel.CheckoutBasketProcedureModelV4Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV4(appCheckout.CheckoutId);
+                                processViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                                processViewModel.AppCheckout = appCheckout;
+                                processViewModel.AppAddress = rsMssqlContext.AppAddresses.Where(a => a.AddressId.Equals(appCheckout.AddressId)).FirstOrDefault();
+                                processViewModel.AppDelivery = rsMssqlContext.AppDeliverys.Where(d => d.CheckoutId.Equals(appCheckout.CheckoutId.ToString())).FirstOrDefault();
+                                return View(processViewModel);
+                            }
+                            else
+                            {
+                                ProcessViewModel processViewModel = new ProcessViewModel();
+                                processViewModel.CheckoutBasketProcedureModelV4Enumerable = HomeHelper.GetCheckoutBasketProcedureModelV4(appCheckout.CheckoutId);
+                                processViewModel.AspNetUser = AspNetUser.FromIdentityUser(user);
+                                processViewModel.AppCheckout = appCheckout;
+                                return View(processViewModel);
+                            }
                         }
                         else
                         {
