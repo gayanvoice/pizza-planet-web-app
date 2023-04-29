@@ -1,34 +1,41 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
+@section CSS {
+    <meta http-equiv="refresh" content="2" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/LKStyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    }
 
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
-    {
-        <nav class="navbar bg-body-tertiary border-bottom">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/shared/logo.png"
-                         height="64" /></a>
-                <div class="d-flex">
-                    <a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-               asp-controller="Home" asp-action="Checkout">
-                        Checkout
-                    </a>
-                    <span class="m-3"></span>
-                    <a class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                    asp-controller="Home" asp-action="Account">
-                        @Model.AspNetUser.Email
-                    </a>
-                    <span class="m-3"></span>
-                    <a class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"
-                    asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
-                       Sign Out
-                    </a>
-                    <span class="m-3"></span>
-                </div>
-            </div>
-        </nav>
+    {   <header class="header">
+            <nav class="navbar">
+                <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/content/Logo.png" alt="Pizza Planet" class="nav-logo" />
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a class="nav-link barelink"
+                         asp-controller="Home" asp-action="Checkout">
+                         Checkout
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link barelink"
+                            asp-controller="Home" asp-action="Account">
+                                @Model.AspNetUser.Email
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link barelink loginbtn"
+                            asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
+                               Sign Out
+                        </a>
+                    </li>
+                </ul>
+             </nav>
+    </header>
     }
 }

@@ -1,0 +1,669 @@
+﻿/*GENERAL*/
+
+/*style links*/
+
+/*main - <link rel="stylesheet" href="~/css/LKStyle.css" / >
+
+icons (nav) - <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+
+icons (password) - <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >*/
+/*
+blankspace font-face - <link href="https://fonts.cdnfonts.com/css/blank-space" rel="stylesheet" to html >*/
+
+/*blankspace font*/
+
+@import url('https://fonts.cdnfonts.com/css/blank-space');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: roboto, Arial;
+}
+
+li {
+    list-style: none;
+    font-family: 'Roboto', sans-serif;
+    width: fit-content;
+}
+
+.redh1 {
+    font-family: roboto, Arial;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ec1f26;
+    padding: 5px 0px 5px 0px;
+}
+
+.redh1uppercase {
+    font-family: roboto, Arial;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ec1f26;
+    padding: 5px 0px 5px 0px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.redh1center {
+    font-family: roboto, Arial;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ec1f26;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.greyh2 {
+    font-family: roboto, Arial;
+    font-size: 24px;
+    color: #373f47;
+    padding: 5px 0px 10px 0px;
+}
+
+
+.barelink {
+    color: white;
+    text-decoration: none;
+}
+
+a.barelink:hover {
+    color: white;
+}
+
+/* unvisited link */
+a:link {
+    color: white;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+}
+
+/* mouse over link */
+a:hover {
+    color: white;
+}
+
+/* selected link */
+a:active {
+    color: white;
+}
+
+.container-left {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 30px;
+    text-align: left;
+}
+
+.container-leftnopad {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 30px 30px 30px 12px;
+    text-align: left;
+}
+
+.containerwide {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    overflow: auto;
+    padding-bottom: 20px;
+}
+
+.containter-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90vh;
+    position: fixed;
+}
+
+/*STAFF PROFILE (INDEX)*/
+
+.staffbutton {
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    font-size: large;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-family: Roboto, Arial;
+    text-decoration: none;
+    box-shadow: 0px 5px 7px rgba(67, 69, 68, 0.3);
+    margin-top: 15px;
+}
+
+.first {
+    background-color: #383b53;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .first:hover {
+        border: 3px solid #383b53;
+        font-weight: bold;
+        color: white;
+    }
+
+.second {
+    background-color: #d12628;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .second:hover {
+        border: 3px solid #d12628;
+        font-weight: bold;
+        color: white;
+    }
+
+.third {
+    background-color: #629f72;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .third:hover {
+        border: 3px solid #629f72;
+        font-weight: bold;
+        color: white;
+    }
+
+.forth {
+    background-color: #db7e16;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .forth:hover {
+        border: 3px solid #db7e16;
+        font-weight: bold;
+        color: white;
+    }
+
+.fifth {
+    background-color: #0052cc;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .fifth:hover {
+        border: 3px solid #0052cc;
+        font-weight: bold;
+        color: white;
+    }
+
+.sixth {
+    background-color: #373f47;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .sixth:hover {
+        border: 3px solid #373f47;
+        font-weight: bold;
+        color: white;
+    }
+
+.seventh {
+    background-color: #6d21b3;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .seventh:hover {
+        border: 3px solid #6d21b3;
+        font-weight: bold;
+        color: white;
+    }
+
+.eighth {
+    background-color: #a01080;
+    width: 18%;
+    line-height: 500%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+    .eighth:hover {
+        border: 3px solid #a01080;
+        font-weight: bold;
+        color: white;
+    }
+
+@media screen and (max-width: 700px) {
+    .first,
+    .second,
+    .third,
+    .forth,
+    .fifth,
+    .sixth,
+    .seventh,
+    .eighth {
+        width: 100%;
+        display: flex; /*fixes resizing caused by overflow: auto*/
+        justify-content: center;
+    }
+
+    .container-left {
+        overflow: auto; /* adds scroll bar*/
+    }
+}
+
+/*TOP NAV*/
+
+/*script:
+
+<script >
+const hamburger = document.querySelector(".hamburger");
+const navMenu = document.querySelector(".nav-menu");
+
+hamburger.addEventListener("click", mobileMenu);
+
+function mobileMenu() {
+    hamburger .classList.toggle("active");
+    navMenu .classList.toggle("active");
+}
+</script >*/
+
+/*html
+<header class="header" >
+<nav class="navbar" >
+<img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/content/Logo.png" alt="Pizza Planet" class="nav-logo" / >
+<ul class="nav-menu" >
+<li class="nav-item" >
+<a class="nav-link barelink loginbtn" asp-controller="Home" asp-action="Logout" > Logout <i class="loginicon fa fa-sign-out" > </i > </a >
+</li >
+</ul >
+<div class="hamburger" >
+<span class="bar" > </span >
+<span class="bar" > </span >
+<span class="bar" > </span >
+</div >
+</nav >
+
+</header >*/
+
+.header {
+    box-shadow: 0px 5px 7px rgba(67, 69, 68, 0.3);
+    background-color: #383b53;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+}
+
+.hamburger {
+    display: none;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    background-color: white;
+}
+
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item {
+    /*    margin-left: 2rem;*/
+    list-style: none;
+    font-family: 'Roboto', sans-serif;
+    width: fit-content;
+    color: white;
+    padding-bottom: 0;
+    border: none !important;
+}
+
+.nav-link {
+    font-size: 1rem;
+    font-weight: 400;
+    color: white;
+    font-family: roboto, Arial;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.loginbtn {
+    font-size: 1rem;
+    font-weight: 400;
+    color: white;
+    font-family: roboto, Arial;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #ec1f26;
+    margin-top: 10px;
+}
+
+
+.nav-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-logo {
+    font-size: 2.1rem;
+    font-weight: 500;
+    width: 12%;
+}
+
+@media only screen and (max-width: 700px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 5rem;
+        flex-direction: column;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+        z-index: 3;
+        justify-content: left;
+        align-items: center;
+    }
+
+        .nav-menu.active {
+            left: 0;
+        }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .nav-link {
+        color: #383b53 !important;
+        font-family: roboto, Arial;
+        text-decoration: none;
+        background-color: white;
+        font-size: large;
+        text-transform: uppercase;
+    }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+    .loginicon {
+        visibility: hidden;
+        position: fixed;
+        z-index: -1; /* stops icon taking up space*/
+    }
+}
+
+/*SIGNIN*/
+
+.formcontainer {
+    width: 400px;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.signin-input {
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid #373f47;
+    width: 100%;
+    height: 50px;
+    margin: 5px 0px 20px 0px;
+    padding: 10px;
+    outline: none;
+    display: inline-block;
+}
+
+.signin-input-pw {
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid #373f47;
+    width: 100%;
+    height: 50px;
+    margin: 0px 0px 10px 0px;
+    padding: 10px;
+    outline: none;
+    display: inline-block;
+    position: relative;
+    left: 0px;
+    top: 5px;
+}
+
+.signin-label {
+    font: roboto, arial;
+    color: #373f47;
+    font-size: 18px;
+    display: block;
+}
+
+.signin-label-pw {
+    font: roboto, arial;
+    color: #373f47;
+    font-size: 18px;
+    display: block;
+    top: 100px;
+}
+
+/*mobile responsive login*/
+
+@media screen and (max-width: 500px) {
+    .formcontainer {
+        width: 350px;
+        height: 100%;
+        padding: 10px;
+        box-shadow: none;
+    }
+}
+
+
+/*Move label up if text is added to input - remember to add placeholder=" " to input in html*/
+.signin-input:not(:placeholder-shown) ~ label {
+    transform: translateY(-20px) !important;
+    padding: 0px;
+    margin: 0px;
+}
+
+.signin-input-pw:not(:placeholder-shown) ~ label {
+    transform: translateY(-20px) !important;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.submitbutton {
+    background-color: #383b53;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 5px;
+    width: 100%;
+    font-family: roboto, Arial;
+    width: 100%;
+    margin: 20px 0px 20px 0px;
+    font-weight: bold;
+}
+
+.error {
+    width: 100%;
+}
+
+/*set input position to relative for this to work*/
+
+.eye {
+    position: absolute;
+    left: 90%;
+    top: 30%;
+    width: 20px;
+    height: 20px;
+    z-index: 5;
+    color: #383b53;
+}
+
+/*script*/
+/*<script >
+const PassBtn = document.querySelector('#passBtn');
+PassBtn.addEventListener('click', () => {
+        const input = document.querySelector('#passInput');
+        input.getAttribute('type') === 'password' ? input.setAttribute('type', 'text') : input.setAttribute('type', 'password');
+
+        if (input.getAttribute('type') === 'text') {
+            PassBtn.innerHTML = '<i class="fa fa-eye-slash"></i>';
+        } else {
+            PassBtn.innerHTML = '<i class="fa fa-eye fa-fw" aria-hidden="true"></i>';
+        }
+
+    });
+</script >*/
+
+/*PRODUCTS*/
+.title {
+    font-family: 'BLANK SPACE', sans-serif;
+    color: white;
+    text-shadow: 5px 5px rgba(236, 31, 38,1);
+    font-size: 60px;
+    padding: 20px;
+}
+
+.price {
+    font-family: 'BLANK SPACE', sans-serif;
+    color: white;
+    text-shadow: 5px 5px #323c88;
+    font-size: 60px;
+    padding: 0px;
+}
+
+.footer {
+    font-family: roboto, Arial;
+    font-size: 15px;
+    color: white;
+}
+
+.footerhighlight {
+    text-shadow: 1px 1px rgba(236, 31, 38,1);
+    font-weight: bold;
+}
+
+/*other*/
+
+.noorders {
+    font-weight: bold;
+    font-size: 50px;
+    text-align: center;
+    padding-left: 0;
+    margin-left: 5px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    color: #373f47 !important;
+}
+
+.making {
+    background-color: #d12628;
+    width: 100%;
+    width: 100%;
+    color: white !important;
+    font-family: roboto, Arial;
+    font-size: 24px;
+    padding: 5px 0px 10px 0px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.ready {
+    background-color: #629f72;
+    width: 100%;
+    color: white !important;
+    font-family: roboto, Arial;
+    font-size: 24px;
+    padding: 5px 0px 10px 0px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.list-container {
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.list-container-wide {
+    margin: 0;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+    border-radius: 5px;
+}
+
+.list-pad {
+    padding: 10px;
+    margin: 0;
+}
+
+/*MANAGER*/
+
+.mgrbtn {
+    font-size: 1rem;
+    font-weight: 400;
+    color: white;
+    font-family: roboto, Arial;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #383b53;
+    margin-top: 10px;
+    width: 100%;
+    height: 50px;
+}
+
+.mgr-input {
+    border-radius: 5px;
+    background-color: white;
+    border: 2px solid #373f47;
+    width: 100%;
+    height: 50px;
+    margin: 5px 0px 5px 0px;
+    padding: 10px;
+    outline: none;
+    display: inline-block;
+}
