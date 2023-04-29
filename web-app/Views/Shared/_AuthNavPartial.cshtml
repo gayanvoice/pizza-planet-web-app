@@ -1,41 +1,63 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@section CSS {
-    <meta http-equiv="refresh" content="2" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/LKStyle.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    }
+
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/LKStyle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+</head>
 
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
-    {   <header class="header">
+    {
+    
+        <header class="header">
             <nav class="navbar">
                 <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/content/Logo.png" alt="Pizza Planet" class="nav-logo" />
                 <ul class="nav-menu">
                     <li class="nav-item">
                         <a class="nav-link barelink"
-                         asp-controller="Home" asp-action="Checkout">
+                   asp-controller="Home" asp-action="Checkout">
+                            <i class="loginicon fa fa-shopping-basket"></i>
                          Checkout
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link barelink"
                             asp-controller="Home" asp-action="Account">
-                                @Model.AspNetUser.Email
+                            <i class="loginicon fa fa-user"> </i> Profile
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link barelink loginbtn"
                             asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
-                               Sign Out
+                            Sign Out <i class="loginicon fa fa-sign-out"> </i>
                         </a>
                     </li>
                 </ul>
+                <div class="hamburger">
+                    <span class="bar"> </span>
+                    <span class="bar"> </span>
+                    <span class="bar"> </span>
+                </div>
              </nav>
+                
     </header>
+                <script>
+                const hamburger = document.querySelector(".hamburger");
+                const navMenu = document.querySelector(".nav-menu");
+
+                hamburger.addEventListener("click", mobileMenu);
+
+                function mobileMenu() {
+                    hamburger.classList.toggle("active");
+                    navMenu.classList.toggle("active");
+                }
+            </script>
     }
 }
+</html>
