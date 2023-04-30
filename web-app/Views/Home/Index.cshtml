@@ -27,7 +27,8 @@
         </symbol>
     </svg>
 }
-
+<div class="containerwidenopad">
+<div class="stars"></div>
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
@@ -175,3 +176,4 @@
         </div>
     }
 }
+</div>

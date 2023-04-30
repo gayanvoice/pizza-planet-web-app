@@ -14,32 +14,35 @@ blankspace font-face - <link href="https://fonts.cdnfonts.com/css/blank-space" r
 
 @import url('https://fonts.cdnfonts.com/css/blank-space');
 
+
 a.footer {
     font-family: roboto,Arial;
-    color: white !important;
+    color: rgba(255, 255, 255, 0.5) !important;
     text-decoration: none !important;
     font-weight: bold !important;
 }
 
-
-#page-container {
+.parent {
     position: relative;
-    min-height: 100vh;
-    overflow: auto; 
-    height: 100%;
+
 }
-#content-wrap {
-    padding-bottom: 2.5rem; /* Footer height */
-}
+
 
 #footer {
-    position: absolute;
-    top: 115%;
-    width: 100%;
-    height: 2.5rem; /* Footer height */
+   /* top: 120vh; */
+    height: 22vh; /* Footer height */
     text-align: center;
-    color: white !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(56, 59, 83,0.3) !important;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.5) !important;
+    padding: 40px 15px 10px 10px;
+    margin-top: 40px; 
 }
+
+
 
 .paddingtop{
     display: inline-block;
@@ -134,11 +137,22 @@ a.barelink:hover {
 
 .containerwide {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: 0px;
     padding: 0px;
-    position: fixed;
     padding-bottom: 20px;
+    background: rgb(56,59,83);
+    background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%);
+    overflow: auto;
+}
+
+.containerwidenopad {
+    position: fixed; 
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 0px;
     background: rgb(56,59,83);
     background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%);
     overflow: auto;
@@ -149,8 +163,7 @@ a.barelink:hover {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100vh;
-    position: relative; 
+    height: auto; 
 }
 
 /*star background*/
@@ -392,11 +405,10 @@ function mobileMenu() {
 }
 
 .navbar {
-    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 1.5rem;
-    width: 100vw; 
+    width: 100%; 
 }
 
 .navbarpercent {
@@ -434,10 +446,15 @@ function mobileMenu() {
     font-family: 'Roboto', sans-serif;
     width: fit-content;
     color: white;
-    border: none !important;
-    display: inline-block; 
-    padding: 0px 12px 0px 0px;  
+    padding: 0px 10px 10px 7px;
 }
+
+.nav-item:last-child{
+    border-right: none; 
+}
+    .nav-item:nth-child(3) {
+        border-right: none;
+    }
 
 .nav-link {
     font-size: 1rem;
@@ -618,14 +635,12 @@ function mobileMenu() {
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color: rgb(56, 59, 83);
-    position: relative; 
 }
 
 .formwrapper {
     width: 400px;
     text-align: center;
-    height: 100%;
-    position: relative; 
+    height: 100%; 
 }
 
 .signin-input {
@@ -719,7 +734,7 @@ function mobileMenu() {
     font-weight: bold;
     text-align: left !important;
     display: block;
-    padding: 0px 0px 10px 0px;
+    padding: 10px 0px 5px 0px;
 }
 
 .errorcontainer {
@@ -775,7 +790,7 @@ PassBtn.addEventListener('click', () => {
 .footer {
     font-family: roboto, Arial;
     font-size: 15px;
-    color: white;
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .footerhighlight {
@@ -866,5 +881,30 @@ PassBtn.addEventListener('click', () => {
     display: inline-block;
 }
 
-/*STAR BACKGROUND*/
+/*FOOTER*/
+.blufooter {
+    margin-top: 20px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(56, 59, 83,0.3) !important;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.blufooterbold {
+    width: 100%;
+    color: white !important;
+    font-weight: bold;
+    font: small;
+    white-space: nowrap;
+    text-decoration: none; 
+}
+
+
+.bluefootersml {
+    width: 100%;
+    color: rgba(255, 255, 255, 0.5) !important;
+    padding-bottom: 0px;
+    font-weight: bold;
+}
 
