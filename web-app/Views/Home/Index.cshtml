@@ -34,18 +34,19 @@
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
     {
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
-        <div class="container my-5">
-            <div class="text-center p-5 bg-body-tertiary border border-dashed rounded-3">
-                <h1 class="text-body-emphasis mb-5">Welcome @Model.AspNetUser.Email</h1>
-                <div class="d-inline-flex gap-2 mb-3">
-                    <a asp-controller="Home" asp-action="Checkout" class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
-                        Checkout <svg class="bi ms-2" width="24" height="24"><use xlink:href="#arrow-right-short"></use></svg>
+        <div class="my-5">
+                <div class="text-center p-5 bannerwide">
+                   @* <img class="pizzaimg" src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/shared/cheesy.png">*@
+                <h1 class="welcome text-body-emphasis mb-5">Welcome @Model.AspNetUser.UserName</h1>
+                    <div class="btnw">
+                        <a asp-controller="Home" asp-action="Product" class="barelink pizzabtn" type="button">
+                        Browse Menu
                     </a>
                 </div>
             </div>
         </div>
         <div class="container">
-            <div class="h4 m-3">History</div>
+                <div class="bsblueh1">Order History</div>
             @if (Model.CheckoutProcedureModelV2Enumerable is not null &&
             Model.CheckoutProcedureModelV2Enumerable.Count() == 0)
             {
@@ -59,7 +60,7 @@
             {
                 if (Model.CheckoutProcedureModelV2Enumerable is not null)
                 {
-                    <div class="list-group">
+                        <div class="histlistcontainer">
                         @foreach (CheckoutProcedureModel.V2? v2 in Model.CheckoutProcedureModelV2Enumerable)
                     {
                             if (v2 is not null)
@@ -67,8 +68,9 @@
                                     {
                                         if (v2.Status.Equals("PROCESS"))
                                         {
+
                                         <a asp-controller="Home" asp-action="Process" asp-route-CheckoutId="@v2.CheckoutId"
-                                           class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                                           class="whiteborderbtm list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                                             <span class="rounded-circle flex-shrink-0">PROCESS</span>
                                             <div class="d-flex gap-2 w-100 justify-content-between">
                                                 <div>
