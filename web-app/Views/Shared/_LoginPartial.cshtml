@@ -2,25 +2,118 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/css/LKStyle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+@*<ul class="navbar-nav">*@
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
+        <header class="header">
+            <nav class="navbar">
+                <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/content/Logo.png" alt="Pizza Planet" class="nav-logo" />
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a class="nav-link barelink"
+                       asp-controller="Home" asp-action="Checkout">
+                            <i class="loginicon fa fa-shopping-basket"></i>
+                            Checkout
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link barelink"
+                       asp-controller="Home" asp-action="Account">
+                            <i class="loginicon fa fa-user"> </i> Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link barelink loginbtn"
+                       asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })">
+                            Sign Out <i class="loginicon fa fa-sign-out"> </i>
+                        </a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"> </span>
+                    <span class="bar"> </span>
+                    <span class="bar"> </span>
+                </div>
+            </nav>
+
+        </header>
+        <script>
+            const hamburger = document.querySelector(".hamburger");
+            const navMenu = document.querySelector(".nav-menu");
+
+            hamburger.addEventListener("click", mobileMenu);
+
+            function mobileMenu() {
+                hamburger.classList.toggle("active");
+                navMenu.classList.toggle("active");
+            }
+        </script>
+
+   @* <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
         </form>
-    </li>
+    </li>*@
 }
 else
 {
-    <li class="nav-item">
+
+    <header class="header">
+        <nav class="navbar">
+            <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/content/Logo.png" alt="Pizza Planet" class="nav-logo" />
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link barelink"
+                   asp-area="Identity" asp-page="/Account/Register">           
+                        Register
+                    </a>
+                </li>
+              
+                <li class="nav-item">
+                    <a class="nav-link barelink loginbtn"
+                   asp-area="Identity" asp-page="/Account/Login">
+                     Login <i class="loginicon fa fa-sign-out"> </i>
+                    </a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"> </span>
+                <span class="bar"> </span>
+                <span class="bar"> </span>
+            </div>
+        </nav>
+
+    </header>
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        hamburger.addEventListener("click", mobileMenu);
+
+        function mobileMenu() {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        }
+    </script>
+
+    @*<li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
+    </li>*@
 }
-</ul>
+@*</ul>*@
+
+</html>

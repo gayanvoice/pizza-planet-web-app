@@ -5,8 +5,12 @@
     ViewData["Title"] = "Sign in";
 }
 @section CSS {
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://getbootstrap.com/docs/5.3/examples/sign-in/sign-in.css" rel="stylesheet">
+    <link href="~/css/LKStyle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+
         .login-with-microsoft-btn {
             transition: background-color .3s, box-shadow .3s;
             padding: 12px 16px 12px 42px;
@@ -22,6 +26,7 @@
             background-color: white;
             background-repeat: no-repeat;
             background-position: 12px 11px;
+            width: 100%; 
         }
 
         .login-with-google-btn {
@@ -38,6 +43,7 @@
             background-color: white;
             background-repeat: no-repeat;
             background-position: 12px 11px;
+            width: 100%; 
         }
          .bd-placeholder-img {
         font-size: 1.125rem;
@@ -106,36 +112,66 @@
       }
     </style>
 }
-<main class="form-signin w-100 m-auto text-center">
+<div id="page-container">
+    <div id="content-wrap">
+<div class="containerwide">
+    <header class="header">
+        <nav class="navbarpercent">
+            <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/content/Logo.png" alt="Pizza Planet" class="nav-logo" />
+            <ul class="nav-menu-login">
+                <li class="nav-item-login">
+                   <span class="headermsg"> Don't have an account? </span>
+                </li>
+                <li class="nav-item-login">
+                    
+                    <a class="nav-link-login barelink loginbtn-login" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+                        Register
+                    </a>
+                </li>
+            </ul>
+          </nav>
+
+    </header>
+    <div class="stars"></div>
+    <div class="containter-center">
+    <div class="formwrapper">
+    <h1 class="h3 mb-3 fw-normal bluebs">Please sign in</h1>
+    <div class="formcontainer m-auto text-center">
 @{
-        <img class="mb-4" src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/shared/logo.png" alt="" height="96">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    
     <form id="account" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+      <div asp-validation-summary="ModelOnly" class="error" role="alert"></div>
+      <div class="errorcontainer">
+        <span asp-validation-for="Input.Email" class="error"></span>
+        <span class="error" asp-validation-for="Input.Password"></span>
+      </div>
         <div class="form-floating mb-3">
-            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-            <label asp-for="Input.Email" class="form-label">Email</label>
-            <span asp-validation-for="Input.Email" class="text-danger"></span>
+            <input class="signin-input" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder=" " />
+            <label class="signin-label" asp-for="Input.Email">Email</label>
+           
         </div>
-        <div class="form-floating mb-3">
-            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-            <label asp-for="Input.Password" class="form-label">Password</label>
-            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        <div class="form-floating">
+                                  
+          <div class="eye">
+             <span role="button" title="veiw password" id="passBtn">
+               <i class="fa fa-eye fa-fw loginicon" aria-hidden="true"></i>
+                </span>
+              </div>
+            <input type="password" class="signin-input-pw" id="passInput" asp-for="Input.Password" autocomplete="current-password" aria-required="true" placeholder=" " />
+            <label class="signin-label-pw" asp-for="Input.Password" class="form-label">Password</label>
+        
         </div>
-        <div class="checkbox mb-3">
-            <label asp-for="Input.RememberMe" class="form-label">
+                                <div class="checkbox mb-3 paddingtop">
+            <label asp-for="Input.RememberMe" class="white form-label">
                 <input class="form-check-input" asp-for="Input.RememberMe" />
                 @Html.DisplayNameFor(m => m.Input.RememberMe)
             </label>
         </div>
         <div>
-            <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Sign in</button>
+         <button id="login-submit" type="submit" class="submitbutton">Sign in</button>
         </div>
-        <div class="mt-3">
-            <span><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Sign up</a></span>
-        </div>
-    </form>
-        <div class="mt-3 mb-3 h5 fw-normal">or</div>
+      </form>
+        <div class="white mt-3 mb-3 h5 fw-normal">or</div>
     if ((Model.ExternalLogins?.Count ?? 0) > 0)
     {
     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal m-auto">
@@ -166,9 +202,35 @@
         </form>
     }
 }
-    <small>Created By  <a href="https://github.com/gayanvoice/web-app" class="mt-5 text-body-secondary">@@100638182 @@100123818@@100654780 @@100654780</a> For 2022-SPR-7CS095 Web Technologies</small>
-    <p class="mt-3 mb-3 text-body-secondary">Pizza Planet © 2023, University of Derby</p>
-</main>
+    
+</div>
+                </div>
+        <footer id="footer">
+        <small>Created By  <a href="https://github.com/gayanvoice/web-app" class="mt-5 footer">@@100638182 @@100123818@@100654780 @@100654780</a> For 2022-SPR-7CS095 Web Technologies</small>
+        <p class="mt-3 mb-3 footer">Pizza Planet © 2023, University of Derby</p>
+        </footer>
+
+                
+ </div>
+
+</div>
+</div>
+</div>
+@*Script for password visibility*@
+<script>
+    const PassBtn = document.querySelector('#passBtn');
+    PassBtn.addEventListener('click', () => {
+        const input = document.querySelector('#passInput');
+        input.getAttribute('type') === 'password' ? input.setAttribute('type', 'text') : input.setAttribute('type', 'password');
+
+        if (input.getAttribute('type') === 'text') {
+            PassBtn.innerHTML = '<i class="fa fa-eye-slash"></i>';
+        } else {
+            PassBtn.innerHTML = '<i class="fa fa-eye fa-fw" aria-hidden="true"></i>';
+        }
+
+    });
+</script>
 @section JS {
     <partial name="_ValidationScriptsPartial" />
 }
