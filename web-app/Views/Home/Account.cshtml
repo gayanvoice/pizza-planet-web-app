@@ -8,7 +8,20 @@
 }
 @section CSS{
     <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/LKStyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.cdnfonts.com/css/blank-space" rel="stylesheet" to html>
+    <style>
+
+    body{
+            background: rgb(56,59,83) !important;
+            background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
+    }
+    </style>
+
 }
+@*<div class="containerwidenopad">*@
+    <div class="stars"></div>
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
@@ -19,8 +32,9 @@
             {
                 if(Model.AspNetUserLogin.LoginProvider is not null)
                 {
+                 @*MS LOGGED IN*@
                     if(Model.AspNetUserLogin.LoginProvider.Equals("Microsoft")){
-                        <div class="d-flex align-items-center p-3 my-3 text-black rounded shadow-sm">
+                        <div class="bannerwide d-flex align-items-center p-3 my-3 text-black rounded shadow-sm">
                             <img class="me-3" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Microsoft_icon.svg" alt="" height="38">
                             <div class="lh-1">
                                 <h1 class="h6 mb-0 text-black lh-1">Microsoft</h1>
@@ -31,10 +45,13 @@
                                
                             </div>
                         </div>
+
                     }
+
+                   @*GOOGLE LOGGED IN*@
                     else if (Model.AspNetUserLogin.LoginProvider.Equals("Google"))
                     {
-                        <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+                        <div class="bannerwide d-flex align-items-center p-3 my-3 rounded shadow-sm">
                             <img class="me-3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1024px-Google_%22G%22_Logo.svg.png" alt="" height="38">
                             <div class="lh-1">
                                 <h1 class="h6 mb-0 lh-1">Google</h1>
@@ -47,7 +64,8 @@
                     }
                     else
                     {
-                        <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+                       @* EMAIL LOGIN*@
+                        <div class="bannerwide d-flex align-items-center p-3 my-3 rounded shadow-sm">
                             <img class="me-3" src="https://cdn-icons-png.flaticon.com/512/893/893257.png" alt="" height="38">
                             <div class="lh-1">
                                 <h1 class="h6 mb-0 lh-1">Unrecognized Provider</h1>
@@ -63,7 +81,7 @@
             }
             else
             {
-                <div class="d-flex align-items-center p-3 my-3 rounded shadow-sm">
+                <div class="bannerwide d-flex align-items-center p-3 my-3 rounded shadow-sm">
                     <img class="me-3" src="https://cdn-icons-png.flaticon.com/512/893/893257.png" alt="" height="38">
                     <div class="lh-1">
                         <h1 class="h6 mb-0 lh-1">Custom Email</h1>
@@ -76,88 +94,88 @@
             }
            
 
-            <div class="px-3 rounded shadow-sm">
+            <div class="bannerwide px-3 rounded shadow-sm">
                 @if (Model.AspNetUser.Id is not null) {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                            <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">User Id</strong>
+                                    <strong class="whitebold">User Id</strong>
                             </div>
-                                <span class="d-block">@Model.AspNetUser.Id</span>
+                                <span class="d-block white">@Model.AspNetUser.Id</span>
                         </div>
                     </div>
                 }
                 @if (Model.AspNetUser.UserName is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">UserName</strong>
+                                    <strong class="whitebold">UserName</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.UserName</span>
+                                <span class="d-block white">@Model.AspNetUser.UserName</span>
                         </div>
                     </div>
                 }
                 @if (Model.AspNetUser.NormalizedUserName is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Normalized UserName</strong>
+                                    <strong class="whitebold">Normalized UserName</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.NormalizedUserName</span>
+                                <span class="d-block white">@Model.AspNetUser.NormalizedUserName</span>
                         </div>
                     </div>
                 }
                 @if (Model.AspNetUser.Email is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                         <div class="pb-3 mb-0 small lh-sm w-100">
+                         <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Email</strong>
+                                    <strong class="whitebold">Email</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.Email</span>
+                                <span class="d-block white">@Model.AspNetUser.Email</span>
                         </div>
                     </div>
                 }
                 @if (Model.AspNetUser.NormalizedEmail is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Normalized Email</strong>
+                                    <strong class="whitebold">Normalized Email</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.NormalizedEmail</span>
+                                <span class="d-block white">@Model.AspNetUser.NormalizedEmail</span>
                         </div>
                     </div>
                 }
                 <div class="d-flex text-body-secondary pt-3">
-                     <div class="pb-3 mb-0 small lh-sm w-100">
+                     <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                         <div class="d-flex justify-content-between">
-                            <strong class="text-gray-dark">Email Confirmed</strong>
+                                <strong class="whitebold">Email Confirmed</strong>
                         </div>
-                        <span class="d-block">@Model.AspNetUser.EmailConfirmed</span>
+                            <span class="d-block white">@Model.AspNetUser.EmailConfirmed</span>
                     </div>
                 </div>
                 @if (Model.AspNetUser.PasswordHash is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Password Hash</strong>
+                                    <strong class="whitebold">Password Hash</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.PasswordHash</span>
+                                <span class="d-block white">@Model.AspNetUser.PasswordHash</span>
                         </div>
                     </div>
                 }
                 @if (Model.AspNetUser.SecurityStamp is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Security Stamp</strong>
+                                    <strong class="whitebold">Security Stamp</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.SecurityStamp</span>
+                                <span class="d-block white">@Model.AspNetUser.SecurityStamp</span>
                         </div>
                     </div>
                 }
@@ -166,67 +184,67 @@
                     <div class="d-flex text-body-secondary pt-3">
                         <div class="pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Concurrency Stamp</strong>
+                                    <strong class="whitebold">Concurrency Stamp</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.ConcurrencyStamp</span>
+                                <span class="d-block white">@Model.AspNetUser.ConcurrencyStamp</span>
                         </div>
                     </div>
                 }
                 @if (Model.AspNetUser.PhoneNumber is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Phone Number</strong>
+                                    <strong class="whitebold">Phone Number</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.PhoneNumber</span>
+                                <span class="d-block white">@Model.AspNetUser.PhoneNumber</span>
                         </div>
                     </div>
                 }
                 @if (Model.AspNetUser.PhoneNumber is not null)
                 {
                     <div class="d-flex text-body-secondary pt-3">
-                        <div class="pb-3 mb-0 small lh-sm w-100">
+                        <div class="whiteborderbtm pb-3 mb-0 small lh-sm w-100">
                             <div class="d-flex justify-content-between">
-                                <strong class="text-gray-dark">Phone Number Confirmed</strong>
+                                    <strong class="whitebold">Phone Number Confirmed</strong>
                             </div>
-                            <span class="d-block">@Model.AspNetUser.PhoneNumberConfirmed</span>
+                                <span class="d-block white">@Model.AspNetUser.PhoneNumberConfirmed</span>
                         </div>
                     </div>
                 }
             </div>
-            <div class="my-3 p-3 bg-body rounded shadow-sm">
-                <h6 class="border-bottom pb-2 mb-0">Addresses</h6>
+            <div class="bannerwide my-3 p-3 bg-body rounded shadow-sm">
+                <h6 class="whiteborderbtm border-bottom pb-2 mb-0">Addresses</h6>
                 @if (Model.AddressEnumerable is not null)
                 {
                     foreach (AppAddress? appAddress in Model.AddressEnumerable)
                     {
                         if (appAddress is not null)
                         {
-                            <div class="d-flex text-body-secondary pt-3">
-                                <img data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-address-id="@appAddress.AddressId" data-bs-post-code="@appAddress.PostCode"
+                            <div class="whiteborderbtm d-flex text-body-secondary pt-3">
+                                <img class="imgwhite" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-address-id="@appAddress.AddressId" data-bs-post-code="@appAddress.PostCode"
                                      src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                                      style="cursor: pointer;" />
-                                <div class="pb-3 mb-0 small lh-sm border-bottom w-100 open-AddBookDialog"
+                                <div class=" pb-3 mb-0 small lh-sm w-100 open-AddBookDialog"
                                      data-bs-toggle="modal" data-bs-target="#exampleModal"
                                      data-bs-post-code="@appAddress.PostCode"
                                      data-bs-latitude="@appAddress.Latitude"
                                      data-bs-longitude="@appAddress.Longitude" style="cursor: pointer;">
                                     <div class="d-flex justify-content-between">
-                                        <strong class="text-gray-dark">@appAddress.PostCode</strong>
-                                        <span>@appAddress.Latitude ° N, @appAddress.Longitude ° W</span>
+                                            <strong class="whitebold">@appAddress.PostCode</strong>
+                                            <span class="white">@appAddress.Latitude ° N, @appAddress.Longitude ° W</span>
                                     </div>
-                                    <span class="d-block">@appAddress.HouseNumber @appAddress.Street @appAddress.Region @appAddress.Country</span>
+                                        <span class="d-block white">@appAddress.HouseNumber @appAddress.Street @appAddress.Region @appAddress.Country</span>
                                 </div>
                             </div>
                         }
                     }
 
                 }
-               
-              
-                <small class="d-block text-end mt-3">
-                    <a asp-controller="Home" asp-action="Address">New address</a>
+
+
+                    <small class="d-block white text-end mt-3">
+                    <a class="loginbtn barelink" asp-controller=" Home" asp-action="Address">New address</a>
                 </small>
             </div>
         </main>
@@ -325,3 +343,5 @@
         }
     </script>
 }
+
+@* </div>*@

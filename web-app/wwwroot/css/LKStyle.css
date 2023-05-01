@@ -62,7 +62,8 @@ li {
 }
 
 .white {
-    color: white!important; 
+    color: white !important;
+    word-break: break-word;
 }
 
 .redh1 {
@@ -156,6 +157,11 @@ a.barelink:hover {
     background: rgb(56,59,83);
     background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%);
     overflow: auto;
+}
+
+.bluebg {
+    background: rgb(56,59,83) !important;
+    background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
 }
 
 .containter-center {
@@ -502,7 +508,7 @@ function mobileMenu() {
     width: 12%;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 700px) {
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -941,7 +947,8 @@ PassBtn.addEventListener('click', () => {
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
         background-color: rgba(57, 62, 103, 0.2) !important;
-        width: 100%;
+        width: 100% !important;
+        color: white !important; 
     }
 
     .welcome {
@@ -1018,6 +1025,20 @@ PassBtn.addEventListener('click', () => {
         border-bottom: 1px solid rgba(230, 230, 230,0.2) !important;
     }
 
+
+    .whitebold {
+        color: white; 
+        font-weight: bold; 
+    }
+
+.imgwhite {
+    filter: brightness(0) invert(1) !important; 
+    margin-right: 10px !important; 
+}
+
+.centralpad {
+    padding: 20px 0px 0px 0px; 
+}
 
 
 
