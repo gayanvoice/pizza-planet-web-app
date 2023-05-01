@@ -8,16 +8,16 @@
         @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
         {
             <div class="container">
-                <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
-                    <p class="col-md-4 mb-0">Pizza Planet © 2023, University of Derby</p>
+                <footer class="centertextft d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
+                    <p class="centertextft align-items-center col-md-4 mb-0">Pizza Planet © 2023, University of Derby</p>
                    
                     <a href="https://github.com/gayanvoice/pizza-planet-web-app"
-                       class="col-md-4 d-flex align-items-center justify-content-left mb-3 mb-md-0 me-md-auto text-decoration-none">
-                        <small class="bluefootersml">@@100638182 @@100123818 @@100654780 @@100654780</small>
+                       class="centertextft col-md-4 d-flex a mb-3 mb-md-0 me-md-auto text-decoration-none">
+                        <small class="bluefootersml centertextft">@@100638182 @@100123818 @@100654780 @@100654780</small>
                    </a>
 
-                    <ul class="nav col-md-4 d-flex justify-content-end">
-                        <li class="nav-item"><small><a asp-controller="Home" asp-action="Account" class="blufooterbold px-2">User ID @Model.AspNetUser.Id</a></small></li>
+                    <ul class="nav col-md-4 d-flex justify-content-end centertextft">
+                        <li class="nav-item centertextft"><small><a asp-controller="Home" asp-action="Account" class="centertextft blufooterbold px-2">User ID @Model.AspNetUser.Id</a></small></li>
                     </ul>
                 </footer>
             </div>

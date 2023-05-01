@@ -5,6 +5,8 @@
 }
 @section CSS {
     <link href="https://getbootstrap.com/docs/5.3/examples/sign-in/sign-in.css" rel="stylesheet">
+    <link href="~/css/LKStyle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .login-with-microsoft-btn {
             transition: background-color .3s, box-shadow .3s;
@@ -21,6 +23,7 @@
             background-color: white;
             background-repeat: no-repeat;
             background-position: 12px 11px;
+            width: 100%; 
         }
 
         .login-with-google-btn {
@@ -37,6 +40,7 @@
             background-color: white;
             background-repeat: no-repeat;
             background-position: 12px 11px;
+            width: 100%; 
         }
 
         .bd-placeholder-img {
@@ -106,33 +110,58 @@
         }
     </style>
 }
-<main class="form-signin w-100 m-auto text-center">
+<div class="containerwidenopad">
+    <header class="header">
+        <nav class="navbarpercent">
+            <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/content/Logo.png" alt="Pizza Planet" class="nav-logo" />
+            <ul class="nav-menu-login">
+                <li class="nav-item-login">
+                    <span class="headermsg"> Already have an account? </span>
+                </li>
+                <li class="nav-item-login">
+
+                    <a class="nav-link-login barelink loginbtn-login" a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">
+                        <i class="loginicon fa fa-sign-in" aria-hidden="true"></i>
+                        Login
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <div class="stars"></div>
+    <div class="containter-center">
+        <div class="formwrapper">
+            <h1 class="h3 mb-3 fw-normal bluebs">Sign Up</h1>
+            <div class="formcontainer m-auto text-center">
     @{
-        <img class="mb-4" src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/shared/logo.png" alt="" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">Sign up</h1>
+        
+ 
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Password</label>
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Sign up</button>
-        </form>
-        <div class="mt-3">
-            <span><a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Sign in</a></span>
+        <div class="errorcontainer">
+            <div asp-validation-summary="ModelOnly" class="error" role="alert"></div>
+            <span asp-validation-for="Input.Email" class="error"></span>
+            <span asp-validation-for="Input.Password" class="error"></span>
+            <span asp-validation-for="Input.ConfirmPassword" class="error"></span>
         </div>
-        <div class="mt-3 mb-3 h5 fw-normal">or</div>
+            
+            <div class="form-floating mb-3">
+                            <input class="signin-input" asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder=" " />
+                            <label class="signin-label" asp-for=" Input.Email">Email</label>
+                        </div>
+            <div class="form-floating mb-3">
+                            <input type="password" id="passInput" asp-for="Input.Password" class="signin-input-pw" autocomplete="new-password" aria-required="true" placeholder=" " />
+                            <label class="signin-label-pw" accept-policy asp-for="Input.Password">Password</label>
+                            
+            </div>
+            <div class="form-floating mb-3">
+                            <input type="password" id="passInput" asp-for="Input.ConfirmPassword" class="signin-input-pw" autocomplete="new-password" aria-required="true" placeholder=" " />
+                            <label class="signin-label-pw" asp-for=" Input.ConfirmPassword">Confirm Password</label>
+            </div>
+                        <button id="registerSubmit" type="submit" class="submitbutton" >Sign up</button>
+        </form>
+        
+                    <div class="white mt-3 mb-3 h5 fw-normal">or</div>
         if ((Model.ExternalLogins?.Count ?? 0) > 0)
         {
             <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal m-auto">
@@ -163,9 +192,14 @@
             </form>
         }
     }
-    <small>Created By  <a href="https://github.com/gayanvoice/web-app" class="mt-5 text-body-secondary">@@100638182 @@100123818@@100654780 @@100654780</a> For 2022-SPR-7CS095 Web Technologies</small>
-    <p class="mt-3 mb-3 text-body-secondary">Pizza Planet © 2023, University of Derby</p>
-</main>
+    </div>
+            </div>
+    </div>
+    <footer id="footer">
+        <small>Created By  <a href="https://github.com/gayanvoice/web-app" class="mt-5 footer">@@100638182 @@100123818@@100654780 @@100654780</a> For 2022-SPR-7CS095 Web Technologies</small>
+        <p class="mt-3 mb-3 footer">Pizza Planet © 2023, University of Derby</p>
+    </footer>
+</div>
 @section JS {
     <partial name="_ValidationScriptsPartial" />
 }

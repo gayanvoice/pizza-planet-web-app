@@ -137,7 +137,7 @@ a.barelink:hover {
 
 .containerwide {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     margin: 0px;
     padding: 0px;
     padding-bottom: 20px;
@@ -149,7 +149,7 @@ a.barelink:hover {
 .containerwidenopad {
     position: fixed; 
     width: 100%;
-    height: 100vh;
+    height: 100%;
     margin: 0px;
     padding: 0px;
     padding-bottom: 0px;
@@ -473,8 +473,8 @@ function mobileMenu() {
     color: white;
     font-family: roboto, Arial;
     text-decoration: none;
-    padding-top: 10px; 
-    margin-bottom: 10px; 
+    padding-top: 10px;  
+ 
 }
 
 .loginbtn {
@@ -486,7 +486,8 @@ function mobileMenu() {
     border-radius: 5px;
     background-color: #ec1f26;
     margin-top: 10px;
-    padding: 7px; 
+    padding: 7px 10px 7px 10px;
+    display: inline-block;
 }
 
 
@@ -501,23 +502,28 @@ function mobileMenu() {
     width: 12%;
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 500px) {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 3.8rem;
+        top: 5.5rem;
         flex-direction: column;
         width: 100%;
         height: 100vh;
         text-align: center;
         transition: 0.3s;
         box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        z-index: 3;
+        z-index: 1;
         justify-content: left;
         align-items: center;
         background: rgb(2,0,36);
         background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(56,59,83,1) 100%);
         padding-top: 20px; 
+    }
+    
+
+    .nav-logo {
+        width: 30%;
     }
 
         .nav-menu.active {
@@ -570,192 +576,206 @@ function mobileMenu() {
         font-family: roboto, Arial;
         text-decoration: none;
         padding-top: 10px;
-        padding-bottom: 10px;
         white-space: nowrap;
     }
 
 }
 
-/*signin nav*/
 
-.nav-menu-login {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    /*signin nav*/
 
-.nav-item-login {
-    /*    margin-left: 2rem;*/
-    list-style: none;
-    font-family: 'Roboto', sans-serif;
-    width: fit-content;
-    color: white;
-    border: none !important;
-    display: inline-block;
-    padding: 0px 12px 0px 0px;
-}
-
-.nav-link-login {
-    font-size: 1rem;
-    font-weight: 400;
-    color: white;
-    font-family: roboto, Arial;
-    text-decoration: none;
-    margin-top: 10px;
-}
-
-.loginbtn-login {
-    font-size: 1rem;
-    font-weight: 400;
-    color: white;
-    font-family: roboto, Arial;
-    text-decoration: none;
-    border-radius: 5px;
-    background-color: #ec1f26;
-    margin-top: 10px;
-    padding: 7px;
-}
-
-.headermsg-login {
-    display: inline-block;
-    font-size: 1rem;
-    font-weight: 400;
-    color: white;
-    font-family: roboto, Arial;
-    text-decoration: none;
-    padding-top: 10px;
-}
-
-
-/*SIGNIN*/
-
-.formcontainer {
-    width: 400px;
-    padding: 20px 30px 20px 30px !important;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: rgb(56, 59, 83);
-}
-
-.formwrapper {
-    width: 400px;
-    text-align: center;
-    height: 100%; 
-}
-
-.signin-input {
-    border-radius: 5px;
-    background-color: white;
-    width: 100%;
-    height: 50px;
-    margin: 5px 0px 10px 0px;
-    padding: 10px;
-    outline: none;
-    display: inline-block;
-}
-
-.signin-input-pw {
-    border-radius: 5px;
-    background-color: white;
-    width: 100%;
-    height: 50px;
-    margin: 0px 0px 10px 0px;
-    padding: 10px;
-    outline: none;
-    display: inline-block;
-    position: relative;
-    left: 0px;
-    top: 5px;
-}
-
-.signin-label {
-    font: roboto, arial;
-    color: #373f47;
-    font-size: 18px;
-    display: block;
-}
-
-.signin-label-pw {
-    font: roboto, arial;
-    color: #373f47;
-    font-size: 18px;
-    display: inline-block;
-    top: 100px;
-}
-
-/*mobile responsive login*/
-
-@media screen and (max-width: 500px) {
-    .formcontainer {
-        width: 350px;
-        padding: 10px;
-        box-shadow: none;
+    .nav-menu-login {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-}
+
+    .nav-item-login {
+        /*    margin-left: 2rem;*/
+        list-style: none;
+        font-family: 'Roboto', sans-serif;
+        width: fit-content;
+        color: white;
+        border: none !important;
+        display: inline-block;
+        padding: 0px 12px 0px 0px;
+    }
+
+    .nav-link-login {
+        font-size: 1rem;
+        font-weight: 400;
+        color: white;
+        font-family: roboto, Arial;
+        text-decoration: none;
+        margin-top: 10px;
+    }
+
+    .loginbtn-login {
+        font-size: 1rem;
+        font-weight: 400;
+        color: white;
+        font-family: roboto, Arial;
+        text-decoration: none;
+        border-radius: 5px;
+        background-color: #ec1f26;
+        margin-top: 10px;
+        padding: 7px 10px 7px 10px;
+        display: inline-block;
+    }
+
+    .headermsg-login {
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 400;
+        color: white;
+        font-family: roboto, Arial;
+        text-decoration: none;
+        padding-top: 10px;
+        white-space: nowrap;
+    }
 
 
-/*Move label up if text is added to input - remember to add placeholder=" " to input in html*/
-.signin-input:not(:placeholder-shown) ~ label {
-    transform: translateY(-20px) !important;
-    padding: 0px;
-    margin: 0px;
-    color: white; 
-}
+    /*SIGNIN*/
 
-.signin-input-pw:not(:placeholder-shown) ~ label {
-    transform: translateY(-20px) !important;
-    padding: 0px;
-    margin: 0px;
-    color: white; 
-}
+    .formcontainer {
+        width: 400px;
+        padding: 15px 30px 20px 30px !important;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        background-color: rgb(56, 59, 83);
+    }
+
+    .formwrapper {
+        width: 400px;
+        text-align: center;
+        height: 100%;
+    }
+
+    .signin-input {
+        border-radius: 5px;
+        background-color: white;
+        width: 100%;
+        height: 50px;
+        margin: 5px 0px 10px 0px;
+        padding: 10px;
+        outline: none;
+        display: inline-block;
+    }
+
+    .signin-input-pw {
+        border-radius: 5px;
+        background-color: white;
+        width: 100%;
+        height: 50px;
+        margin: 5px 0px 10px 0px;
+        padding: 10px;
+        outline: none;
+        display: inline-block;
+    }
+
+    .signin-label {
+        font: roboto, arial;
+        color: #373f47;
+        font-size: 18px;
+        display: block;
+    }
+
+    .signin-label-pw {
+        font: roboto, arial;
+        color: #373f47;
+        font-size: 18px;
+        display: inline-block;
+        top: 100px;
+    }
+
+    /*mobile responsive login*/
+
+    @media screen and (max-width: 500px) {
+        .formcontainer {
+            width: 350px;
+            padding: 10px;
+            box-shadow: none;
+        }
+    }
 
 
-.submitbutton {
-    background-color: #ec1f26;
-    border: none;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    font-size: 20px;
-    border-radius: 5px;
-    width: 100%;
-    font-family: roboto, Arial;
-    width: 100%;
-    font-weight: bold;
-    height: 50px; 
-}
+    /*Move label up if text is added to input - remember to add placeholder=" " to input in html*/
+    .signin-input:not(:placeholder-shown) ~ label {
+        transform: translateY(-20px) !important;
+        padding: 0px;
+        margin: 0px;
+        color: white;
+    }
 
-.error {
-    color: #ec1f26 !important;
-    width: 100% !important;
-    padding-left: 0 !important;
-    color: white !important;
-    font-weight: bold;
-    text-align: left !important;
-    display: block;
-    padding: 10px 0px 5px 0px;
-}
+    .signin-input-pw:not(:placeholder-shown) ~ label {
+        transform: translateY(-20px) !important;
+        padding: 0px;
+        margin: 0px;
+        color: white;
+    }
 
-.errorcontainer {
-    margin-bottom: 20px !important; 
-    display: block !important; 
-}
 
-/*set input position to relative for this to work*/
+    .submitbutton {
+        background-color: #ec1f26;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+        font-size: 20px;
+        border-radius: 5px;
+        width: 100%;
+        font-family: roboto, Arial;
+        width: 100%;
+        font-weight: bold;
+        height: 50px;
+    }
 
-.eye {
-    position: absolute;
-    left: 90%;
-    top: 30%;
-    width: 20px;
-    height: 20px;
-    z-index: 5;
-    color: #383b53;
-}
+    .error {
+        color: #ec1f26 !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        color: white !important;
+        font-weight: bold;
+        text-align: left !important;
+        display: block;
+        /*  margin-bottom: 30px; */
+    }
 
-/*script*/
-/*<script >
+
+        .error:only-child {
+            margin-bottom: 30px !important;
+            margin-top: 15px;
+        }
+
+        .error:last-child {
+            margin-bottom: 30px !important;
+        }
+
+        .error:first-child {
+            margin-top: 15px !important;
+        }
+
+
+    .errorcontainer {
+        width: 100%;
+    }
+
+
+    /*set input position to relative for this to work*/
+
+    .eye {
+        position: absolute;
+        left: 90%;
+        top: 30%;
+        width: 20px;
+        height: 20px;
+        z-index: 5;
+        color: #383b53;
+    }
+
+    /*script*/
+    /*<script >
 const PassBtn = document.querySelector('#passBtn');
 PassBtn.addEventListener('click', () => {
         const input = document.querySelector('#passInput');
@@ -770,220 +790,234 @@ PassBtn.addEventListener('click', () => {
     });
 </script >*/
 
-/*PRODUCTS*/
-.title {
-    font-family: 'BLANK SPACE', sans-serif;
-    color: white;
-    text-shadow: 5px 5px rgba(236, 31, 38,1);
-    font-size: 60px;
-    padding: 20px;
-}
-
-.price {
-    font-family: 'BLANK SPACE', sans-serif;
-    color: white;
-    text-shadow: 5px 5px #323c88;
-    font-size: 60px;
-    padding: 0px;
-}
-
-.footer {
-    font-family: roboto, Arial;
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.5) !important;
-}
-
-.footerhighlight {
-    text-shadow: 1px 1px rgba(236, 31, 38,1);
-    font-weight: bold;
-}
-
-/*other*/
-
-.noorders {
-    font-weight: bold;
-    font-size: 50px;
-    text-align: center;
-    padding-left: 0;
-    margin-left: 5px;
-    margin-top: 10px;
-    text-transform: uppercase;
-    color: #373f47 !important;
-}
-
-.making {
-    background-color: #d12628;
-    width: 100%;
-    width: 100%;
-    color: white !important;
-    font-family: roboto, Arial;
-    font-size: 24px;
-    padding: 5px 0px 10px 0px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-}
-
-.ready {
-    background-color: #629f72;
-    width: 100%;
-    color: white !important;
-    font-family: roboto, Arial;
-    font-size: 24px;
-    padding: 5px 0px 10px 0px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-}
-
-.list-container {
-    padding: 0;
-    margin: 0;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-.list-container-wide {
-    margin: 0;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
-    border-radius: 5px;
-}
-
-.list-pad {
-    padding: 10px;
-    margin: 0;
-}
-
-/*MANAGER*/
-
-.mgrbtn {
-    font-size: 1rem;
-    font-weight: 400;
-    color: white;
-    font-family: roboto, Arial;
-    text-decoration: none;
-    border-radius: 5px;
-    background-color: #383b53;
-    margin-top: 10px;
-    width: 100%;
-    height: 50px;
-}
-
-.mgr-input {
-    border-radius: 5px;
-    background-color: white;
-    border: 2px solid #373f47;
-    width: 100%;
-    height: 50px;
-    margin: 5px 0px 5px 0px;
-    padding: 10px;
-    outline: none;
-    display: inline-block;
-}
-
-/*FOOTER*/
-.blufooter {
-    margin-top: 20px;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    background-color: rgba(56, 59, 83,0.3) !important;
-    width: 100%;
-    color: rgba(255, 255, 255, 0.5) !important;
-}
-
-.blufooterbold {
-    width: 100%;
-    color: white !important;
-    font-weight: bold;
-    font: small;
-    white-space: nowrap;
-    text-decoration: none; 
-}
-
-
-.bluefootersml {
-    width: 100%;
-    color: rgba(255, 255, 255, 0.5) !important;
-    padding-bottom: 0px;
-    font-weight: bold;
-}
-
-/*INDEX*/
-
-.bannerwide {
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    background-color: rgba(57, 62, 103, 0.2) !important;
-    width: 100%;
-}
-
-.welcome {
-    font-family: 'BLANK SPACE', sans-serif;
-    font-size: 30px;
-    color: white !important;
-    text-shadow: 4px 4px rgba(236, 31, 38,1);
-    padding: 30px 0px 0px 0px;
-    overflow-wrap: break-word;
-}
-
-.pizzabtn {
-    font-size: 1.2rem;
-    color: white;
-    font-family: 'BLANK SPACE', sans-serif;
-    text-shadow: 4px 4px rgba(236, 31, 38,1);
-    text-decoration: none;
-    border-radius: 5px;
-   /* background-image: url(https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/shared/pppiza.png);
-    background-position: center;*/
-    background-color: rgba(236, 31, 38,1);
-    border: 2px solid #ec1f26;
-    margin-top: 10px;
-    padding: 7px;
-    text-align: center !important;
-    width: 25%;
-    height: 50px;
-}
-
-@media screen and (max-width: 500px) {
-    .pizzabtn {
-        width: 80%;
+    /*PRODUCTS*/
+    .title {
+        font-family: 'BLANK SPACE', sans-serif;
+        color: white;
+        text-shadow: 5px 5px rgba(236, 31, 38,1);
+        font-size: 60px;
+        padding: 20px;
     }
-}
 
-.btnw {
-    width: 100% !important;
-    align-content: center !important;
-    text-align: center !important; 
-    display: inline-block;
-    padding: 0 !important; 
-    margin: 0 !important;
-}
+    .price {
+        font-family: 'BLANK SPACE', sans-serif;
+        color: white;
+        text-shadow: 5px 5px #323c88;
+        font-size: 60px;
+        padding: 0px;
+    }
 
-.bsblueh1 {
-    font-size: 1.3rem;
-    color: white;
-    font-family: 'BLANK SPACE', sans-serif;
-    margin: 0;
-    padding: 0px 5px 20px;
-    text-shadow: 4px 4px #323c88;
-}
+    .footer {
+        font-family: roboto, Arial;
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
 
-.histlistcontainer {
-    background-color: #383b53 !important;
-    /*    -webkit-backdrop-filter: blur(10px);
+    .footerhighlight {
+        text-shadow: 1px 1px rgba(236, 31, 38,1);
+        font-weight: bold;
+    }
+
+    /*other*/
+
+    .noorders {
+        font-weight: bold;
+        font-size: 50px;
+        text-align: center;
+        padding-left: 0;
+        margin-left: 5px;
+        margin-top: 10px;
+        text-transform: uppercase;
+        color: #373f47 !important;
+    }
+
+    .making {
+        background-color: #d12628;
+        width: 100%;
+        width: 100%;
+        color: white !important;
+        font-family: roboto, Arial;
+        font-size: 24px;
+        padding: 5px 0px 10px 0px;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+
+    .ready {
+        background-color: #629f72;
+        width: 100%;
+        color: white !important;
+        font-family: roboto, Arial;
+        font-size: 24px;
+        padding: 5px 0px 10px 0px;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+    }
+
+    .list-container {
+        padding: 0;
+        margin: 0;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .list-container-wide {
+        margin: 0;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+        border-radius: 5px;
+    }
+
+    .list-pad {
+        padding: 10px;
+        margin: 0;
+    }
+
+    /*MANAGER*/
+
+    .mgrbtn {
+        font-size: 1rem;
+        font-weight: 400;
+        color: white;
+        font-family: roboto, Arial;
+        text-decoration: none;
+        border-radius: 5px;
+        background-color: #383b53;
+        margin-top: 10px;
+        width: 100%;
+        height: 50px;
+    }
+
+    .mgr-input {
+        border-radius: 5px;
+        background-color: white;
+        border: 2px solid #373f47;
+        width: 100%;
+        height: 50px;
+        margin: 5px 0px 5px 0px;
+        padding: 10px;
+        outline: none;
+        display: inline-block;
+    }
+
+    /*FOOTER*/
+    .blufooter {
+        margin-top: 20px;
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba(56, 59, 83,0.3) !important;
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5) !important;
+    }
+
+    @media screen and (max-width: 500) {
+        .centertextft {
+            justify-content: center !important;
+            text-align: center !important;
+        }
+    }
+
+    .blufooterbold {
+        width: 100%;
+        color: white !important;
+        font-weight: bold;
+        font: small;
+        white-space: nowrap;
+        text-decoration: none;
+    }
+
+
+    .bluefootersml {
+        width: 100%;
+        color: rgba(255, 255, 255, 0.5) !important;
+        padding-bottom: 0px;
+        font-weight: bold;
+    }
+
+    /*INDEX*/
+
+    .bannerwide {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba(57, 62, 103, 0.2) !important;
+        width: 100%;
+    }
+
+    .welcome {
+        font-family: 'BLANK SPACE', sans-serif;
+        font-size: 30px;
+        color: white !important;
+        text-shadow: 4px 4px rgba(236, 31, 38,1);
+        padding: 30px 0px 0px 0px;
+        overflow-wrap: break-word;
+    }
+
+    .pizzabtn {
+        font-size: 1.2rem;
+        color: white;
+        font-family: 'BLANK SPACE', sans-serif;
+        text-shadow: 4px 4px rgba(236, 31, 38,1);
+        text-decoration: none;
+        border-radius: 5px;
+        /* background-image: url(https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/shared/pppiza.png);
+    background-position: center;*/
+        background-color: rgba(236, 31, 38,1);
+        border: 2px solid #ec1f26;
+        margin-top: 10px;
+        padding: 7px;
+        text-align: center !important;
+        width: 25%;
+        height: 50px;
+    }
+
+    @media screen and (max-width: 900px) {
+        .pizzabtn {
+            width: 60%;
+        }
+    }
+
+    @media screen and (max-width: 900px) {
+        .pizzabtn {
+            width: 80%;
+        }
+    }
+
+    .btnw {
+        width: 100% !important;
+        align-content: center !important;
+        text-align: center !important;
+        display: inline-block;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .bsblueh1 {
+        font-size: 1.3rem;
+        color: white;
+        font-family: 'BLANK SPACE', sans-serif;
+        margin: 0;
+        padding: 0px 5px 20px;
+        text-shadow: 4px 4px #323c88;
+    }
+
+    .histlistcontainer {
+        background-color: #383b53 !important;
+        /*    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);*/
-    display: flex;
-    flex-direction: column;
-    padding: 20px 30px 10px 30px;  
-    margin-bottom: 0;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    color: white !important; 
-}
+        display: flex;
+        flex-direction: column;
+        padding: 20px 30px 10px 30px;
+        margin-bottom: 0;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        color: white !important;
+    }
 
-.whiteborderbtm {
-    border-bottom: 1px solid rgba(230, 230, 230,0.2) !important;
-}
+    .whiteborderbtm {
+        border-bottom: 1px solid rgba(230, 230, 230,0.2) !important;
+    }
+
 
 
 

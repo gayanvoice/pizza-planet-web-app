@@ -124,6 +124,7 @@
                 <li class="nav-item-login">
                     
                     <a class="nav-link-login barelink loginbtn-login" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">
+                       
                         Register
                     </a>
                 </li>
@@ -139,13 +140,13 @@
 @{
     
     <form id="account" method="post">
-      <div asp-validation-summary="ModelOnly" class="error" role="alert"></div>
-      <div class="errorcontainer">
+       <div class="errorcontainer">
+        <div asp-validation-summary="ModelOnly" class="error" role="alert"></div>
         <span asp-validation-for="Input.Email" class="error"></span>
         <span class="error" asp-validation-for="Input.Password"></span>
       </div>
         <div class="form-floating mb-3">
-            <input class="signin-input" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder=" " />
+            <input class="signin-input" asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder=" " />
             <label class="signin-label" asp-for="Input.Email">Email</label>
            
         </div>
