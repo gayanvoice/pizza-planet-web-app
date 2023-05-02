@@ -7,7 +7,19 @@
 }
 @section CSS{
     <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/LKStyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.cdnfonts.com/css/blank-space" rel="stylesheet" to html>
+
+    <style>
+
+        body {
+            background: rgb(56,59,83) !important;
+            background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
+        }
+    </style>
 }
+<div class="stars"></div>
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
@@ -15,16 +27,16 @@
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
         <div class="container mt-4">
             <main>
-                <div class="row g-5">
+                <div class="row g-5 toppad">
                     <div class="col-md-5 col-lg-4">
                         <h4 class="d-flex justify-content-between align-items-center mb-4">
-                            <span class="text-primary">Postcode</span>
+                            <span class="redh1bs">Postcode</span>
                         </h4>
 
-                        <form class="card p-2" asp-controller="Home" asp-action="Address" method="get">
+                        <form class="card p-2 blurcontainer" asp-controller="Home" asp-action="Address" method="get">
                             <div class="input-group">
                                 <input type="text" name="PostCode" class="form-control" placeholder="Post Code" value="@Model.Search.PostCode">
-                                <button type="submit" class="btn btn-primary">Search</button>
+                                <button class="searchbtn" type="submit" class="redbg btn btn-primary">Search</button>
                             </div>
                         </form>
 
@@ -32,7 +44,7 @@
                     </div>
 
                     <div class="col-md-7 col-lg-8 order-md-last">
-                        <h4 class="mb-3">Billing address</h4>
+                        <h4 class="mb-3 bsblueh1nopad">Billing address</h4>
                        @* <form id="account" method="post" asp-controller="Home" asp-action="Address">
                             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                             <div class="form-floating mb-3">
@@ -53,12 +65,12 @@
                             </div>
  
                         </form>*@
-                        <form class="needs-validation" novalidate="" asp-controller="Home" asp-action="Address" method="post">
+                        <form class="blurcontainer needs-validation" novalidate="" asp-controller="Home" asp-action="Address" method="post">
                             <div class="row g-3">
                                 <div class="col-12">
-                                    <label asp-for="Form.HouseNumber" class="form-label">House Number <span class="text-body-secondary">(Optional)</span></label>
+                                    <label asp-for="Form.HouseNumber" class="form-label">House Number <span class="text-body-secondary white">(Optional)</span></label>
                                     <div class="input-group has-validation">
-                                        <span class="input-group-text">#</span>
+                                        <span class="input-group-text hash">#</span>
                                         <input asp-for="Form.HouseNumber" class="form-control" autocomplete="House Number" aria-required="true" />
                                     </div>
                                     <span asp-validation-for="Form.HouseNumber" class="form-label"></span>
@@ -111,7 +123,7 @@
                                 </div>
                             </div>
 
-                            <button class="w-100 btn btn-primary btn-lg mt-4" type="submit">Add</button>
+                            <button class="w-100 btn btn-primary btn-lg mt-4 addbtn" type="submit">Add</button>
                         </form>
                     </div>
                 </div>

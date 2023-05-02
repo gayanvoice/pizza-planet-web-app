@@ -222,8 +222,8 @@
                         if (appAddress is not null)
                         {
                             <div class="whiteborderbtm d-flex text-body-secondary pt-3">
-                                <img class="imgwhite" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-address-id="@appAddress.AddressId" data-bs-post-code="@appAddress.PostCode"
-                                     src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
+                                <img data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-address-id="@appAddress.AddressId" data-bs-post-code="@appAddress.PostCode"
+                                     src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" class="imgwhite bd-placeholder-img flex-shrink-0 me-2 rounded" width="32" height="32"
                                      style="cursor: pointer;" />
                                 <div class=" pb-3 mb-0 small lh-sm w-100 open-AddBookDialog"
                                      data-bs-toggle="modal" data-bs-target="#exampleModal"
@@ -244,7 +244,7 @@
 
 
                     <small class="d-block white text-end mt-3">
-                    <a class="loginbtn barelink" asp-controller=" Home" asp-action="Address">New address</a>
+                    <a class="loginbtn barelink" asp-controller="Home" asp-action="Address">New address</a>
                 </small>
             </div>
         </main>

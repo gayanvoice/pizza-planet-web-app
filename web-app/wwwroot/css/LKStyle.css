@@ -14,6 +14,9 @@ blankspace font-face - <link href="https://fonts.cdnfonts.com/css/blank-space" r
 
 @import url('https://fonts.cdnfonts.com/css/blank-space');
 
+html * {
+    font-family: roboto,Arial;
+}
 
 a.footer {
     font-family: roboto,Arial;
@@ -92,6 +95,15 @@ li {
     padding: 10px 0px 10px 0px;
     text-align: center;
     text-transform: uppercase;
+}
+
+.redh1bs {
+    font-size: 1.3rem;
+    color: white !important;
+    font-family: 'BLANK SPACE', sans-serif;
+    margin: 0;
+    padding: 0px 0px 0px 5px;
+    text-shadow: 4px 4px rgba(236, 31, 38,1);
 }
 
 .bluebs {
@@ -1008,6 +1020,17 @@ PassBtn.addEventListener('click', () => {
         text-shadow: 4px 4px #323c88;
     }
 
+.bsblueh1nopad {
+    font-size: 1.3rem;
+    color: white;
+    font-family: 'BLANK SPACE', sans-serif;
+    margin: 0;
+    padding: 0px 0px 0px 5px; 
+    text-shadow: 4px 4px #323c88;
+}
+
+
+
     .histlistcontainer {
         background-color: #383b53 !important;
         /*    -webkit-backdrop-filter: blur(10px);
@@ -1039,6 +1062,88 @@ PassBtn.addEventListener('click', () => {
 .centralpad {
     padding: 20px 0px 0px 0px; 
 }
+
+/*ADDRESSES*/
+
+.address-input {
+    border-radius: 5px;
+    background-color: white;
+    height: 50px;
+    margin: 5px 0px 10px 0px;
+    outline: none;
+    display: inline-block;
+}
+
+.blurcontainer {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(57, 62, 103, 0.2) !important;
+    border-radius: 0.375rem;
+    padding: 20px 30px 20px 30px; 
+    color: white !important;
+}
+
+.toppad {
+    padding-top: 20px;
+}
+
+.hash {
+    color: white !important;
+    background-color: #383b53 !important;
+    -webkit-border-top-left-radius: 0.375rem !important;
+    -webkit-border-bottom-left-radius: 0.375rem !important;
+    -moz-border-radius-topleft: 0.375rem !important;
+    -moz-border-radius-bottomleft: 0.375rem !important;
+    border-top-left-radius: 0.375rem !important;
+    border-bottom-left-radius: 0.375rem !important;
+    border: none !important;
+}
+
+.addbtn {
+    background-color: #ec1f26 !important;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    border-radius: 0.375rem;
+    width: 100%;
+    font-family: roboto, Arial;
+    font-weight: bold;
+    height: 50px;
+    padding: 10px !important; 
+}
+
+
+
+.searchbtn {
+    background-color: #ec1f26 !important;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-family: roboto, Arial;
+}
+
+.redpill {
+    font-size: 1.2rem;
+    color: white;
+    font-family: 'BLANK SPACE', sans-serif;
+    text-shadow: 4px 4px rgba(236, 31, 38,1);
+    text-decoration: none;
+    background-color: rgba(236, 31, 38,1);
+    border: 2px solid #ec1f26;
+    margin: 10px;
+    text-align: center !important;
+    width: 25%;
+    height: 50px;
+    padding: 10px 20px;
+    display: inline-block;
+    border-radius: 50px;
+}
+
+
 
 
 
