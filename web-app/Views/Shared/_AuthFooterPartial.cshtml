@@ -2,14 +2,29 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav blufooter">
+<div class="navbar-nav blufooter">
 @if (SignInManager.IsSignedIn(User))
 {
         @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
         {
-            <div class="container">
-                <footer class="centertextft d-flex flex-wrap justify-content-between align-items-center py-3 my-4">
-                    <p class="centertextft align-items-center col-md-4 mb-0">Pizza Planet © 2023, University of Derby</p>
+            <div class="container footer-menu">
+                <footer class="centertextft d-flex flex-wrap align-items-center py-3 my-4">
+                    <ul>
+                        <li class="f-menu">
+                            Pizza Planet © 2023, University of Derby
+                        </li>
+
+                        <li class="ptfooter">
+                            <a href="https://github.com/gayanvoice/pizza-planet-web-app"
+                               class="text-decoration-none">
+                                <small class="bluefootersml">@@100638182 @@100123818 @@100654780 @@100654780</small>
+                            </a>
+                        </li>
+                        <li class="ptfooter">
+                            <small><a class="bluefootersml" asp-controller="Home" asp-action="Account">User ID @Model.AspNetUser.Id</a></small>
+                        </li>
+                    </ul>
+                   @* <p class="centertextft align-items-center col-md-4 mb-0">Pizza Planet © 2023, University of Derby</p>
                    
                     <a href="https://github.com/gayanvoice/pizza-planet-web-app"
                        class="centertextft col-md-4 d-flex a mb-3 mb-md-0 me-md-auto text-decoration-none">
@@ -18,9 +33,9 @@
 
                     <ul class="nav col-md-4 d-flex justify-content-end centertextft">
                         <li class="nav-item centertextft"><small><a asp-controller="Home" asp-action="Account" class="centertextft blufooterbold px-2">User ID @Model.AspNetUser.Id</a></small></li>
-                    </ul>
+                    </ul>*@
                 </footer>
             </div>
         }
 }
-</ul>
+</div>
