@@ -1133,6 +1133,20 @@ PassBtn.addEventListener('click', () => {
 }
 
 .redpill {
+    font-family: 'BLANK SPACE', sans-serif;
+    text-shadow: 4px 4px rgba(236, 31, 38,1);
+    text-decoration: none;
+    background-color: rgba(236, 31, 38,1);
+    border: 2px solid #ec1f26;
+    text-align: center !important;
+    width: 300px;
+    height: 50px;
+    padding: 10px;
+    display: inline-block;
+    border-radius: 50px;
+}
+
+.redpill {
     font-size: 1.2rem;
     color: white;
     font-family: 'BLANK SPACE', sans-serif;
@@ -1140,13 +1154,33 @@ PassBtn.addEventListener('click', () => {
     text-decoration: none;
     background-color: rgba(236, 31, 38,1);
     border: 2px solid #ec1f26;
-    margin: 10px;
-    text-align: center !important;
-    width: 25%;
+    width: 300px;
     height: 50px;
-    padding: 10px 20px;
+    margin: 0;
+    padding: 3px 0px 10px 50px;
     display: inline-block;
     border-radius: 50px;
+}
+
+.redpillsmoll {
+    font-size: 1rem;
+    color: white;
+    font-family: 'BLANK SPACE', sans-serif;
+    text-decoration: none;
+    background-color: #c6676a;
+    border: 2px solid #c6676a;
+    text-align: center !important;
+    width: 70px;
+    height: 40px;
+    padding-top: 7px;
+    display: inline-block;
+    border-radius: 50px;
+    margin-left: 35px;
+    text-shadow: none !important; 
+}
+
+.checkout {
+    margin-left: 50px; 
 }
 
 /*FOOTER*/
@@ -1197,3 +1231,70 @@ PassBtn.addEventListener('click', () => {
 
         }
 }
+
+/*PRODUCT*/
+
+.bannerwideprod {
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+    background-color: rgba(57, 62, 103, 0.2) !important;
+    width: 100% !important;
+    color: white !important;
+    justify-content: center !important;
+    display: inline-block; 
+    height: 100px; 
+    align-content: center !important; 
+    text-align: center !important; 
+    padding-top: 25px; 
+    padding-bottom: 25px; 
+}
+
+.browse {
+    font-family: 'BLANK SPACE', sans-serif;
+    font-size: 30px;
+    color: white !important;
+    text-shadow: 4px 4px rgba(236, 31, 38,1);
+    padding-top: 10px; 
+    overflow-wrap: break-word;
+}
+
+.prodtitle {
+    font-size: 2.1rem !important;
+    color: white !important;
+    font-family: 'BLANK SPACE', sans-serif;
+    text-shadow: 4px 4px #323c88;
+    padding-top: 20px; 
+}
+
+.price {
+    font-size: 3.5rem !important;
+    color: white !important;
+    font-family: 'BLANK SPACE', sans-serif;
+    text-shadow: 4px 4px rgba(236, 31, 38,1);
+    padding-top: 20px;
+}
+
+.shaddow {
+    color: white!important; 
+    font-family: roboto, Arial !important; 
+    text-shadow: 2px 2px 2px #1A1A1A !important;
+    font-size: 15px !important; 
+}
+
+.qtylbl {
+    color: white !important;
+    font-family: roboto, Arial !important;
+    text-decoration: none;
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+    background-color: rgba(57, 62, 103, 0.3) !important;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    padding: 12px 0px 0px 0px !important;
+    text-align: center !important;
+    display: inline-block;
+    border-radius: 50px;
+    font-size: 1.3rem !important;
+}
+
