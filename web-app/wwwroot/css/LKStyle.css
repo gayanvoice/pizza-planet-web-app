@@ -1132,19 +1132,6 @@ PassBtn.addEventListener('click', () => {
     font-family: roboto, Arial;
 }
 
-.redpill {
-    font-family: 'BLANK SPACE', sans-serif;
-    text-shadow: 4px 4px rgba(236, 31, 38,1);
-    text-decoration: none;
-    background-color: rgba(236, 31, 38,1);
-    border: 2px solid #ec1f26;
-    text-align: center !important;
-    width: 300px;
-    height: 50px;
-    padding: 10px;
-    display: inline-block;
-    border-radius: 50px;
-}
 
 .redpill {
     font-size: 1.2rem;
@@ -1298,3 +1285,88 @@ PassBtn.addEventListener('click', () => {
     font-size: 1.3rem !important;
 }
 
+.clear{
+    background-color: transparent !important; 
+}
+
+.bluecard {
+    background-color: #383b53 !important;
+}
+
+.leftalign {
+    float: left; 
+}
+
+.rightalign {
+    float: right; 
+}
+
+.additems {
+    font-family: 'BLANK SPACE', sans-serif;
+    text-decoration: none;
+    background-color: #404ca9;
+    border: 2px solid #404ca9;
+    text-align: center !important;
+    width: 300px;
+    height: 50px;
+    padding-top: 10px !important;
+    display: inline-block;
+    border-radius: 50px;
+}
+
+
+
+.checkoutbtn {
+    font-family: 'BLANK SPACE', sans-serif;
+    text-decoration: none;
+    background-color: rgba(236, 31, 38,1);
+    border: 2px solid rgba(236, 31, 38,1);
+    text-align: center !important;
+    width: 300px;
+    height: 50px;
+    padding-top: 10px !important;
+    display: inline-block;
+    border-radius: 50px;
+}
+
+.bsblueh1checkout {
+    font-size: 1.6rem !important;
+    color: white !important;
+    font-family: 'BLANK SPACE', sans-serif !important;
+    margin: 0;
+    padding: 0px 5px 0px !important;
+    text-shadow: 4px 4px #323c88 !important;
+}
+
+.redpillcheck {
+    font-size: 1.2rem;
+    color: white;
+    font-family: 'BLANK SPACE', sans-serif;
+    text-shadow: 4px 4px rgba(236, 31, 38,1);
+    text-decoration: none;
+    background-color: rgba(236, 31, 38,1);
+    border: 2px solid #ec1f26;
+    width: 300px;
+    height: 50px;
+    margin: 0;
+    padding: 3px 0px 10px 95px;
+    display: inline-block;
+    border-radius: 50px;
+}
+
+.redpillsmollcheck {
+    font-size: 1rem;
+    color: white;
+    font-family: 'BLANK SPACE', sans-serif;
+    text-decoration: none;
+    background-color: #c6676a;
+    border: 2px solid #c6676a;
+    text-align: center !important;
+    width: 70px;
+    height: 40px;
+    padding-top: 9px;
+    display: inline-block;
+    border-radius: 50px;
+    margin-left: 35px;
+    text-shadow: none !important;
+}

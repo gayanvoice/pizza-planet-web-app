@@ -13,7 +13,15 @@
 }
 @section CSS {
     <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <link rel="stylesheet" href="~/css/LKStyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.cdnfonts.com/css/blank-space" rel="stylesheet" to html>
     <style>
+        body {
+            background: rgb(56,59,83) !important;
+            background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
+        }
+
         .bi {
             vertical-align: -.125em;
             fill: white;
@@ -33,7 +41,7 @@
         </symbol>
     </svg>
 }
-
+<div class="stars"></div>
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
@@ -51,11 +59,11 @@
                 </div>
             </section>
         }
-        <section class="h-100 h-custom" style="background-color: #eee;">
-            <div class="container py-5 h-100">
+        <section class="h-100 h-custom" style=" background-color: transparent !important">
+            <div class="container py-5 h-100 clear">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col">
-                        <div class="card">
+                        <div class="card bannerwide rounded">
                             <div class="card-body p-4">
 
                                 <div class="row">
@@ -64,24 +72,28 @@
                                         @if (Model.CheckoutBasketProcedureModelV3Enumerable is not null &&
                                        Model.CheckoutBasketProcedureModelV3Enumerable.Count() == 0)
                                         {
-                                            <div class="card">
-                                                <div class="card-body p-4">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="h5">
-                                                                You have no any items in your checkout.
-                                                            </div>
+
+                                            @*NO ITEMS ERROR*@
+                                            <div class="card" style="background-color: transparent !important; border: none !important">
+
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="h5" style="color: white; font-family: roboto, arial; text-align:center;font-size: 24px; padding-top: 20px;">
+                                                            You have no items in your basket
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
 
-                                            <div class="card mt-4">
-                                                <div class="card-body p-4">
+                                            @*ADD ITEMS*@
+                                            <div class="card mt-4" style="background-color: transparent !important; border: none !important">
+                                                <div class="card-body p-4" style="background-color: transparent !important; border: none !important; align-content: center !important; padding: 0 !important; margin: 0 !important;">
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="h5 text-center">
-                                                                <a asp-controller="Home" asp-action="Product" class="text-body">
+                                                                <a class="additems barelink" asp-controller="Home" asp-action="Product" class="text-body">
                                                                     <i class="fas fa-long-arrow-alt-left me-2"></i>Add Items
                                                                 </a>
                                                             </div>
@@ -98,17 +110,18 @@
                                         {
                                             if (Model.CheckoutBasketProcedureModelV3Enumerable is not null)
                                             {
+                                                @*CHECKOUT SECTION*@
                                                 double totalCost = 0.0;
                                                 double totalUnits = Model.CheckoutBasketProcedureModelV3Enumerable.Sum(b => b.Quantity);
                                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                                     <div>
-                                                        <div class="display-6 mb-1">Checkout</div>
+                                                        <div class="bsblueh1checkout display-6 mb-1">Checkout</div>
                                                     </div>
-                                                    <div>
-                                                        <p class="mb-0 display-6">
-                                                            @totalUnits
-                                                        </p>
-                                                    </div>
+                                                    @* <div>
+                                    <p class="mb-0 display-6">
+                                    @totalUnits
+                                    </p>
+                                    </div>*@
                                                 </div>
 
 
@@ -117,9 +130,10 @@
                                                 {
                                                     if (v3 is not null)
                                                     {
+                                                        @*ITEMS IN BASKET*@
                                                         double itemCost = v3.Quantity * v3.Price;
-                                                        <div class="card mb-3">
-                                                            <div class="card-body">
+                                                        <div class="card mb-3 rounded" style="background-color: #383b53 !important;font-family: roboto, Arial; color: white !important;">
+                                                            <div class="clear card-body">
                                                                 <div class="d-flex justify-content-between">
                                                                     <div class="d-flex flex-row align-items-center">
                                                                         <div>
@@ -146,18 +160,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        totalCost = totalCost + itemCost;
-                                                        totalUnits = totalUnits + v3.Quantity;
+                                                        
                                                     }
                                                 }
 
-
-                                                <div class="card mt-4">
-                                                    <div class="card-body p-4">
+                                                @*ADD ITEMS*@
+                                                <div class="card mt-4" style="background-color: transparent !important; border: none !important">
+                                                    <div class="card-body p-4" style="background-color: transparent !important; border: none !important; align-content: center !important; padding: 0 !important; margin: 0 !important;">
                                                         <div class="row">
                                                             <div class="col-lg-12">
                                                                 <div class="h5 text-center">
-                                                                    <a asp-controller="Home" asp-action="Product" class="text-body">
+                                                                    <a class="additems barelink" asp-controller="Home" asp-action="Product" class="text-body">
                                                                         <i class="fas fa-long-arrow-alt-left me-2"></i>Add Items
                                                                     </a>
                                                                 </div>
@@ -169,11 +182,15 @@
 
                                                     </div>
                                                 </div>
-                                                <div class="card mt-4">
+                                                @*TOTAL COST*@
+                                                <div class="card mt-4" style="background-color: #383b53 !important;font-family: roboto, Arial; color: white !important;">
                                                     <div class="card-body p-4">
                                                         <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="h4 text-xl-end">
+                                                            <div class="col-lg-12" style="clear: both; padding-top: 10px;">
+                                                                <div class="h4 leftalign">
+                                                                    Total
+                                                                </div>
+                                                                <div class="h4 rightalign">
                                                                     @totalCost.ToString("C2", CultureInfo.CreateSpecificCulture("en-GB"))
                                                                 </div>
 
@@ -184,41 +201,46 @@
 
                                                     </div>
                                                 </div>
+                                                @*ORDER*@
+
+
+                                                <div class="card mt-4" style="background-color: transparent !important; border: none !important">
+                                                    <div class="card-body p-4" style="background-color: transparent !important; border: none !important; align-content: center !important; padding: 0 !important; margin: 0 !important;">
+
+                                                        <div class="row">
+
+                                                            <div class="col-lg-12">
+                                                                <div class="h5 text-center">
+                                                                    <a class="redpillcheck barelink" asp-controller="Home" asp-action="Order">
+                                                                        Order <span class="redpillsmollcheck">@totalUnits </span>
+
+
+
+
+
+
+                                                                    </a>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
                                             }
                                         }
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-        <section class="h-100 h-custom" style="background-color: #eee;">
-            <div class="container pb-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body p-4">
-                                <div class="row">
-
-                                    <div class="col-lg-12">
-                                        <div class="h5 text-xl-end">
-                                            <a asp-controller="Home" asp-action="Order" class="text-body">
-                                                <i class="fas fa-long-arrow-alt-left me-2"></i>Order
-                                            </a>
-                                        </div>
-
-                                    </div>
 
 
-                                </div>
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </section>
 
 
