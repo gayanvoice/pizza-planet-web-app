@@ -1425,3 +1425,16 @@ PassBtn.addEventListener('click', () => {
     display: inline-block;
     border-radius: 50px;
 }
+
+.smallrdbtn {
+    font-size: 1rem;
+    font-weight: 400;
+    color: white;
+    font-family: roboto, Arial;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #ec1f26;
+    margin-top: 10px;
+    padding: 7px 10px 7px 10px;
+    display: inline-block;
+}
