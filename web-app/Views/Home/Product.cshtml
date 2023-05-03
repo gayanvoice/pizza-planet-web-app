@@ -12,16 +12,17 @@
     <link rel="stylesheet" href="~/css/LKStyle.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.cdnfonts.com/css/blank-space" rel="stylesheet" to html>
-    <style>
-
+   
+    }
+<style>
         body {
             background: rgb(56,59,83) !important;
             background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
         }
     </style>
 
-}
-    <div class="stars"></div>
+
+ <div class="stars"></div>
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
@@ -29,6 +30,7 @@
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
         <section>
             <div class="bannerwideprod">
+               
                             
                                         @if (Model.CheckoutBasketProcedureModelV2Enumerable is not null &&
                                        Model.CheckoutBasketProcedureModelV2Enumerable.Count() == 0)
