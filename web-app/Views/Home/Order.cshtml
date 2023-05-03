@@ -135,48 +135,48 @@
                         <a asp-controller="Home" asp-action="Checkout" class="text-body">Checkout</a>
                         </div>
                         </div>*@
-                        @*WORKING HERE*@
+                                    @*WORKING HERE*@
                                     <div style="background: transparent; border: none; padding-bottom: 30px;">
-                                    @if (Model.AppCheckout.DeliveryMethod.Equals("DELIVERY"))
-                                    {
-                                        <div style="align-content: center; text-align: center">
+                                        @if (Model.AppCheckout.DeliveryMethod.Equals("DELIVERY"))
+                                        {
+                                            <div style="align-content: center; text-align: center">
 
-                                            <a asp-controller="Home" asp-action="Delivery" class="barelink redpillcnt">Select Address</a>
+                                                <a asp-controller="Home" asp-action="Delivery" class="barelink redpillcnt">Select Address</a>
 
-                                        </div>
-                                    }
-                                    else if (Model.AppCheckout.DeliveryMethod.Equals("PICK"))
-                                    {
-                                        <div style="align-content: center; text-align: center">
+                                            </div>
+                                        }
+                                        else if (Model.AppCheckout.DeliveryMethod.Equals("PICK"))
+                                        {
+                                            <div style="align-content: center; text-align: center">
 
-                                            <a asp-controller="Home" asp-action="Payment" class="barelink redpillcnt">Payment</a>
+                                                <a asp-controller="Home" asp-action="Payment" class="barelink redpillcnt">Payment</a>
 
-                                        </div>
-                                    }
-                                    else if (Model.AppCheckout.DeliveryMethod.Equals("DINE"))
-                                    {
-                                        <div style="align-content: center; text-align: center">
+                                            </div>
+                                        }
+                                        else if (Model.AppCheckout.DeliveryMethod.Equals("DINE"))
+                                        {
+                                            <div style="align-content: center; text-align: center">
 
-                                            <a asp-controller="Home" asp-action="Payment" class="barelink redpillcnt">Payment</a>
+                                                <a asp-controller="Home" asp-action="Payment" class="barelink redpillcnt">Payment</a>
 
-                                        </div>
-                                    }
-                                    else
-                                    {
+                                            </div>
+                                        }
+                                        else
+                                        {
                                             <div style="color: white; font-family: roboto, arial; text-align:center;font-size: 24px; padding-top: 20px;">
 
-                                            Select Order Method
+                                                Select Order Method
 
-                                        </div>
-                                    }
-                                </div>
+                                            </div>
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            
+
         }
         else
         {
