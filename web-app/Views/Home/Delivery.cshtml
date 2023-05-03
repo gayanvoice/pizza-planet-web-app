@@ -9,6 +9,15 @@
 @section CSS{
     <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
 }
+
+<style>
+body{
+        /*!!IMPORTANT forces grid display which stops headers & footers moving around*/
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: 1fr auto;
+}
+</style>
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)

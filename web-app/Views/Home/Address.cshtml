@@ -16,6 +16,10 @@
         body {
             background: rgb(56,59,83) !important;
             background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
+            /*!!IMPORTANT forces grid display which stops headers & footers moving around*/
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: 1fr auto;
         }
     </style>
 }

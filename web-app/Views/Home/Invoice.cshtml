@@ -20,6 +20,12 @@
 }
 @section CSS {
     <style>
+        body{
+            /*!!IMPORTANT forces grid display which stops headers & footers moving around*/
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: 1fr auto;
+        }
         .bi {
             vertical-align: -.125em;
             fill: white;

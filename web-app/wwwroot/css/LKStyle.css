@@ -18,6 +18,13 @@ html * {
     font-family: roboto,Arial;
 }
 
+body {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(57, 62, 103, 0.2) !important;
+    color: white !important; 
+}
+
 a.footer {
     font-family: roboto,Arial;
     color: rgba(255, 255, 255, 0.5) !important;
@@ -420,6 +427,7 @@ function mobileMenu() {
     background: rgb(2,0,36);
     background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(56,59,83,1) 100%);
     box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    max-height: 100px; 
 }
 
 .navbar {
@@ -925,15 +933,16 @@ PassBtn.addEventListener('click', () => {
         display: inline-block;
     }
 
-    /*FOOTER*/
-    .blufooter {
-        margin-top: 20px;
-        -webkit-backdrop-filter: blur(10px);
-        backdrop-filter: blur(10px);
-        background-color: rgba(56, 59, 83,0.3) !important;
-        width: 100%;
-        color: rgba(255, 255, 255, 0.5) !important;
-    }
+ /*FOOTER*/
+.blufooter {
+    margin-top: 20px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(56, 59, 83,0.3) !important;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.5) !important;
+    
+}
 
     @media screen and (max-width: 500) {
         .centertextft {
