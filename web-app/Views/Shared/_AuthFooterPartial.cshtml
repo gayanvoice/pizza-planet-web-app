@@ -2,6 +2,12 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+    <style>
+    html {
+        color: white !important; 
+    }
+</style>
+
 <div class="navbar-nav blufooter">
 @if (SignInManager.IsSignedIn(User))
 {
@@ -10,7 +16,7 @@
             <div class="container footer-menu">
                 <footer class="centertextft d-flex flex-wrap align-items-center py-3 my-4">
                     <ul>
-                        <li class="f-menu">
+                        <li class="f-menu" style="color: white !important">
                             Pizza Planet © 2023, University of Derby
                         </li>
 
