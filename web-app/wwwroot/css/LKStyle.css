@@ -1141,6 +1141,20 @@ PassBtn.addEventListener('click', () => {
     font-family: roboto, Arial;
 }
 
+.searchbtnblue {
+    background-color: rgba(236, 31, 38,1) !important;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-family: roboto, Arial;
+    height: 45px;
+    font-weight: bold;
+    font-size: 1.15rem;
+    margin-top: 35px;
+}
+
 
 .redpill {
     font-size: 1.2rem;
@@ -1363,6 +1377,15 @@ PassBtn.addEventListener('click', () => {
     text-shadow: 4px 4px #323c88 !important;
 }
 
+.bsblueh1pmnt {
+    font-size: 1.6rem !important;
+    color: white !important;
+    font-family: 'BLANK SPACE', sans-serif !important;
+    margin: 0;
+    padding: 0px 5px 25px 0px !important;
+    text-shadow: 4px 4px #323c88 !important;
+}
+
 .redpillcheck {
     font-size: 1.2rem;
     color: white;
@@ -1438,3 +1461,4 @@ PassBtn.addEventListener('click', () => {
     padding: 7px 10px 7px 10px;
     display: inline-block;
 }
+
