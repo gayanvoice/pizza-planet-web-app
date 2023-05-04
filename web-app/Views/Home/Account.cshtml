@@ -44,7 +44,7 @@
                         <div class="bannerwide d-flex align-items-center p-3 my-3 text-black rounded shadow-sm">
                             <img class="me-3" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Microsoft_icon.svg" alt="" height="38">
                             <div class="lh-1">
-                                <h1 class="h6 mb-0 text-black lh-1">Microsoft</h1>
+                                <h1 class="h6 mb-0 lh-1">Microsoft</h1>
                                 @if(Model.AspNetUser.Email is not null)
                                 {
                                      <small>@Model.AspNetUser.Email</small>
@@ -272,7 +272,7 @@
             <form asp-controller="Home" asp-action="DeleteAddress" method="get">
                 <div class="modal-header whiteborderbtm">
                 <h1 class="modal-title fs-5" id="deleteModalLabel">Title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close crosswhite" style="color: white !important" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body whiteborderbtm" >
                 <div class="h6">Are you sure want to delete this postcode from account?</div>

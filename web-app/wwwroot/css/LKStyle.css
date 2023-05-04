@@ -1074,6 +1074,13 @@ PassBtn.addEventListener('click', () => {
     margin-right: 10px !important; 
 }
 
+.crosswhite {
+    filter: brightness(0) invert(1) !important;
+    color: white !important; 
+    margin-right: 7px; 
+    
+}
+
 .centralpad {
     padding: 20px 0px 0px 0px; 
 }
@@ -1474,5 +1481,23 @@ PassBtn.addEventListener('click', () => {
     margin-top: 10px;
     padding: 7px 10px 7px 10px;
     display: inline-block;
+}
+
+/*INVOICE*/
+.invoicecontainer {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background-color: rgba(57, 62, 103, 0.2) !important;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 30px 10px 30px;
+    margin: 30px;
+    border-radius: 5px;
+    color: white !important;
+}
+
+.tablescroll {
+    width: 100%;
+    overflow: auto;
 }
 

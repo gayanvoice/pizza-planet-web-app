@@ -19,12 +19,22 @@
     }
 }
 @section CSS {
+    <link rel="stylesheet" href="~/css/LKStyle.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.cdnfonts.com/css/blank-space" rel="stylesheet" to html>
     <style>
+
+        html * {
+            color: white !important; 
+        }
         body{
             /*!!IMPORTANT forces grid display which stops headers & footers moving around*/
             min-height: 100vh;
             display: grid;
             grid-template-rows: 1fr auto;
+            background: rgb(56,59,83) !important;
+            background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
+            color: white !important;
         }
         .bi {
             vertical-align: -.125em;
@@ -36,10 +46,11 @@
         }
 
         .page-header {
+           
             margin: 0 0 1rem;
             padding-bottom: 1rem;
             padding-top: .5rem;
-            border-bottom: 1px dotted #e2e2e2;
+            border-bottom: 1px solid rgba(230, 230, 230,0.2) !important;
             display: -ms-flexbox;
             display: flex;
             -ms-flex-pack: justify;
@@ -170,18 +181,20 @@
         </symbol>
     </svg>
 }
+<div class="stars"></div>
 
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
     {
         <partial name="/Views/Shared/_AuthNavPartial.cshtml" />
+        <div class="invoicecontainer">
         <div class="page-content container mt-2">
-            <div class="page-header text-blue-d2">
-                <h1 class="page-title text-secondary-d1">
+                <div class="page-header">
+                    <h1 class="page-title text-secondary-d1" style="color:white !important">
                     Invoice
-                    <small class="page-info">
-                        ID: #@Model.AppCheckout.CheckoutId
+                        <small class="page-info" style="color:white">
+                            ID: #@Model.AppCheckout.CheckoutId
                     </small>
                 </h1>
                 </div>
@@ -192,18 +205,18 @@
                     <div class="col-12 col-lg-12">
                         <div class="row">
                             <div class="col-12">
-                                <div class="text-center text-150 mb-4">
+                                @*<div class="text-center text-150 mb-4">
                                     <img src="https://pizzaplanetstorage.blob.core.windows.net/static/static/web-app/image/shared/logo.png" 
                                     width="128" class="text-80" />
-                                </div>
+                                </div>*@
                             </div>
                         </div>
-                        <hr class="row brc-default-l1 mx-n1 mb-4" />
+                        @*<hr class="row brc-default-l1 mx-n1 mb-4" />*@
 
                         <div class="row">
                             <div class="col-sm-6">
                                 <div>
-                                    <span class="text-600 text-sm text-grey-m2 align-middle">To:</span>
+                                    <span class="text-600 text-sm align-middle">To:</span>
                                     <span class="text-110 align-middle">@Model.AspNetUser.UserName</span>
                                 </div>
                                 @if(Model.AppCheckout.DeliveryMethod.Equals("DELIVERY"))
@@ -226,7 +239,7 @@
                                             @if (Model.AppAddress.PostCode is not null)
                                             {
                                                 <div class="my-1">
-                                                    <i class="fa fa-phone fa-flip-horizontal text-secondary"></i> <b class="text-600">@Model.AppAddress.PostCode</b>
+                                                    <i class="fa fa-map-marker" aria-hidden="true" style="color:white"></i> <b class="text-600">@Model.AppAddress.PostCode</b>
                                                 </div>
                                             }
                                        
@@ -249,17 +262,17 @@
                                     </div>
 
                                     <div class="my-2">
-                                        <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> 
+                                        <i class="fa fa-circle text-xs mr-1" style="color:#ec1f26 !important;"></i>
                                         <span class="text-600 text-90">ID:</span> #@Model.AppCheckout.CheckoutId
                                         </div>
 
                                      <div class="my-2">
-                                         <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+                                        <i class="fa fa-circle text-xs mr-1" style="color:#ec1f26 !important;"></i>
                                          <span class="text-600 text-90">Issue Date:</span> @Model.AppCheckout.ModifyTime
                                          </div>
 
                                     <div class="my-2">
-                                        <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> 
+                                        <i class="fa fa-circle text-xs mr-1" style="color:#ec1f26 !important;"></i>
                                         <span class="text-600 text-90">Status:</span> 
                                         <span class="px-25">@Model.AppCheckout.Status</span>
                                     </div>
@@ -267,8 +280,11 @@
                         </div>
                         @if (Model.CheckoutBasketProcedureModelV1Enumerable is not null)
                         {
+
+                            @*TABLE HEADERS*@
+
                             <div class="mt-4">
-                                <div class="row text-600 text-white bgc-default-tp1 py-25">
+                                    <div class="row text-600 text-white bgc-default-tp1 py-25" style="background-color: #595d79 !important;">
                                     <div class="d-none d-sm-block col-1">#</div>
                                     <div class="col-9 col-sm-5">Description</div>
                                     <div class="d-none d-sm-block col-4 col-sm-2">Qty</div>
@@ -279,12 +295,16 @@
                                 @{
                                     double totalCost = 0.0;
                                     double totalUnits = Model.CheckoutBasketProcedureModelV1Enumerable.Sum(b => b.Quantity);
-                                    foreach (CheckoutBasketProcedureModel.V1? v1 in Model.CheckoutBasketProcedureModelV1Enumerable.OrderBy(b => b.Type).ToList())
+
+                                     foreach (CheckoutBasketProcedureModel.V1? v1 in Model.CheckoutBasketProcedureModelV1Enumerable.OrderBy(b => b.Type).ToList())
                                     {
                                         if (v1 is not null)
                                         {
+
+                                        
                                             double itemCost = v1.Quantity * v1.Price;
-                                            <div class="text-95 text-secondary-d3">
+
+                                                <div class="text-95 text-secondary-d3">
                                                 <div class="row mb-2 mb-sm-0 py-25">
                                                     <div class="d-none d-sm-block col-1">@v1.Type</div>
                                                     <div class="col-9 col-sm-5">@v1.Name</div>
@@ -332,6 +352,8 @@
                 </div>
             </div>
         </div>
+            </div>
+        
         <partial name="/Views/Shared/_AuthFooterPartial.cshtml" />
     }
     else
