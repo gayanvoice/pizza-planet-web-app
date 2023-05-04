@@ -491,17 +491,19 @@ function mobileMenu() {
     margin-top: 10px;
 }
 
+    .nav-link:hover {
+        font-size: 1.15rem;
+    }
 
-.headermsg {
-    display: inline-block; 
-    font-size: 1rem;
-    font-weight: 400;
-    color: white;
-    font-family: roboto, Arial;
-    text-decoration: none;
-    padding-top: 10px;  
- 
-}
+    .headermsg {
+        display: inline-block;
+        font-size: 1rem;
+        font-weight: 400;
+        color: white;
+        font-family: roboto, Arial;
+        text-decoration: none;
+        padding-top: 10px;
+    }
 
 .loginbtn {
     font-size: 1rem;
@@ -514,6 +516,10 @@ function mobileMenu() {
     margin-top: 10px;
     padding: 7px 10px 7px 10px;
     display: inline-block;
+}
+
+.loginbtn:hover {
+    font-size: 1rem;
 }
 
 
