@@ -1155,6 +1155,20 @@ PassBtn.addEventListener('click', () => {
     margin-top: 35px;
 }
 
+.searchbtnactblue {
+    background-color: #404ca9 !important;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    font-family: roboto, Arial;
+    height: 45px;
+    font-weight: bold;
+    font-size: 1.15rem;
+    margin-top: 5px !important;
+}
+
 
 .redpill {
     font-size: 1.2rem;
