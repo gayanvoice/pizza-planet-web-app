@@ -58,8 +58,8 @@ Model.AppAddressIEnumerable.Count() == 0)
                                                     <div class="card-body p-4">
                                                         <div class="row">
                                                             <div class="col-lg-12">
-                                                                <div class="h5">
-                                                                    You have no any address in your account.
+                                                                <div class="h5" style="color: white; font-family: roboto, arial; text-align:center;font-size: 20px; padding-top: 20px;">
+                                                                    You have no saved addresses
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -134,7 +134,15 @@ Model.AppAddressIEnumerable.Count() == 0)
                                                         <a asp-controller="Home" asp-action="Address" class="w-100 btn btn-primary btn-lg mt-4 searchbtnactblue">
                                                             <i class="fas fa-long-arrow-alt-left me-2"></i>Add Address
                                                         </a>
+                                                        <div class="row d-flex justify-content-center align-items-center h-100" style="margin-top: 30px">
+
+                                                            <a asp-controller="Home" asp-action="Payment" class="barelink redpillcnt" style="padding-top: 8px">
+                                                                <i class="fas fa-long-arrow-alt-left me-2"></i>Payment
+                                                            </a>
+                                                        </div>
                                                     </div>
+
+
                                                 }
                                             }
                                         </div>
@@ -145,36 +153,9 @@ Model.AppAddressIEnumerable.Count() == 0)
                     </div>
                 </div>
             </section>
-            <section class="h-100 h-custom" style="background-color: transparent;">
-                <div class="container pb-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body p-4">
-                                <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="h5 text-xl-start">
-                                                <a asp-controller="Home" asp-action="Order" class="text-body">Order</a>
-                                            </div>
-                                        </div>
-                                    <div class="col-lg-6">
-                                        <div class="h5 text-xl-end">
-                                            <a asp-controller="Home" asp-action="Payment" class="text-body">
-                                                <i class="fas fa-long-arrow-alt-left me-2"></i>Payment
-                                            </a>
-                                        </div>
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            
+                
+        
         }
         else
         {
@@ -191,6 +172,7 @@ Model.AppAddressIEnumerable.Count() == 0)
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
