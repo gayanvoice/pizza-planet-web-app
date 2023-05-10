@@ -20,15 +20,31 @@
 }
 @section CSS{
     <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.cdnfonts.com/css/blank-space" rel="stylesheet" to html>
 }
 <style>
+
+    html * {
+        color: white !important;
+    }
+
+    small {
+        color: white !important;
+       
+    }
     body{
         /*!!IMPORTANT forces grid display which stops headers & footers moving around*/
         min-height: 100vh;
         display: grid;
         grid-template-rows: 1fr auto;
+        background: rgb(56,59,83) !important;
+        background: radial-gradient(circle, rgba(56,59,83,1) 0%, rgba(0,0,0,1) 100%) !important;
+        
     }
+
 </style>
+<div class="stars"></div>
 @if (SignInManager.IsSignedIn(User))
 {
     @if (Model.AspNetUser is not null && Model.AspNetUser.Id is not null)
@@ -37,25 +53,26 @@
         @if (Model.AppCheckout is not null)
         {
             <main class="container">
-                <div class="d-flex align-items-center p-3 my-3 rounded border">
+                <div class="d-flex align-items-center p-3 my-3 bannerwide rounded">
                     <div class="lh-1">
-                        <div class="h6 mb-0 lh-1">Checkout ID <span class="text-muted">@Model.AppCheckout.CheckoutId</span></div>
-                        <small>Last updated @Time.ToRelativeDate(Model.AppCheckout.ModifyTime)</small>
+                        <div class="h6 mb-0 lh-1" style="margin-bottom: 5px !important">Checkout ID <span style="color: white !important">@Model.AppCheckout.CheckoutId</span></div>
+                        <small> Last updated @Time.ToRelativeDate(Model.AppCheckout.ModifyTime)</small>
                     </div>
                 </div>
                 @if (Model.AppCheckout.DeliveryMethod is not null && Model.AppCheckout.DeliveryMethod.Equals("DELIVERY"))
                 {
                     if (Model.AppAddress is not null)
                     {
-                        <div class="d-flex align-items-center p-3 my-3 rounded border">
+                        <div class="d-flex align-items-center p-3 my-3 bannerwide rounded">
                             <div class="lh-1">
-                                <div class="h6 mb-0 lh-1">Delivery Type <span class="text-muted">@Model.AppCheckout.DeliveryMethod</span></div>
-                                <div class="h6 mb-0 lh-1">Address
-                                    <span class="text-muted">@Model.AppAddress.HouseNumber</span>
-                                    <span class="text-muted">@Model.AppAddress.Street</span>
-                                    <span class="text-muted">@Model.AppAddress.Region</span>
-                                    <span class="text-muted">@Model.AppAddress.Country</span>
-                                    <span class="text-muted">@Model.AppAddress.PostCode</span>
+                                <div class="h6 mb-0 lh-1" style="margin-bottom: 5px !important">Delivery Type <span style"color: white !important;">@Model.AppCheckout.DeliveryMethod</span></div>
+                                <div class="h6 mb-0 lh-1" style="margin-bottom: 5px !important">
+                                    Address
+                                    <span style"color: white !important;">@Model.AppAddress.HouseNumber</span>
+                                    <span style"color: white !important;">@Model.AppAddress.Street</span>
+                                    <span style"color: white !important;">@Model.AppAddress.Region</span>
+                                    <span style"color: white !important;">@Model.AppAddress.Country</span>
+                                    <span style"color: white !important;">@Model.AppAddress.PostCode</span>
                                 </div>
                             </div>
                         </div>
@@ -64,9 +81,9 @@
                 }
                 else
                 {
-                    <div class="d-flex align-items-center p-3 my-3 rounded border">
+                    <div class="d-flex align-items-center p-3 my-3 bannerwide rounded">
                         <div class="lh-1">
-                            <div class="h6 mb-0 lh-1">Delivery Type <span class="text-muted">@Model.AppCheckout.DeliveryMethod</span></div>
+                            <div class="h6 mb-0 lh-1" style="margin-bottom: 5px !important">Delivery Type <span style"color: white !important;">@Model.AppCheckout.DeliveryMethod</span></div>
                         </div>
                     </div>
                     
@@ -74,19 +91,19 @@
 
                 @if (Model.AppDelivery is not null)
                 {
-                    <div class="d-flex align-items-center p-3 my-3 rounded border">
+                    <div class="d-flex align-items-center p-3 my-3 rounded bannerwide">
                         <div class="lh-1">
                             @if (Model.AppDelivery.AuthUserId is not null)
                             {
-                                <div class="h6 mb-0 lh-1">Driver Id <span class="text-muted">@Model.AppDelivery.AuthUserId</span></div>
+                                <div class="h6 mb-0 lh-1" style="margin-bottom: 5px !important">Driver Id <span style"color: white !important;">@Model.AppDelivery.AuthUserId</span></div>
                             }
                             @if (Model.AppDelivery.Latitude is not null && Model.AppDelivery.Longitude is not null)
                             {
-                                <div class="h6 mb-0 lh-1">Location <span class="text-muted">@Model.AppDelivery.Latitude</span> <span class="text-muted">@Model.AppDelivery.Longitude</span></div>
+                                <div class="h6 mb-0 lh-1" style="margin-bottom: 5px !important">Location <span style"color: white !important;">@Model.AppDelivery.Latitude</span> <span>@Model.AppDelivery.Longitude</span></div>
                             }
                             @if (Model.AppDelivery.Status is not null)
                             {
-                                <div class="h6 mb-0 lh-1">Status <span class="text-muted">@Model.AppDelivery.Status</span></div>
+                                <div class="h6 mb-0 lh-1" style="margin-bottom: 5px !important">Status <span style"color: white !important;">@Model.AppDelivery.Status</span></div>
                             }
                         </div>
                     </div>
@@ -100,8 +117,8 @@
                     var totalProgress = 0;
                     var totalItems = Model.CheckoutBasketProcedureModelV4Enumerable.Count();
                   
-                    <div class="my-3 p-3 bg-body rounded border">
-                        <h6 class="border-bottom pb-2 mb-0">Items</h6>
+                    <div class="my-3 p-3 bg-body rounded bannerwide">
+                        <h6 class="whiteborderbtm pb-2 mb-0">Items</h6>
                         @foreach (CheckoutBasketProcedureModel.V4? v4 in Model.CheckoutBasketProcedureModelV4Enumerable)
                         {
                             if (v4 is not null)
@@ -140,12 +157,12 @@
                                 totalProgress = totalProgress + itemProgress;
 
                                 totalItems = totalItems * v4.Quantity;
-                                <div class="d-flex text-muted pt-3">
-                                    <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                                <div class="d-flex pt-3" style"color: white !important;">
+                                    <div class="pb-3 mb-0 small lh-sm whiteborderbtm w-100">
                                         <div class="d-flex justify-content-between">
                                             <strong class="text-gray-dark">@v4.Quantity X @v4.Name</strong>
-                                            <div class="progress" role="progressbar" aria-label="Basic example" style="width: 200px">
-                                                <div class="progress-bar" style="width: @itemProgress%">@itemProgress %</div>
+                                            <div class="progress" role="progressbar" aria-label="Basic example" style="width: 200px; background-color: #E6E6E6;">
+                                                <div class="progress-bar" style="width: @itemProgress%; background-color: #ec1f26;">@itemProgress %</div>
                                             </div>
                                         </div>
                                         <span class="d-block">@v4.Status</span>
@@ -157,11 +174,11 @@
                             totalProgress = totalProgress / totalItems;
                          }
                     </div>
-                    <div class="p-3 my-3 rounded border">
+                    <div class="p-3 my-3 rounded bannerwide">
                         <div class="lh-1">
-                            <h1 class="h6 mb-0 lh-1 mb-3">Checkout Status <span class="text-muted">@Model.AppCheckout.Status</span></h1>
-                            <div class="progress" role="progressbar" aria-label="Basic example">
-                                <div class="progress-bar" style="width: @totalProgress%">@totalProgress%</div>
+                            <h1 class="h6 mb-0 lh-1 mb-3">Checkout Status <span style"color: white !important;">@Model.AppCheckout.Status</span></h1>
+                            <div class="progress" role="progressbar" aria-label="Basic example" style="background-color: #E6E6E6">
+                                <div class="progress-bar" style="width: @totalProgress%; background-color: #ec1f26;">@totalProgress%</div>
                             </div>
 
                         </div>

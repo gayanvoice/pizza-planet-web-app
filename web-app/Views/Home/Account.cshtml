@@ -44,7 +44,7 @@
                         <div class="bannerwide d-flex align-items-center p-3 my-3 text-black rounded shadow-sm">
                             <img class="me-3" src="https://upload.wikimedia.org/wikipedia/commons/2/25/Microsoft_icon.svg" alt="" height="38">
                             <div class="lh-1">
-                                <h1 class="h6 mb-0 text-black lh-1">Microsoft</h1>
+                                <h1 class="h6 mb-0 lh-1">Microsoft</h1>
                                 @if(Model.AspNetUser.Email is not null)
                                 {
                                      <small>@Model.AspNetUser.Email</small>
@@ -251,7 +251,7 @@
 
 
                     <small class="d-block white text-end mt-3">
-                    <a class="loginbtn barelink" asp-controller="Home" asp-action="Address">New address</a>
+                    <a class="smallrdbtn barelink" asp-controller="Home" asp-action="Address">New address</a>
                 </small>
             </div>
         </main>
@@ -268,17 +268,17 @@
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: #383b53; color: white">
             <form asp-controller="Home" asp-action="DeleteAddress" method="get">
-            <div class="modal-header">
+                <div class="modal-header whiteborderbtm">
                 <h1 class="modal-title fs-5" id="deleteModalLabel">Title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close crosswhite" style="color: white !important" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+                <div class="modal-body whiteborderbtm" >
                 <div class="h6">Are you sure want to delete this postcode from account?</div>
                 <input type="text" class="form-control" name="Id" hidden>
             </div>
-            <div class="modal-footer">
+                <div class="modal-footer" style="border:none;">
                     <button class="btn btn-danger" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" type="submit">Delete</button>
             </div>
             </form>
