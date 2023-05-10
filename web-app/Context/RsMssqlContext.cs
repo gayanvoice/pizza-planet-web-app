@@ -70,7 +70,7 @@ public partial class RsMssqlContext : DbContext
     public virtual DbSet<DjangoSession> DjangoSessions { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=tcp:rs-mssql.database.windows.net,1433;Initial Catalog=rs-mssql;Persist Security Info=False;User ID=rsuser;Password=rspassword1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+        => optionsBuilder.UseSqlServer("Server=tcp:pizza-planet-database.database.windows.net,1433;Initial Catalog=PizzaPlanetDatabase;Persist Security Info=False;User ID=ppuser;Password=Password1!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
